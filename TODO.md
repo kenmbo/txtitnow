@@ -4,7 +4,7 @@
 ## Milestone 1: Basic editor window
 
 - [x] Set the main form title to `TxtItNow`
-- [ ] Set a reasonable default main window size
+- [x] Set a reasonable default main window size
 - [ ] Add a central multiline editor control
 - [ ] Make the editor fill the available client area
 - [ ] Enable vertical scrolling in the editor
