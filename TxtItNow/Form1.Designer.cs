@@ -35,10 +35,10 @@ partial class Form1
         // 
         // editorTextBox
         // 
-        editorTextBox.Location = new Point(12, 12);
         editorTextBox.Multiline = true;
+        editorTextBox.Dock = DockStyle.Fill;
         editorTextBox.Name = "editorTextBox";
-        editorTextBox.Size = new Size(976, 676);
+        editorTextBox.Size = new Size(1000, 700);
         editorTextBox.TabIndex = 0;
         // 
         // Form1
