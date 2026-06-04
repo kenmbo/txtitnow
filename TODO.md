@@ -5,7 +5,7 @@
 
 - [x] Set the main form title to `TxtItNow`
 - [x] Set a reasonable default main window size
-- [ ] Add a central multiline editor control
+- [x] Add a central multiline editor control
 - [ ] Make the editor fill the available client area
 - [ ] Enable vertical scrolling in the editor
 - [ ] Enable horizontal scrolling or word-wrap behavior explicitly

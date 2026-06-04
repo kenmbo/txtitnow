@@ -6,6 +6,7 @@ partial class Form1
     ///  Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
+    private TextBox editorTextBox;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -29,9 +30,24 @@ partial class Form1
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
+        editorTextBox = new TextBox();
+        SuspendLayout();
+        // 
+        // editorTextBox
+        // 
+        editorTextBox.Location = new Point(12, 12);
+        editorTextBox.Multiline = true;
+        editorTextBox.Name = "editorTextBox";
+        editorTextBox.Size = new Size(976, 676);
+        editorTextBox.TabIndex = 0;
+        // 
+        // Form1
+        // 
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1000, 700);
         Text = "TxtItNow";
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
