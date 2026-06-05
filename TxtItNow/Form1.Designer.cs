@@ -38,6 +38,8 @@ partial class Form1
         editorTextBox.Multiline = true;
         editorTextBox.Dock = DockStyle.Fill;
         editorTextBox.Name = "editorTextBox";
+	editorTextBox.ScrollBars = ScrollBars.Vertical;
+	editorTextBox.WordWrap = true;
         editorTextBox.Size = new Size(1000, 700);
         editorTextBox.TabIndex = 0;
         // 

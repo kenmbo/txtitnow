@@ -7,7 +7,7 @@
 - [x] Set a reasonable default main window size
 - [x] Add a central multiline editor control
 - [x] Make the editor fill the available client area
-- [ ] Enable vertical scrolling in the editor
+- [x] Enable vertical scrolling in the editor
 - [ ] Enable horizontal scrolling or word-wrap behavior explicitly
 - [ ] Add a menu bar
 - [ ] Add a `File` menu
