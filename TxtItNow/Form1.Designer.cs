@@ -7,6 +7,7 @@ partial class Form1
     /// </summary>
     private System.ComponentModel.IContainer components = null;
     private TextBox editorTextBox;
+    private MenuStrip mainMenuStrip;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -31,8 +32,18 @@ partial class Form1
     {
         components = new System.ComponentModel.Container();
         editorTextBox = new TextBox();
+	mainMenuStrip = new MenuStrip();
+
         SuspendLayout();
         // 
+        // mainMenuStrip
+        // 
+        mainMenuStrip.Dock = DockStyle.Top;
+        mainMenuStrip.Location = new Point(0, 0);
+        mainMenuStrip.Name = "mainMenuStrip";
+        mainMenuStrip.Size = new Size(1000, 24);
+        mainMenuStrip.TabIndex = 1;
+        //
         // editorTextBox
         // 
         editorTextBox.Multiline = true;
@@ -47,6 +58,9 @@ partial class Form1
         // 
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1000, 700);
+        Controls.Add(editorTextBox);
+        Controls.Add(mainMenuStrip);
+        MainMenuStrip = mainMenuStrip;
         Text = "TxtItNow";
         ResumeLayout(false);
         PerformLayout();
