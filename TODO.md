@@ -8,10 +8,10 @@
 - [x] Add a central multiline editor control
 - [x] Make the editor fill the available client area
 - [x] Enable vertical scrolling in the editor
-- [ ] Enable horizontal scrolling or word-wrap behavior explicitly
-- [ ] Add a menu bar
-- [ ] Add a `File` menu
-- [ ] Add `File > New`
+- [x] Enable horizontal scrolling or word-wrap behavior explicitly
+- [x] Add a menu bar
+- [x] Add a `File` menu
+- [x] Add `File > New`
 - [ ] Add `File > Open`
 - [ ] Add `File > Save`
 - [ ] Add `File > Save As`

@@ -8,6 +8,7 @@ partial class Form1
     private System.ComponentModel.IContainer components = null;
     private TextBox editorTextBox;
     private MenuStrip mainMenuStrip;
+    private ToolStripMenuItem fileToolStripMenuItem;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -33,17 +34,25 @@ partial class Form1
         components = new System.ComponentModel.Container();
         editorTextBox = new TextBox();
 	mainMenuStrip = new MenuStrip();
+        fileToolStripMenuItem = new ToolStripMenuItem();
 
         SuspendLayout();
         // 
         // mainMenuStrip
         // 
         mainMenuStrip.Dock = DockStyle.Top;
+        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
         mainMenuStrip.Location = new Point(0, 0);
         mainMenuStrip.Name = "mainMenuStrip";
         mainMenuStrip.Size = new Size(1000, 24);
         mainMenuStrip.TabIndex = 1;
         //
+        // fileToolStripMenuItem
+        // 
+        fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+        fileToolStripMenuItem.Size = new Size(37, 20);
+        fileToolStripMenuItem.Text = "&File";
+        // 
         // editorTextBox
         // 
         editorTextBox.Multiline = true;
