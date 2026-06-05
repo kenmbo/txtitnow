@@ -12,7 +12,7 @@
 - [x] Add a menu bar
 - [x] Add a `File` menu
 - [x] Add `File > New`
-- [ ] Add `File > Open`
+- [x] Add `File > Open`
 - [ ] Add `File > Save`
 - [ ] Add `File > Save As`
 - [ ] Add `File > Exit`

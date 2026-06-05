@@ -35,6 +35,7 @@ partial class Form1
         editorTextBox = new TextBox();
 	mainMenuStrip = new MenuStrip();
         fileToolStripMenuItem = new ToolStripMenuItem();
+        newToolStripMenuItem = new ToolStripMenuItem();
 
         SuspendLayout();
         // 
@@ -49,9 +50,16 @@ partial class Form1
         //
         // fileToolStripMenuItem
         // 
+        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem });
         fileToolStripMenuItem.Name = "fileToolStripMenuItem";
         fileToolStripMenuItem.Size = new Size(37, 20);
         fileToolStripMenuItem.Text = "&File";
+        // 
+        // newToolStripMenuItem
+        // 
+        newToolStripMenuItem.Name = "newToolStripMenuItem";
+        newToolStripMenuItem.Size = new Size(180, 22);
+        newToolStripMenuItem.Text = "&New";
         // 
         // editorTextBox
         // 
