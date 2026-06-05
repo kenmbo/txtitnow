@@ -9,6 +9,8 @@ partial class Form1
     private TextBox editorTextBox;
     private MenuStrip mainMenuStrip;
     private ToolStripMenuItem fileToolStripMenuItem;
+    private ToolStripMenuItem newToolStripMenuItem;
+    private ToolStripMenuItem openToolStripMenuItem;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -33,10 +35,10 @@ partial class Form1
     {
         components = new System.ComponentModel.Container();
         editorTextBox = new TextBox();
-	mainMenuStrip = new MenuStrip();
+        mainMenuStrip = new MenuStrip();
         fileToolStripMenuItem = new ToolStripMenuItem();
         newToolStripMenuItem = new ToolStripMenuItem();
-
+        openToolStripMenuItem = new ToolStripMenuItem();
         SuspendLayout();
         // 
         // mainMenuStrip
@@ -46,11 +48,11 @@ partial class Form1
         mainMenuStrip.Location = new Point(0, 0);
         mainMenuStrip.Name = "mainMenuStrip";
         mainMenuStrip.Size = new Size(1000, 24);
-        mainMenuStrip.TabIndex = 1;
-        //
+        mainMenuStrip.TabIndex = 0;
+        // 
         // fileToolStripMenuItem
         // 
-        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem });
+        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem });
         fileToolStripMenuItem.Name = "fileToolStripMenuItem";
         fileToolStripMenuItem.Size = new Size(37, 20);
         fileToolStripMenuItem.Text = "&File";
@@ -61,15 +63,21 @@ partial class Form1
         newToolStripMenuItem.Size = new Size(180, 22);
         newToolStripMenuItem.Text = "&New";
         // 
+        // openToolStripMenuItem
+        // 
+        openToolStripMenuItem.Name = "openToolStripMenuItem";
+        openToolStripMenuItem.Size = new Size(180, 22);
+        openToolStripMenuItem.Text = "&Open";
+        // 
         // editorTextBox
         // 
-        editorTextBox.Multiline = true;
         editorTextBox.Dock = DockStyle.Fill;
+        editorTextBox.Multiline = true;
         editorTextBox.Name = "editorTextBox";
-	editorTextBox.ScrollBars = ScrollBars.Vertical;
-	editorTextBox.WordWrap = true;
+        editorTextBox.ScrollBars = ScrollBars.Vertical;
         editorTextBox.Size = new Size(1000, 700);
-        editorTextBox.TabIndex = 0;
+        editorTextBox.TabIndex = 1;
+        editorTextBox.WordWrap = true;
         // 
         // Form1
         // 
@@ -85,3 +93,4 @@ partial class Form1
 
     #endregion
 }
+
