@@ -13,7 +13,7 @@
 - [x] Add a `File` menu
 - [x] Add `File > New`
 - [x] Add `File > Open`
-- [ ] Add `File > Save`
+- [x] Add `File > Save`
 - [ ] Add `File > Save As`
 - [ ] Add `File > Exit`
 - [ ] Wire `File > Exit` to close the application

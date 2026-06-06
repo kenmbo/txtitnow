@@ -11,6 +11,7 @@ partial class Form1
     private ToolStripMenuItem fileToolStripMenuItem;
     private ToolStripMenuItem newToolStripMenuItem;
     private ToolStripMenuItem openToolStripMenuItem;
+    private ToolStripMenuItem saveToolStripMenuItem;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -39,12 +40,13 @@ partial class Form1
         fileToolStripMenuItem = new ToolStripMenuItem();
         newToolStripMenuItem = new ToolStripMenuItem();
         openToolStripMenuItem = new ToolStripMenuItem();
+	saveToolStripMenuItem = new ToolStripMenuItem();
         SuspendLayout();
         // 
         // mainMenuStrip
         // 
         mainMenuStrip.Dock = DockStyle.Top;
-        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
+        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, saveToolStripMenuItem });
         mainMenuStrip.Location = new Point(0, 0);
         mainMenuStrip.Name = "mainMenuStrip";
         mainMenuStrip.Size = new Size(1000, 24);
@@ -68,6 +70,12 @@ partial class Form1
         openToolStripMenuItem.Name = "openToolStripMenuItem";
         openToolStripMenuItem.Size = new Size(180, 22);
         openToolStripMenuItem.Text = "&Open";
+        // 
+        // saveToolStripMenuItem
+        // 
+        saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+        saveToolStripMenuItem.Size = new Size(180, 22);
+        saveToolStripMenuItem.Text = "&Save";
         // 
         // editorTextBox
         // 
