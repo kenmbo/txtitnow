@@ -13,6 +13,7 @@ partial class Form1
     private ToolStripMenuItem openToolStripMenuItem;
     private ToolStripMenuItem saveToolStripMenuItem;
     private ToolStripMenuItem saveAsToolStripMenuItem;
+    private ToolStripMenuItem exitToolStripMenuItem;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -43,6 +44,7 @@ partial class Form1
         openToolStripMenuItem = new ToolStripMenuItem();
 	saveToolStripMenuItem = new ToolStripMenuItem();
 	saveAsToolStripMenuItem = new ToolStripMenuItem();
+	exitToolStripMenuItem = new ToolStripMenuItem();
         SuspendLayout();
         // 
         // mainMenuStrip
@@ -56,7 +58,7 @@ partial class Form1
         // 
         // fileToolStripMenuItem
         // 
-        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem });
+        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, exitToolStripMenuItem });
         fileToolStripMenuItem.Name = "fileToolStripMenuItem";
         fileToolStripMenuItem.Size = new Size(37, 20);
         fileToolStripMenuItem.Text = "&File";
@@ -84,6 +86,12 @@ partial class Form1
         saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
         saveAsToolStripMenuItem.Size = new Size(180, 22);
         saveAsToolStripMenuItem.Text = "Save &As";
+        // 
+        // exitToolStripMenuItem
+        // 
+        exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+        exitToolStripMenuItem.Size = new Size(180, 22);
+        exitToolStripMenuItem.Text = "E&xit";
         // 
         // editorTextBox
         // 
