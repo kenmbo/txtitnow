@@ -6,4 +6,10 @@ public partial class Form1 : Form
     {
         InitializeComponent();
     }
+
+    private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
 }
+
