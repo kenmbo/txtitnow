@@ -14,7 +14,7 @@
 - [x] Add `File > New`
 - [x] Add `File > Open`
 - [x] Add `File > Save`
-- [ ] Add `File > Save As`
+- [x] Add `File > Save As`
 - [ ] Add `File > Exit`
 - [ ] Wire `File > Exit` to close the application
 - [ ] Add placeholder event handlers for File menu items that are not implemented yet
