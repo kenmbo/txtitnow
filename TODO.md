@@ -17,7 +17,7 @@
 - [x] Add `File > Save As`
 - [x] Add `File > Exit`
 - [x] Wire `File > Exit` to close the application
-- [ ] Add placeholder event handlers for File menu items that are not implemented yet
+- [x] Add placeholder event handlers for File menu items that are not implemented yet
 
 ## Milestone 2: File state handling
 

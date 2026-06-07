@@ -68,24 +68,28 @@ partial class Form1
         newToolStripMenuItem.Name = "newToolStripMenuItem";
         newToolStripMenuItem.Size = new Size(180, 22);
         newToolStripMenuItem.Text = "&New";
+	newToolStripMenuItem.Click += NewToolStripMenuItem_Click;
         // 
         // openToolStripMenuItem
         // 
         openToolStripMenuItem.Name = "openToolStripMenuItem";
         openToolStripMenuItem.Size = new Size(180, 22);
         openToolStripMenuItem.Text = "&Open";
+	openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
         // 
         // saveToolStripMenuItem
         // 
         saveToolStripMenuItem.Name = "saveToolStripMenuItem";
         saveToolStripMenuItem.Size = new Size(180, 22);
         saveToolStripMenuItem.Text = "&Save";
+	saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
         // 
         // saveAsToolStripMenuItem
         // 
         saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
         saveAsToolStripMenuItem.Size = new Size(180, 22);
         saveAsToolStripMenuItem.Text = "Save &As";
+	saveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
         // 
         // exitToolStripMenuItem
         // 
