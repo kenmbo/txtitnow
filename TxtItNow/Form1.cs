@@ -2,6 +2,9 @@ namespace TxtItNow;
 
 public partial class Form1 : Form
 {
+    private string? currentFilePath;
+    private bool isDocumentDirty;
+
     public Form1()
     {
         InitializeComponent();

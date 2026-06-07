@@ -21,8 +21,8 @@
 
 ## Milestone 2: File state handling
 
-- [ ] Add a field/property for the current file path
-- [ ] Add a field/property for dirty/unsaved state
+- [x] Add a field/property for the current file path
+- [x] Add a field/property for dirty/unsaved state
 - [ ] Mark the document as dirty when editor text changes
 - [ ] Mark the document as clean after a successful save
 - [ ] Update the window title to show the app name
