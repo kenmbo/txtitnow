@@ -20,7 +20,7 @@ public partial class Form1 : Form
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        ShowNotImplementedMessage("New");
+	editorTextBox.Clear();
     }
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
