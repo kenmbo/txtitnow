@@ -29,7 +29,7 @@
 - [x] Update the window title to show the current file name when a file is open
 - [x] Update the window title to show an asterisk when the document has unsaved changes
 - [x] Implement `File > New` to clear the editor
-- [ ] Reset the current file path when creating a new document
+- [x] Reset the current file path when creating a new document
 - [ ] Reset dirty state after creating a new blank document
 - [ ] Prompt before `File > New` if there are unsaved changes
 - [ ] Implement `File > Open` with `OpenFileDialog`
