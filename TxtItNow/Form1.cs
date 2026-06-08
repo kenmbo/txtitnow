@@ -2,6 +2,8 @@ namespace TxtItNow;
 
 public partial class Form1 : Form
 {
+    private const string ApplicationName = "TxtItNow";
+
     private string? currentFilePath = null;
     private bool isDocumentDirty;
 
@@ -52,7 +54,7 @@ public partial class Form1 : Form
     {
         MessageBox.Show(
             $"{commandName} is not implemented yet.",
-            "TxtItNow",
+            ApplicationName,
             MessageBoxButtons.OK,
             MessageBoxIcon.Information);
     }
@@ -64,6 +66,6 @@ public partial class Form1 : Form
             : Path.GetFileName(currentFilePath);
 
         string dirtyMarker = isDocumentDirty ? "*" : string.Empty;
-        Text = $"{dirtyMarker}{documentName} - TxtItNow";
+        Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
