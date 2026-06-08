@@ -2,12 +2,19 @@ namespace TxtItNow;
 
 public partial class Form1 : Form
 {
-    private string? currentFilePath;
+    private string? currentFilePath = null;
     private bool isDocumentDirty;
 
     public Form1()
     {
         InitializeComponent();
+        UpdateWindowTitle();
+    }
+
+    private void EditorTextBox_TextChanged(object sender, EventArgs e)
+    {
+        isDocumentDirty = true;
+        UpdateWindowTitle();
     }
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -43,5 +50,14 @@ public partial class Form1 : Form
             MessageBoxButtons.OK,
             MessageBoxIcon.Information);
     }
-}
 
+    private void UpdateWindowTitle()
+    {
+        string documentName = currentFilePath is null
+            ? "Untitled"
+            : Path.GetFileName(currentFilePath);
+
+        string dirtyMarker = isDocumentDirty ? "*" : string.Empty;
+        Text = $"{dirtyMarker}{documentName} - TxtItNow";
+    }
+}

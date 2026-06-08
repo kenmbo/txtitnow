@@ -107,6 +107,7 @@ partial class Form1
         editorTextBox.Size = new Size(1000, 700);
         editorTextBox.TabIndex = 1;
         editorTextBox.WordWrap = true;
+	editorTextBox.TextChanged += EditorTextBox_TextChanged;
         // 
         // Form1
         // 
