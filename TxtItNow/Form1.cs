@@ -15,8 +15,7 @@ public partial class Form1 : Form
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
     {
-        isDocumentDirty = true;
-        UpdateWindowTitle();
+        MarkDocumentDirty();	
     }
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -47,6 +46,12 @@ public partial class Form1 : Form
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;
+        UpdateWindowTitle();
+    }
+
+    private void MarkDocumentDirty()
+    {
+        isDocumentDirty = true;
         UpdateWindowTitle();
     }
 
