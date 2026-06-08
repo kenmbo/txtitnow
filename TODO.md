@@ -26,7 +26,7 @@
 - [x] Mark the document as dirty when editor text changes
 - [x] Mark the document as clean after a successful save
 - [x] Update the window title to show the app name
-- [ ] Update the window title to show the current file name when a file is open
+- [x] Update the window title to show the current file name when a file is open
 - [ ] Update the window title to show an asterisk when the document has unsaved changes
 - [ ] Implement `File > New` to clear the editor
 - [ ] Reset the current file path when creating a new document

@@ -4,13 +4,13 @@ public partial class Form1 : Form
 {
     private const string ApplicationName = "TxtItNow";
 
-    private string? currentFilePath = null;
+    private string? currentFilePath;
     private bool isDocumentDirty;
 
     public Form1()
     {
         InitializeComponent();
-        UpdateWindowTitle();
+	SetCurrentFilePath(null);
     }
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
@@ -50,6 +50,12 @@ public partial class Form1 : Form
         UpdateWindowTitle();
     }
 
+    private void SetCurrentFilePath(string? filePath)
+    {
+        currentFilePath = filePath;
+        UpdateWindowTitle();
+    }
+    
     private void ShowNotImplementedMessage(string commandName)
     {
         MessageBox.Show(
