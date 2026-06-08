@@ -42,6 +42,12 @@ public partial class Form1 : Form
         Close();
     }
 
+    private void MarkDocumentClean()
+    {
+        isDocumentDirty = false;
+        UpdateWindowTitle();
+    }
+
     private void ShowNotImplementedMessage(string commandName)
     {
         MessageBox.Show(
