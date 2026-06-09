@@ -20,6 +20,10 @@ public partial class Form1 : Form
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
     {
+	if (!ConfirmDiscardUnsavedChanges())
+	{
+		return;
+	}
 	editorTextBox.Clear();
 	SetCurrentFilePath(null);
 	MarkDocumentClean();
@@ -61,6 +65,22 @@ public partial class Form1 : Form
     {
         currentFilePath = filePath;
         UpdateWindowTitle();
+    }
+
+    private bool ConfirmDiscardUnsavedChanges()
+    {
+	if(!isDocumentDirty)
+	{
+	    return true;
+	}
+	
+	DialogResult result = MessageBox.show(
+	   "You have unsaved changes. Do you wanna discard them?",
+	   ApplicationName,
+	   MessageBoxButtons.OKCancel,
+	   MessageBoxIcon.Warning);
+
+	return result == DialogResult.OK;
     }
     
     private void ShowNotImplementedMessage(string commandName)
