@@ -32,10 +32,10 @@ public partial class Form1 : Form
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
     {
-	if (!ConfirmDiscardUnsavedChanges()
-	{
-	    return;
-	}
+        if (!ConfirmDiscardUnsavedChanges())
+        {
+            return;
+        }
 
         using OpenFileDialog openFileDialog = new()
         {
@@ -49,8 +49,8 @@ public partial class Form1 : Form
         }
 
         editorTextBox.Text = File.ReadAllText(openFileDialog.FileName);
-	SetCurrentFilePath(openFileDialog.FileName);
-	MarkDocumentClean();
+        SetCurrentFilePath(openFileDialog.FileName);
+        MarkDocumentClean();
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -70,6 +70,8 @@ public partial class Form1 : Form
         {
             return;
         }
+
+        File.WriteAllText(saveFileDialog.FileName, editorTextBox.Text);
     }
 
     private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -130,4 +132,3 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
-

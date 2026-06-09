@@ -38,7 +38,7 @@
 - [x] Mark the document as clean after opening a file
 - [x] Prompt before `File > Open` if there are unsaved changes
 - [x] Implement `File > Save As` with `SaveFileDialog`
-- [ ] Write editor contents to the selected file path
+- [x] Write editor contents to the selected file path
 - [ ] Store the saved path as the current file path
 - [ ] Mark the document as clean after `Save As`
 - [ ] Implement `File > Save` for files that already have a current file path
