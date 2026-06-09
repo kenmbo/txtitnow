@@ -33,7 +33,7 @@
 - [x] Reset dirty state after creating a new blank document
 - [x] Prompt before `File > New` if there are unsaved changes
 - [x] Implement `File > Open` with `OpenFileDialog`
-- [ ] Load selected file contents into the editor
+- [x] Load selected file contents into the editor
 - [ ] Store the opened file path as the current file path
 - [ ] Mark the document as clean after opening a file
 - [ ] Prompt before `File > Open` if there are unsaved changes

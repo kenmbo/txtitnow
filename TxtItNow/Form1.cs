@@ -10,34 +10,40 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-	SetCurrentFilePath(null);
+        SetCurrentFilePath(null);
     }
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
     {
-        MarkDocumentDirty();	
+        MarkDocumentDirty();
     }
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
     {
-	if (!ConfirmDiscardUnsavedChanges())
-	{
-		return;
-	}
-	editorTextBox.Clear();
-	SetCurrentFilePath(null);
-	MarkDocumentClean();
+        if (!ConfirmDiscardUnsavedChanges())
+        {
+            return;
+        }
+
+        editorTextBox.Clear();
+        SetCurrentFilePath(null);
+        MarkDocumentClean();
     }
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
     {
-	using OpenFileDialog openFileDialog = new()
-	{
-	    Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-	    Title = "Open"
-	}
+        using OpenFileDialog openFileDialog = new()
+        {
+            Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
+            Title = "Open"
+        };
 
-	openFileDialog.ShowDialog(this);
+        if (openFileDialog.ShowDialog(this) != DialogResult.OK)
+        {
+            return;
+        }
+
+        editorTextBox.Text = File.ReadAllText(openFileDialog.FileName);
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -75,20 +81,20 @@ public partial class Form1 : Form
 
     private bool ConfirmDiscardUnsavedChanges()
     {
-	if(!isDocumentDirty)
-	{
-	    return true;
-	}
-	
-	DialogResult result = MessageBox.Show(
-	   "You have unsaved changes. Do you wanna discard them?",
-	   ApplicationName,
-	   MessageBoxButtons.OKCancel,
-	   MessageBoxIcon.Warning);
+        if (!isDocumentDirty)
+        {
+            return true;
+        }
 
-	return result == DialogResult.OK;
+        DialogResult result = MessageBox.Show(
+            "You have unsaved changes. Do you wanna to discard them?",
+            ApplicationName,
+            MessageBoxButtons.OKCancel,
+            MessageBoxIcon.Warning);
+
+        return result == DialogResult.OK;
     }
-    
+
     private void ShowNotImplementedMessage(string commandName)
     {
         MessageBox.Show(
@@ -108,3 +114,4 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
+
