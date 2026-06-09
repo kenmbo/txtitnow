@@ -44,6 +44,7 @@ public partial class Form1 : Form
         }
 
         editorTextBox.Text = File.ReadAllText(openFileDialog.FileName);
+	SetCurrentFilePath(openFileDialog.FileName);
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
