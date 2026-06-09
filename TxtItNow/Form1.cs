@@ -32,6 +32,11 @@ public partial class Form1 : Form
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
     {
+	if (!ConfirmDiscardUnsavedChanges()
+	{
+	    return;
+	}
+
         using OpenFileDialog openFileDialog = new()
         {
             Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
