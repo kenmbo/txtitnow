@@ -31,7 +31,13 @@ public partial class Form1 : Form
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        ShowNotImplementedMessage("Open");
+	using OpenFileDialog openFileDialog = new()
+	{
+	    Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+	    Title = "Open"
+	}
+
+	openFileDialog.ShowDialog(this);
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -74,7 +80,7 @@ public partial class Form1 : Form
 	    return true;
 	}
 	
-	DialogResult result = MessageBox.show(
+	DialogResult result = MessageBox.Show(
 	   "You have unsaved changes. Do you wanna discard them?",
 	   ApplicationName,
 	   MessageBoxButtons.OKCancel,
