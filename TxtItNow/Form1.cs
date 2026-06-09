@@ -60,7 +60,16 @@ public partial class Form1 : Form
 
     private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        ShowNotImplementedMessage("Save As");
+        using SaveFileDialog saveFileDialog = new()
+        {
+            Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
+            Title = "Save As"
+        };
+
+        if (saveFileDialog.ShowDialog(this) != DialogResult.OK)
+        {
+            return;
+        }
     }
 
     private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
