@@ -22,6 +22,7 @@ public partial class Form1 : Form
     {
 	editorTextBox.Clear();
 	SetCurrentFilePath(null);
+	MarkDocumentClean();
     }
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
