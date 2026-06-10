@@ -72,6 +72,7 @@ public partial class Form1 : Form
         }
 
         File.WriteAllText(saveFileDialog.FileName, editorTextBox.Text);
+        SetCurrentFilePath(saveFileDialog.FileName);
     }
 
     private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -105,7 +106,7 @@ public partial class Form1 : Form
         }
 
         DialogResult result = MessageBox.Show(
-            "You have unsaved changes. Do you wanna to discard them?",
+            "You have unsaved changes. Do you want to discard them?",
             ApplicationName,
             MessageBoxButtons.OKCancel,
             MessageBoxIcon.Warning);
@@ -132,3 +133,4 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
+
