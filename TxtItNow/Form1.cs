@@ -94,6 +94,15 @@ public partial class Form1 : Form
         Close();
     }
 
+    private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (!ConfirmDiscardUnsavedChanges())
+        {
+            e.Cancel = true;
+        }
+    }
+
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;

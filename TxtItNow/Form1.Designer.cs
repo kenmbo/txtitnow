@@ -117,6 +117,7 @@ partial class Form1
         Controls.Add(mainMenuStrip);
         MainMenuStrip = mainMenuStrip;
         Text = "TxtItNow";
+	FormClosing += Form1_FormClosing;
         ResumeLayout(false);
         PerformLayout();
     }

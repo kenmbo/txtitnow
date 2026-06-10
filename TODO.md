@@ -43,7 +43,7 @@
 - [x] Mark the document as clean after `Save As`
 - [x] Implement `File > Save` for files that already have a current file path
 - [x] Make `File > Save` fall back to `Save As` when no current file path exists
-- [ ] Prompt before application exit if there are unsaved changes
+- [x] Prompt before application exit if there are unsaved changes
 - [ ] Handle canceling an unsaved-changes prompt without losing editor content
 - [ ] Handle basic file read/write errors with a user-facing message box
 
