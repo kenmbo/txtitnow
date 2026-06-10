@@ -57,6 +57,7 @@ public partial class Form1 : Form
     {
         if (currentFilePath is null)
         {
+            SaveDocumentAs();
             return;
         }
 
@@ -66,6 +67,11 @@ public partial class Form1 : Form
 
     private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
     {
+        SaveDocumentAs();
+    }
+
+    private bool SaveDocumentAs()
+    {
         using SaveFileDialog saveFileDialog = new()
         {
             Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
@@ -74,12 +80,13 @@ public partial class Form1 : Form
 
         if (saveFileDialog.ShowDialog(this) != DialogResult.OK)
         {
-            return;
+            return false;
         }
 
         File.WriteAllText(saveFileDialog.FileName, editorTextBox.Text);
         SetCurrentFilePath(saveFileDialog.FileName);
-	MarkDocumentClean();
+        MarkDocumentClean();
+        return true;
     }
 
     private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -113,7 +120,7 @@ public partial class Form1 : Form
         }
 
         DialogResult result = MessageBox.Show(
-            "You have unsaved changes. Do you want to discard them?",
+            "You have unsaved changes. Do you wanna to discard them?",
             ApplicationName,
             MessageBoxButtons.OKCancel,
             MessageBoxIcon.Warning);
@@ -140,4 +147,3 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
-
