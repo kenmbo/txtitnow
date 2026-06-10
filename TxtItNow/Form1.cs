@@ -55,7 +55,13 @@ public partial class Form1 : Form
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        ShowNotImplementedMessage("Save");
+        if (currentFilePath is null)
+        {
+            return;
+        }
+
+        File.WriteAllText(currentFilePath, editorTextBox.Text);
+        MarkDocumentClean();
     }
 
     private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)

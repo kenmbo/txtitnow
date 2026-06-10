@@ -41,7 +41,7 @@
 - [x] Write editor contents to the selected file path
 - [x] Store the saved path as the current file path
 - [x] Mark the document as clean after `Save As`
-- [ ] Implement `File > Save` for files that already have a current file path
+- [x] Implement `File > Save` for files that already have a current file path
 - [ ] Make `File > Save` fall back to `Save As` when no current file path exists
 - [ ] Prompt before application exit if there are unsaved changes
 - [ ] Handle canceling an unsaved-changes prompt without losing editor content
