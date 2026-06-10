@@ -73,6 +73,7 @@ public partial class Form1 : Form
 
         File.WriteAllText(saveFileDialog.FileName, editorTextBox.Text);
         SetCurrentFilePath(saveFileDialog.FileName);
+	MarkDocumentClean();
     }
 
     private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
