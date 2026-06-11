@@ -78,6 +78,7 @@ partial class Form1
         // newToolStripMenuItem
         // 
         newToolStripMenuItem.Name = "newToolStripMenuItem";
+        newToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
         newToolStripMenuItem.Size = new Size(180, 22);
         newToolStripMenuItem.Text = "&New";
         newToolStripMenuItem.Click += NewToolStripMenuItem_Click;
