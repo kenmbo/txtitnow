@@ -157,6 +157,7 @@ partial class Form1
         // selectAllToolStripMenuItem
         // 
         selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+	selectAllToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
         selectAllToolStripMenuItem.Size = new Size(180, 22);
         selectAllToolStripMenuItem.Text = "Select &All";
         selectAllToolStripMenuItem.Click += SelectAllToolStripMenuItem_Click;
