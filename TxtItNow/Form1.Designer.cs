@@ -14,6 +14,7 @@ partial class Form1
     private ToolStripMenuItem saveToolStripMenuItem;
     private ToolStripMenuItem saveAsToolStripMenuItem;
     private ToolStripMenuItem exitToolStripMenuItem;
+    private ToolStripMenuItem editToolStripMenuItem;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -45,12 +46,13 @@ partial class Form1
         saveToolStripMenuItem = new ToolStripMenuItem();
         saveAsToolStripMenuItem = new ToolStripMenuItem();
         exitToolStripMenuItem = new ToolStripMenuItem();
+        editToolStripMenuItem = new ToolStripMenuItem();
         SuspendLayout();
         // 
         // mainMenuStrip
         // 
         mainMenuStrip.Dock = DockStyle.Top;
-        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
+        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem });
         mainMenuStrip.Location = new Point(0, 0);
         mainMenuStrip.Name = "mainMenuStrip";
         mainMenuStrip.Size = new Size(1000, 24);
@@ -68,28 +70,28 @@ partial class Form1
         newToolStripMenuItem.Name = "newToolStripMenuItem";
         newToolStripMenuItem.Size = new Size(180, 22);
         newToolStripMenuItem.Text = "&New";
-	newToolStripMenuItem.Click += NewToolStripMenuItem_Click;
+        newToolStripMenuItem.Click += NewToolStripMenuItem_Click;
         // 
         // openToolStripMenuItem
         // 
         openToolStripMenuItem.Name = "openToolStripMenuItem";
         openToolStripMenuItem.Size = new Size(180, 22);
         openToolStripMenuItem.Text = "&Open";
-	openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
+        openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
         // 
         // saveToolStripMenuItem
         // 
         saveToolStripMenuItem.Name = "saveToolStripMenuItem";
         saveToolStripMenuItem.Size = new Size(180, 22);
         saveToolStripMenuItem.Text = "&Save";
-	saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
+        saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
         // 
         // saveAsToolStripMenuItem
         // 
         saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
         saveAsToolStripMenuItem.Size = new Size(180, 22);
         saveAsToolStripMenuItem.Text = "Save &As";
-	saveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
+        saveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
         // 
         // exitToolStripMenuItem
         // 
@@ -97,6 +99,12 @@ partial class Form1
         exitToolStripMenuItem.Size = new Size(180, 22);
         exitToolStripMenuItem.Text = "E&xit";
         exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
+        // 
+        // editToolStripMenuItem
+        // 
+        editToolStripMenuItem.Name = "editToolStripMenuItem";
+        editToolStripMenuItem.Size = new Size(39, 20);
+        editToolStripMenuItem.Text = "&Edit";
         // 
         // editorTextBox
         // 
@@ -107,7 +115,7 @@ partial class Form1
         editorTextBox.Size = new Size(1000, 700);
         editorTextBox.TabIndex = 1;
         editorTextBox.WordWrap = true;
-	editorTextBox.TextChanged += EditorTextBox_TextChanged;
+        editorTextBox.TextChanged += EditorTextBox_TextChanged;
         // 
         // Form1
         // 
@@ -117,10 +125,11 @@ partial class Form1
         Controls.Add(mainMenuStrip);
         MainMenuStrip = mainMenuStrip;
         Text = "TxtItNow";
-	FormClosing += Form1_FormClosing;
+        FormClosing += Form1_FormClosing;
         ResumeLayout(false);
         PerformLayout();
     }
 
     #endregion
 }
+

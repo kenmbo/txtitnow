@@ -50,7 +50,7 @@
 
 ## Milestone 3: Editing features
 
-- [ ] Add an `Edit` menu
+- [x] Add an `Edit` menu
 - [ ] Add `Edit > Undo`
 - [ ] Wire `Edit > Undo` to the editor undo command
 - [ ] Add `Edit > Cut`
