@@ -59,8 +59,8 @@
 - [x] Wire `Edit > Copy` to the editor copy command
 - [x] Add `Edit > Paste`
 - [x] Wire `Edit > Paste` to the editor paste command
-- [ ] Add `Edit > Select All`
-- [ ] Wire `Edit > Select All` to select all editor text
+- [x] Add `Edit > Select All`
+- [x] Wire `Edit > Select All` to select all editor text
 - [ ] Add keyboard shortcut for `New`
 - [ ] Add keyboard shortcut for `Open`
 - [ ] Add keyboard shortcut for `Save`

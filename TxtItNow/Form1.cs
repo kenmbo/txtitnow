@@ -126,6 +126,11 @@ public partial class Form1 : Form
         editorTextBox.Paste();
     }
 
+    private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        editorTextBox.SelectAll();
+    }
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;
