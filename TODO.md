@@ -52,7 +52,7 @@
 
 - [x] Add an `Edit` menu
 - [x] Add `Edit > Undo`
-- [ ] Wire `Edit > Undo` to the editor undo command
+- [x] Wire `Edit > Undo` to the editor undo command
 - [ ] Add `Edit > Cut`
 - [ ] Wire `Edit > Cut` to the editor cut command
 - [ ] Add `Edit > Copy`

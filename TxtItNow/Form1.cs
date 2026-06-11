@@ -103,6 +103,14 @@ public partial class Form1 : Form
         }
     }
 
+    private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (editorTextBox.CanUndo)
+        {
+            editorTextBox.Undo();
+        }
+    }
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;

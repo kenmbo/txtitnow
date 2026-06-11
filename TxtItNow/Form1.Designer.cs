@@ -114,6 +114,7 @@ partial class Form1
         undoToolStripMenuItem.Name = "undoToolStripMenuItem";
         undoToolStripMenuItem.Size = new Size(180, 22);
         undoToolStripMenuItem.Text = "&Undo";
+        undoToolStripMenuItem.Click += UndoToolStripMenuItem_Click;
         // 
         // editorTextBox
         // 
