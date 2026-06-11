@@ -55,8 +55,8 @@
 - [x] Wire `Edit > Undo` to the editor undo command
 - [x] Add `Edit > Cut`
 - [x] Wire `Edit > Cut` to the editor cut command
-- [ ] Add `Edit > Copy`
-- [ ] Wire `Edit > Copy` to the editor copy command
+- [x] Add `Edit > Copy`
+- [x] Wire `Edit > Copy` to the editor copy command
 - [ ] Add `Edit > Paste`
 - [ ] Wire `Edit > Paste` to the editor paste command
 - [ ] Add `Edit > Select All`

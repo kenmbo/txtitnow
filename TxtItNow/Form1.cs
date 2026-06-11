@@ -116,6 +116,11 @@ public partial class Form1 : Form
         editorTextBox.Cut();
     }
 
+    private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        editorTextBox.Copy();
+    }
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;

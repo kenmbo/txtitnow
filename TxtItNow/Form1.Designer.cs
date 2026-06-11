@@ -17,6 +17,7 @@ partial class Form1
     private ToolStripMenuItem editToolStripMenuItem;
     private ToolStripMenuItem undoToolStripMenuItem;
     private ToolStripMenuItem cutToolStripMenuItem;
+    private ToolStripMenuItem copyToolStripMenuItem;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -51,6 +52,7 @@ partial class Form1
         editToolStripMenuItem = new ToolStripMenuItem();
         undoToolStripMenuItem = new ToolStripMenuItem();
         cutToolStripMenuItem = new ToolStripMenuItem();
+        copyToolStripMenuItem = new ToolStripMenuItem();
         SuspendLayout();
         // 
         // mainMenuStrip
@@ -106,7 +108,7 @@ partial class Form1
         // 
         // editToolStripMenuItem
         // 
-        editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { undoToolStripMenuItem, cutToolStripMenuItem });
+        editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { undoToolStripMenuItem, cutToolStripMenuItem, copyToolStripMenuItem });
         editToolStripMenuItem.Name = "editToolStripMenuItem";
         editToolStripMenuItem.Size = new Size(39, 20);
         editToolStripMenuItem.Text = "&Edit";
@@ -124,6 +126,13 @@ partial class Form1
         cutToolStripMenuItem.Size = new Size(180, 22);
         cutToolStripMenuItem.Text = "Cu&t";
         cutToolStripMenuItem.Click += CutToolStripMenuItem_Click;
+        // 
+        // copyToolStripMenuItem
+        // 
+        copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+        copyToolStripMenuItem.Size = new Size(180, 22);
+        copyToolStripMenuItem.Text = "&Copy";
+        copyToolStripMenuItem.Click += CopyToolStripMenuItem_Click;
         // 
         // editorTextBox
         // 
