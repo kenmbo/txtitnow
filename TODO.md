@@ -46,6 +46,7 @@
 - [x] Prompt before application exit if there are unsaved changes
 - [x] Handle canceling an unsaved-changes prompt without losing editor content
 - [x] Handle basic file read/write errors with a user-facing message box
+- [x] Create workflow to automate Windows build testing
 
 ## Milestone 3: Editing features
 
