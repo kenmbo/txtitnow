@@ -65,8 +65,8 @@
 - [x] Add keyboard shortcut for `Open`
 - [x] Add keyboard shortcut for `Save`
 - [x] Add keyboard shortcut for `Save As`
-- [ ] Add keyboard shortcut for `Exit`
-- [ ] Add keyboard shortcut for `Undo`
+- [x] Add keyboard shortcut for `Exit`
+- [x] Add keyboard shortcut for `Undo`
 - [ ] Add keyboard shortcuts for `Cut`, `Copy`, and `Paste`
 - [ ] Add keyboard shortcut for `Select All`
 - [ ] Enable or disable `Undo` based on whether undo is available

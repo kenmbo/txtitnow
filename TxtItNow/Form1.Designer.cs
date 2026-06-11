@@ -110,6 +110,7 @@ partial class Form1
         // exitToolStripMenuItem
         // 
         exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+        exitToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
         exitToolStripMenuItem.Size = new Size(180, 22);
         exitToolStripMenuItem.Text = "E&xit";
         exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
@@ -124,6 +125,7 @@ partial class Form1
         // undoToolStripMenuItem
         // 
         undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+        undoToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Z;
         undoToolStripMenuItem.Size = new Size(180, 22);
         undoToolStripMenuItem.Text = "&Undo";
         undoToolStripMenuItem.Click += UndoToolStripMenuItem_Click;
@@ -182,3 +184,4 @@ partial class Form1
 
     #endregion
 }
+
