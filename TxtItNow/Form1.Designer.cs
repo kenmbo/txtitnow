@@ -133,6 +133,7 @@ partial class Form1
         // cutToolStripMenuItem
         // 
         cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+        cutToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
         cutToolStripMenuItem.Size = new Size(180, 22);
         cutToolStripMenuItem.Text = "Cu&t";
         cutToolStripMenuItem.Click += CutToolStripMenuItem_Click;
@@ -140,6 +141,7 @@ partial class Form1
         // copyToolStripMenuItem
         // 
         copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+        copyToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
         copyToolStripMenuItem.Size = new Size(180, 22);
         copyToolStripMenuItem.Text = "&Copy";
         copyToolStripMenuItem.Click += CopyToolStripMenuItem_Click;
@@ -147,6 +149,7 @@ partial class Form1
         // pasteToolStripMenuItem
         // 
         pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+        pasteToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.V;
         pasteToolStripMenuItem.Size = new Size(180, 22);
         pasteToolStripMenuItem.Text = "&Paste";
         pasteToolStripMenuItem.Click += PasteToolStripMenuItem_Click;
@@ -184,4 +187,3 @@ partial class Form1
 
     #endregion
 }
-
