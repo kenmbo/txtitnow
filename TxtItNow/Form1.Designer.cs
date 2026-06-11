@@ -86,6 +86,7 @@ partial class Form1
         // openToolStripMenuItem
         // 
         openToolStripMenuItem.Name = "openToolStripMenuItem";
+        openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
         openToolStripMenuItem.Size = new Size(180, 22);
         openToolStripMenuItem.Text = "&Open";
         openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
@@ -93,6 +94,7 @@ partial class Form1
         // saveToolStripMenuItem
         // 
         saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+        saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
         saveToolStripMenuItem.Size = new Size(180, 22);
         saveToolStripMenuItem.Text = "&Save";
         saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
@@ -100,6 +102,7 @@ partial class Form1
         // saveAsToolStripMenuItem
         // 
         saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+        saveAsToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
         saveAsToolStripMenuItem.Size = new Size(180, 22);
         saveAsToolStripMenuItem.Text = "Save &As";
         saveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;

@@ -62,9 +62,9 @@
 - [x] Add `Edit > Select All`
 - [x] Wire `Edit > Select All` to select all editor text
 - [x] Add keyboard shortcut for `New`
-- [ ] Add keyboard shortcut for `Open`
-- [ ] Add keyboard shortcut for `Save`
-- [ ] Add keyboard shortcut for `Save As`
+- [x] Add keyboard shortcut for `Open`
+- [x] Add keyboard shortcut for `Save`
+- [x] Add keyboard shortcut for `Save As`
 - [ ] Add keyboard shortcut for `Exit`
 - [ ] Add keyboard shortcut for `Undo`
 - [ ] Add keyboard shortcuts for `Cut`, `Copy`, and `Paste`
