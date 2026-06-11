@@ -3,49 +3,50 @@
 
 ## Milestone 1: Basic editor window
 
-- [ ] Set the main form title to `TxtItNow`
-- [ ] Set a reasonable default main window size
-- [ ] Add a central multiline editor control
-- [ ] Make the editor fill the available client area
-- [ ] Enable vertical scrolling in the editor
-- [ ] Enable horizontal scrolling or word-wrap behavior explicitly
-- [ ] Add a menu bar
-- [ ] Add a `File` menu
-- [ ] Add `File > New`
-- [ ] Add `File > Open`
-- [ ] Add `File > Save`
-- [ ] Add `File > Save As`
-- [ ] Add `File > Exit`
-- [ ] Wire `File > Exit` to close the application
-- [ ] Add placeholder event handlers for File menu items that are not implemented yet
+- [x] Set the main form title to `TxtItNow`
+- [x] Set a reasonable default main window size
+- [x] Add a central multiline editor control
+- [x] Make the editor fill the available client area
+- [x] Enable vertical scrolling in the editor
+- [x] Enable horizontal scrolling or word-wrap behavior explicitly
+- [x] Add a menu bar
+- [x] Add a `File` menu
+- [x] Add `File > New`
+- [x] Add `File > Open`
+- [x] Add `File > Save`
+- [x] Add `File > Save As`
+- [x] Add `File > Exit`
+- [x] Wire `File > Exit` to close the application
+- [x] Add placeholder event handlers for File menu items that are not implemented yet
 
 ## Milestone 2: File state handling
 
-- [ ] Add a field/property for the current file path
-- [ ] Add a field/property for dirty/unsaved state
-- [ ] Mark the document as dirty when editor text changes
-- [ ] Mark the document as clean after a successful save
-- [ ] Update the window title to show the app name
-- [ ] Update the window title to show the current file name when a file is open
-- [ ] Update the window title to show an asterisk when the document has unsaved changes
-- [ ] Implement `File > New` to clear the editor
-- [ ] Reset the current file path when creating a new document
-- [ ] Reset dirty state after creating a new blank document
-- [ ] Prompt before `File > New` if there are unsaved changes
-- [ ] Implement `File > Open` with `OpenFileDialog`
-- [ ] Load selected file contents into the editor
-- [ ] Store the opened file path as the current file path
-- [ ] Mark the document as clean after opening a file
-- [ ] Prompt before `File > Open` if there are unsaved changes
-- [ ] Implement `File > Save As` with `SaveFileDialog`
-- [ ] Write editor contents to the selected file path
-- [ ] Store the saved path as the current file path
-- [ ] Mark the document as clean after `Save As`
-- [ ] Implement `File > Save` for files that already have a current file path
-- [ ] Make `File > Save` fall back to `Save As` when no current file path exists
-- [ ] Prompt before application exit if there are unsaved changes
-- [ ] Handle canceling an unsaved-changes prompt without losing editor content
-- [ ] Handle basic file read/write errors with a user-facing message box
+- [x] Add a field/property for the current file path
+- [x] Add a field/property for dirty/unsaved state
+- [x] Mark the document as dirty when editor text changes
+- [x] Mark the document as clean after a successful save
+- [x] Update the window title to show the app name
+- [x] Update the window title to show the current file name when a file is open
+- [x] Update the window title to show an asterisk when the document has unsaved changes
+- [x] Implement `File > New` to clear the editor
+- [x] Reset the current file path when creating a new document
+- [x] Reset dirty state after creating a new blank document
+- [x] Prompt before `File > New` if there are unsaved changes
+- [x] Implement `File > Open` with `OpenFileDialog`
+- [x] Load selected file contents into the editor
+- [x] Store the opened file path as the current file path
+- [x] Mark the document as clean after opening a file
+- [x] Prompt before `File > Open` if there are unsaved changes
+- [x] Implement `File > Save As` with `SaveFileDialog`
+- [x] Write editor contents to the selected file path
+- [x] Store the saved path as the current file path
+- [x] Mark the document as clean after `Save As`
+- [x] Implement `File > Save` for files that already have a current file path
+- [x] Make `File > Save` fall back to `Save As` when no current file path exists
+- [x] Prompt before application exit if there are unsaved changes
+- [x] Handle canceling an unsaved-changes prompt without losing editor content
+- [x] Handle basic file read/write errors with a user-facing message box
+- [x] Create workflow to automate Windows build testing
 
 ## Milestone 3: Editing features
 
