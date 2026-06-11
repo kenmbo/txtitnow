@@ -48,7 +48,12 @@ public partial class Form1 : Form
             return;
         }
 
-        editorTextBox.Text = File.ReadAllText(openFileDialog.FileName);
+        if (!TryReadFile(openFileDialog.FileName, out string fileContents))
+        {
+            return;
+        }
+
+        editorTextBox.Text = fileContents;
         SetCurrentFilePath(openFileDialog.FileName);
         MarkDocumentClean();
     }
@@ -61,8 +66,7 @@ public partial class Form1 : Form
             return;
         }
 
-        File.WriteAllText(currentFilePath, editorTextBox.Text);
-        MarkDocumentClean();
+        SaveDocumentToPath(currentFilePath);
     }
 
     private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,10 +87,7 @@ public partial class Form1 : Form
             return false;
         }
 
-        File.WriteAllText(saveFileDialog.FileName, editorTextBox.Text);
-        SetCurrentFilePath(saveFileDialog.FileName);
-        MarkDocumentClean();
-        return true;
+        return SaveDocumentToPath(saveFileDialog.FileName);
     }
 
     private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -101,7 +102,6 @@ public partial class Form1 : Form
             e.Cancel = true;
         }
     }
-
 
     private void MarkDocumentClean()
     {
@@ -121,6 +121,38 @@ public partial class Form1 : Form
         UpdateWindowTitle();
     }
 
+    private bool TryReadFile(string filePath, out string fileContents)
+    {
+        try
+        {
+            fileContents = File.ReadAllText(filePath);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            fileContents = string.Empty;
+            ShowFileError("open", filePath, ex);
+            return false;
+        }
+    }
+
+    private bool SaveDocumentToPath(string filePath)
+    {
+        try
+        {
+            File.WriteAllText(filePath, editorTextBox.Text);
+        }
+        catch (Exception ex)
+        {
+            ShowFileError("save", filePath, ex);
+            return false;
+        }
+
+        SetCurrentFilePath(filePath);
+        MarkDocumentClean();
+        return true;
+    }
+
     private bool ConfirmDiscardUnsavedChanges()
     {
         if (!isDocumentDirty)
@@ -129,7 +161,7 @@ public partial class Form1 : Form
         }
 
         DialogResult result = MessageBox.Show(
-            "You have unsaved changes. Do you wanna to discard them?",
+            "You have unsaved changes. Do you want to discard them?",
             ApplicationName,
             MessageBoxButtons.OKCancel,
             MessageBoxIcon.Warning);
@@ -144,6 +176,15 @@ public partial class Form1 : Form
             ApplicationName,
             MessageBoxButtons.OK,
             MessageBoxIcon.Information);
+    }
+
+    private void ShowFileError(string action, string filePath, Exception ex)
+    {
+        MessageBox.Show(
+            $"Could not {action} file:{Environment.NewLine}{filePath}{Environment.NewLine}{Environment.NewLine}{ex.Message}",
+            ApplicationName,
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error);
     }
 
     private void UpdateWindowTitle()

@@ -44,8 +44,8 @@
 - [x] Implement `File > Save` for files that already have a current file path
 - [x] Make `File > Save` fall back to `Save As` when no current file path exists
 - [x] Prompt before application exit if there are unsaved changes
-- [ ] Handle canceling an unsaved-changes prompt without losing editor content
-- [ ] Handle basic file read/write errors with a user-facing message box
+- [x] Handle canceling an unsaved-changes prompt without losing editor content
+- [x] Handle basic file read/write errors with a user-facing message box
 
 ## Milestone 3: Editing features
 
