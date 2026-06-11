@@ -53,8 +53,8 @@
 - [x] Add an `Edit` menu
 - [x] Add `Edit > Undo`
 - [x] Wire `Edit > Undo` to the editor undo command
-- [ ] Add `Edit > Cut`
-- [ ] Wire `Edit > Cut` to the editor cut command
+- [x] Add `Edit > Cut`
+- [x] Wire `Edit > Cut` to the editor cut command
 - [ ] Add `Edit > Copy`
 - [ ] Wire `Edit > Copy` to the editor copy command
 - [ ] Add `Edit > Paste`

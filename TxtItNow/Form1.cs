@@ -111,6 +111,11 @@ public partial class Form1 : Form
         }
     }
 
+    private void CutToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        editorTextBox.Cut();
+    }
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;
