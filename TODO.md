@@ -69,7 +69,7 @@
 - [x] Add keyboard shortcut for `Undo`
 - [x] Add keyboard shortcuts for `Cut`, `Copy`, and `Paste`
 - [x] Add keyboard shortcut for `Select All`
-- [ ] Enable or disable `Undo` based on whether undo is available
+- [x] Enable or disable `Undo` based on whether undo is available
 - [ ] Enable or disable `Cut` and `Copy` based on whether text is selected
 
 ## Milestone 4: Polish

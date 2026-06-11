@@ -121,9 +121,11 @@ partial class Form1
         editToolStripMenuItem.Name = "editToolStripMenuItem";
         editToolStripMenuItem.Size = new Size(39, 20);
         editToolStripMenuItem.Text = "&Edit";
+        editToolStripMenuItem.DropDownOpening += EditToolStripMenuItem_DropDownOpening;
         // 
         // undoToolStripMenuItem
         // 
+        undoToolStripMenuItem.Enabled = false;
         undoToolStripMenuItem.Name = "undoToolStripMenuItem";
         undoToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Z;
         undoToolStripMenuItem.Size = new Size(180, 22);
@@ -157,7 +159,7 @@ partial class Form1
         // selectAllToolStripMenuItem
         // 
         selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-	selectAllToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
+        selectAllToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
         selectAllToolStripMenuItem.Size = new Size(180, 22);
         selectAllToolStripMenuItem.Text = "Select &All";
         selectAllToolStripMenuItem.Click += SelectAllToolStripMenuItem_Click;
