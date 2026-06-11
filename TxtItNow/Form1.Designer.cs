@@ -15,6 +15,7 @@ partial class Form1
     private ToolStripMenuItem saveAsToolStripMenuItem;
     private ToolStripMenuItem exitToolStripMenuItem;
     private ToolStripMenuItem editToolStripMenuItem;
+    private ToolStripMenuItem undoToolStripMenuItem;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -47,6 +48,7 @@ partial class Form1
         saveAsToolStripMenuItem = new ToolStripMenuItem();
         exitToolStripMenuItem = new ToolStripMenuItem();
         editToolStripMenuItem = new ToolStripMenuItem();
+        undoToolStripMenuItem = new ToolStripMenuItem();
         SuspendLayout();
         // 
         // mainMenuStrip
@@ -102,9 +104,16 @@ partial class Form1
         // 
         // editToolStripMenuItem
         // 
+        editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { undoToolStripMenuItem });
         editToolStripMenuItem.Name = "editToolStripMenuItem";
         editToolStripMenuItem.Size = new Size(39, 20);
         editToolStripMenuItem.Text = "&Edit";
+        // 
+        // undoToolStripMenuItem
+        // 
+        undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+        undoToolStripMenuItem.Size = new Size(180, 22);
+        undoToolStripMenuItem.Text = "&Undo";
         // 
         // editorTextBox
         // 
@@ -132,4 +141,3 @@ partial class Form1
 
     #endregion
 }
-
