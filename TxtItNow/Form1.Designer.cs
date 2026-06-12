@@ -134,6 +134,7 @@ partial class Form1
         // 
         // cutToolStripMenuItem
         // 
+        cutToolStripMenuItem.Enabled = false;
         cutToolStripMenuItem.Name = "cutToolStripMenuItem";
         cutToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
         cutToolStripMenuItem.Size = new Size(180, 22);
@@ -142,6 +143,7 @@ partial class Form1
         // 
         // copyToolStripMenuItem
         // 
+        copyToolStripMenuItem.Enabled = false;
         copyToolStripMenuItem.Name = "copyToolStripMenuItem";
         copyToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
         copyToolStripMenuItem.Size = new Size(180, 22);
@@ -173,6 +175,8 @@ partial class Form1
         editorTextBox.Size = new Size(1000, 700);
         editorTextBox.TabIndex = 1;
         editorTextBox.WordWrap = true;
+        editorTextBox.KeyUp += EditorTextBox_KeyUp;
+        editorTextBox.MouseUp += EditorTextBox_MouseUp;
         editorTextBox.TextChanged += EditorTextBox_TextChanged;
         // 
         // Form1

@@ -19,6 +19,16 @@ public partial class Form1 : Form
         UpdateEditMenuItemStates();
     }
 
+    private void EditorTextBox_KeyUp(object sender, KeyEventArgs e)
+    {
+        UpdateEditMenuItemStates();
+    }
+
+    private void EditorTextBox_MouseUp(object sender, MouseEventArgs e)
+    {
+        UpdateEditMenuItemStates();
+    }
+
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (!ConfirmDiscardUnsavedChanges())
@@ -126,21 +136,25 @@ public partial class Form1 : Form
     private void CutToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.Cut();
+        UpdateEditMenuItemStates();
     }
 
     private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.Copy();
+        UpdateEditMenuItemStates();
     }
 
     private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.Paste();
+        UpdateEditMenuItemStates();
     }
 
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.SelectAll();
+        UpdateEditMenuItemStates();
     }
 
     private void MarkDocumentClean()
@@ -164,6 +178,9 @@ public partial class Form1 : Form
     private void UpdateEditMenuItemStates()
     {
         undoToolStripMenuItem.Enabled = editorTextBox.CanUndo;
+        bool hasSelection = editorTextBox.SelectionLength > 0;
+        cutToolStripMenuItem.Enabled = hasSelection;
+        copyToolStripMenuItem.Enabled = hasSelection;
     }
 
     private bool TryReadFile(string filePath, out string fileContents)
