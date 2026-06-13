@@ -6,11 +6,13 @@ public partial class Form1 : Form
 
     private string? currentFilePath;
     private bool isDocumentDirty;
+    private bool isWordWrapEnabled = true;
 
     public Form1()
     {
         InitializeComponent();
         SetCurrentFilePath(null);
+        ApplyWordWrapSetting();
         UpdateStatusBar();
     }
 
@@ -170,8 +172,8 @@ public partial class Form1 : Form
 
     private void WordWrapToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        editorTextBox.WordWrap = !editorTextBox.WordWrap;
-        wordWrapToolStripMenuItem.Checked = editorTextBox.WordWrap;
+        isWordWrapEnabled = !isWordWrapEnabled;
+        ApplyWordWrapSetting();
         UpdateStatusBar();
     }
 
@@ -199,6 +201,12 @@ public partial class Form1 : Form
         bool hasSelection = editorTextBox.SelectionLength > 0;
         cutToolStripMenuItem.Enabled = hasSelection;
         copyToolStripMenuItem.Enabled = hasSelection;
+    }
+
+    private void ApplyWordWrapSetting()
+    {
+        editorTextBox.WordWrap = isWordWrapEnabled;
+        wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
     }
 
     private void UpdateStatusBar()
