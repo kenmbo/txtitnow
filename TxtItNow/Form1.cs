@@ -24,11 +24,13 @@ public partial class Form1 : Form
     private void EditorTextBox_KeyUp(object sender, KeyEventArgs e)
     {
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void EditorTextBox_MouseUp(object sender, MouseEventArgs e)
     {
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -43,6 +45,7 @@ public partial class Form1 : Form
         SetCurrentFilePath(null);
         MarkDocumentClean();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -73,6 +76,7 @@ public partial class Form1 : Form
         SetCurrentFilePath(openFileDialog.FileName);
         MarkDocumentClean();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -128,6 +132,7 @@ public partial class Form1 : Form
         }
 
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void EditToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
@@ -139,24 +144,28 @@ public partial class Form1 : Form
     {
         editorTextBox.Cut();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.Copy();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.Paste();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.SelectAll();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void MarkDocumentClean()
