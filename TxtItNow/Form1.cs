@@ -168,6 +168,13 @@ public partial class Form1 : Form
         UpdateStatusBar();
     }
 
+    private void WordWrapToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        editorTextBox.WordWrap = !editorTextBox.WordWrap;
+        wordWrapToolStripMenuItem.Checked = editorTextBox.WordWrap;
+        UpdateStatusBar();
+    }
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;

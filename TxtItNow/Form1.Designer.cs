@@ -145,6 +145,7 @@ partial class Form1
         wordWrapToolStripMenuItem.Name = "wordWrapToolStripMenuItem";
         wordWrapToolStripMenuItem.Size = new Size(180, 22);
         wordWrapToolStripMenuItem.Text = "&Word Wrap";
+        wordWrapToolStripMenuItem.Click += WordWrapToolStripMenuItem_Click;
         // 
         // undoToolStripMenuItem
         // 
