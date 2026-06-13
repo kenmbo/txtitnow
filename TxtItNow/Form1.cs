@@ -11,12 +11,14 @@ public partial class Form1 : Form
     {
         InitializeComponent();
         SetCurrentFilePath(null);
+        UpdateStatusBar();
     }
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
     {
         MarkDocumentDirty();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void EditorTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -181,6 +183,16 @@ public partial class Form1 : Form
         bool hasSelection = editorTextBox.SelectionLength > 0;
         cutToolStripMenuItem.Enabled = hasSelection;
         copyToolStripMenuItem.Enabled = hasSelection;
+    }
+
+    private void UpdateStatusBar()
+    {
+        int currentLineIndex = editorTextBox.GetLineFromCharIndex(editorTextBox.SelectionStart);
+        int lineNumber = currentLineIndex + 1;
+        int lineStartIndex = editorTextBox.GetFirstCharIndexFromLine(currentLineIndex);
+        int columnNumber = editorTextBox.SelectionStart - lineStartIndex + 1;
+
+        editorStatusLabel.Text = $"Ln {lineNumber}, Col {columnNumber}";
     }
 
     private bool TryReadFile(string filePath, out string fileContents)

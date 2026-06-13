@@ -182,8 +182,8 @@ partial class Form1
         // editorStatusLabel
         // 
         editorStatusLabel.Name = "editorStatusLabel";
-        editorStatusLabel.Size = new Size(39, 17);
-        editorStatusLabel.Text = "Ready";
+        editorStatusLabel.Size = new Size(63, 17);
+        editorStatusLabel.Text = "Ln 1, Col 1";
         // 
         // editorTextBox
         // 
