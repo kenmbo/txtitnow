@@ -74,10 +74,10 @@
 
 ## Milestone 4: Polish
 
-- [ ] Add a status bar
-- [ ] Show current line number in the status bar
-- [ ] Show current column number in the status bar
-- [ ] Update line and column when the caret moves
+- [x] Add a status bar
+- [x] Show current line number in the status bar
+- [x] Show current column number in the status bar
+- [x] Update line and column when the caret moves
 - [ ] Add a `Format` menu
 - [ ] Add `Format > Word Wrap`
 - [ ] Wire `Word Wrap` to toggle editor wrapping
@@ -102,7 +102,44 @@
 - [ ] Add syntax coloring design notes
 - [ ] Choose a syntax-highlighting approach
 - [ ] Add syntax coloring for one language as a prototype
-- [ ] Add boolean option for dark mode into the menu
-- [ ] Implement dark mode
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
+
+### Dark mode
+
+- [ ] Add a `View` menu if one does not already exist
+- [ ] Add `View > Dark Mode`
+- [ ] Store the current theme mode in app state
+- [ ] Apply a dark color palette to the main form
+- [ ] Apply dark mode colors to the editor control
+- [ ] Apply dark mode colors to menus and status UI where practical
+- [ ] Toggle back to the default light theme
+- [ ] Update the `Dark Mode` menu item checked state when toggled
+- [ ] Preserve the dark mode setting during the app session
+- [ ] Add manual test notes for switching between light mode and dark mode
+
+### Tabs
+
+- [ ] Add a tab container to the main window
+- [ ] Move the editor control into the first tab
+- [ ] Create a document state model for each tab
+- [ ] Track file path separately for each tab
+- [ ] Track dirty/unsaved state separately for each tab
+- [ ] Update the active tab title to show the file name
+- [ ] Update the active tab title to show an unsaved-change marker
+- [ ] Add `File > New Tab`
+- [ ] Create a new blank editor tab from `File > New Tab`
+- [ ] Add a close button or close command for the active tab
+- [ ] Prompt to save when closing a dirty tab
+- [ ] Close only the selected tab when multiple tabs are open
+- [ ] Close the application when closing the only remaining tab
+- [ ] Prompt to save before closing the application if the only remaining tab has unsaved content
+- [ ] Update `File > Open` to load the selected file into the active tab
+- [ ] Update `File > Save` to save only the active tab
+- [ ] Update `File > Save As` to save only the active tab
+- [ ] Update the main window title based on the active tab
+- [ ] Update status bar information based on the active tab
+- [ ] Add keyboard shortcut for creating a new tab
+- [ ] Add keyboard shortcut for closing the active tab
+- [ ] Add keyboard shortcuts for switching between tabs
+- [ ] Add manual test notes for creating, saving, switching, and closing tabs
