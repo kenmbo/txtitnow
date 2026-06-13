@@ -15,6 +15,7 @@ partial class Form1
     private ToolStripMenuItem saveAsToolStripMenuItem;
     private ToolStripMenuItem exitToolStripMenuItem;
     private ToolStripMenuItem editToolStripMenuItem;
+    private ToolStripMenuItem formatToolStripMenuItem;
     private ToolStripMenuItem undoToolStripMenuItem;
     private ToolStripMenuItem cutToolStripMenuItem;
     private ToolStripMenuItem copyToolStripMenuItem;
@@ -54,6 +55,7 @@ partial class Form1
         saveAsToolStripMenuItem = new ToolStripMenuItem();
         exitToolStripMenuItem = new ToolStripMenuItem();
         editToolStripMenuItem = new ToolStripMenuItem();
+	formatToolStripMenuItem = new ToolStripMenuItem();
         undoToolStripMenuItem = new ToolStripMenuItem();
         cutToolStripMenuItem = new ToolStripMenuItem();
         copyToolStripMenuItem = new ToolStripMenuItem();
@@ -66,7 +68,7 @@ partial class Form1
         // mainMenuStrip
         // 
         mainMenuStrip.Dock = DockStyle.Top;
-        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem });
+        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, formatToolStripMenuItem });
         mainMenuStrip.Location = new Point(0, 0);
         mainMenuStrip.Name = "mainMenuStrip";
         mainMenuStrip.Size = new Size(1000, 24);
@@ -127,6 +129,12 @@ partial class Form1
         editToolStripMenuItem.Text = "&Edit";
         editToolStripMenuItem.DropDownOpening += EditToolStripMenuItem_DropDownOpening;
         // 
+	// formatToolStripMenuItem
+        //
+        formatToolStripMenuItem.Name = "formatToolStripMenuItem";
+        formatToolStripMenuItem.Size = new Size(57, 20);
+        formatToolStripMenuItem.Text = "F&ormat";
+        //
         // undoToolStripMenuItem
         // 
         undoToolStripMenuItem.Enabled = false;

@@ -78,7 +78,7 @@
 - [x] Show current line number in the status bar
 - [x] Show current column number in the status bar
 - [x] Update line and column when the caret moves
-- [ ] Add a `Format` menu
+- [x] Add a `Format` menu
 - [ ] Add `Format > Word Wrap`
 - [ ] Wire `Word Wrap` to toggle editor wrapping
 - [ ] Persist the current word-wrap setting during the app session
