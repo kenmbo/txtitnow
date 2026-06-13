@@ -20,6 +20,8 @@ partial class Form1
     private ToolStripMenuItem copyToolStripMenuItem;
     private ToolStripMenuItem pasteToolStripMenuItem;
     private ToolStripMenuItem selectAllToolStripMenuItem;
+    private StatusStrip editorStatusStrip;
+    private ToolStripStatusLabel editorStatusLabel;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -57,6 +59,8 @@ partial class Form1
         copyToolStripMenuItem = new ToolStripMenuItem();
         pasteToolStripMenuItem = new ToolStripMenuItem();
         selectAllToolStripMenuItem = new ToolStripMenuItem();
+        editorStatusStrip = new StatusStrip();
+        editorStatusLabel = new ToolStripStatusLabel();
         SuspendLayout();
         // 
         // mainMenuStrip
@@ -166,13 +170,28 @@ partial class Form1
         selectAllToolStripMenuItem.Text = "Select &All";
         selectAllToolStripMenuItem.Click += SelectAllToolStripMenuItem_Click;
         // 
+        // editorStatusStrip
+        // 
+        editorStatusStrip.Dock = DockStyle.Bottom;
+        editorStatusStrip.Items.AddRange(new ToolStripItem[] { editorStatusLabel });
+        editorStatusStrip.Location = new Point(0, 678);
+        editorStatusStrip.Name = "editorStatusStrip";
+        editorStatusStrip.Size = new Size(1000, 22);
+        editorStatusStrip.TabIndex = 2;
+        // 
+        // editorStatusLabel
+        // 
+        editorStatusLabel.Name = "editorStatusLabel";
+        editorStatusLabel.Size = new Size(39, 17);
+        editorStatusLabel.Text = "Ready";
+        // 
         // editorTextBox
         // 
         editorTextBox.Dock = DockStyle.Fill;
         editorTextBox.Multiline = true;
         editorTextBox.Name = "editorTextBox";
         editorTextBox.ScrollBars = ScrollBars.Vertical;
-        editorTextBox.Size = new Size(1000, 700);
+        editorTextBox.Size = new Size(1000, 654);
         editorTextBox.TabIndex = 1;
         editorTextBox.WordWrap = true;
         editorTextBox.KeyUp += EditorTextBox_KeyUp;
@@ -184,6 +203,7 @@ partial class Form1
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1000, 700);
         Controls.Add(editorTextBox);
+        Controls.Add(editorStatusStrip);
         Controls.Add(mainMenuStrip);
         MainMenuStrip = mainMenuStrip;
         Text = "TxtItNow";

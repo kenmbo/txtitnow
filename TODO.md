@@ -74,7 +74,7 @@
 
 ## Milestone 4: Polish
 
-- [ ] Add a status bar
+- [x] Add a status bar
 - [ ] Show current line number in the status bar
 - [ ] Show current column number in the status bar
 - [ ] Update line and column when the caret moves
