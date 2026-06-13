@@ -16,6 +16,7 @@ partial class Form1
     private ToolStripMenuItem exitToolStripMenuItem;
     private ToolStripMenuItem editToolStripMenuItem;
     private ToolStripMenuItem formatToolStripMenuItem;
+    private ToolStripMenuItem wordWrapToolStripMenuItem;
     private ToolStripMenuItem undoToolStripMenuItem;
     private ToolStripMenuItem cutToolStripMenuItem;
     private ToolStripMenuItem copyToolStripMenuItem;
@@ -55,7 +56,8 @@ partial class Form1
         saveAsToolStripMenuItem = new ToolStripMenuItem();
         exitToolStripMenuItem = new ToolStripMenuItem();
         editToolStripMenuItem = new ToolStripMenuItem();
-	formatToolStripMenuItem = new ToolStripMenuItem();
+        formatToolStripMenuItem = new ToolStripMenuItem();
+        wordWrapToolStripMenuItem = new ToolStripMenuItem();
         undoToolStripMenuItem = new ToolStripMenuItem();
         cutToolStripMenuItem = new ToolStripMenuItem();
         copyToolStripMenuItem = new ToolStripMenuItem();
@@ -129,12 +131,21 @@ partial class Form1
         editToolStripMenuItem.Text = "&Edit";
         editToolStripMenuItem.DropDownOpening += EditToolStripMenuItem_DropDownOpening;
         // 
-	// formatToolStripMenuItem
-        //
+        // formatToolStripMenuItem
+        // 
+        formatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wordWrapToolStripMenuItem });
         formatToolStripMenuItem.Name = "formatToolStripMenuItem";
         formatToolStripMenuItem.Size = new Size(57, 20);
         formatToolStripMenuItem.Text = "F&ormat";
-        //
+        // 
+        // wordWrapToolStripMenuItem
+        // 
+        wordWrapToolStripMenuItem.Checked = true;
+        wordWrapToolStripMenuItem.CheckState = CheckState.Checked;
+        wordWrapToolStripMenuItem.Name = "wordWrapToolStripMenuItem";
+        wordWrapToolStripMenuItem.Size = new Size(180, 22);
+        wordWrapToolStripMenuItem.Text = "&Word Wrap";
+        // 
         // undoToolStripMenuItem
         // 
         undoToolStripMenuItem.Enabled = false;

@@ -79,7 +79,7 @@
 - [x] Show current column number in the status bar
 - [x] Update line and column when the caret moves
 - [x] Add a `Format` menu
-- [ ] Add `Format > Word Wrap`
+- [x] Add `Format > Word Wrap`
 - [ ] Wire `Word Wrap` to toggle editor wrapping
 - [ ] Persist the current word-wrap setting during the app session
 - [ ] Add `Format > Font`
