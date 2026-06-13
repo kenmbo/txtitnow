@@ -16,17 +16,6 @@ public partial class Form1 : Form
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
     {
         MarkDocumentDirty();
-        UpdateEditMenuItemStates();
-    }
-
-    private void EditorTextBox_KeyUp(object sender, KeyEventArgs e)
-    {
-        UpdateEditMenuItemStates();
-    }
-
-    private void EditorTextBox_MouseUp(object sender, MouseEventArgs e)
-    {
-        UpdateEditMenuItemStates();
     }
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -37,10 +26,8 @@ public partial class Form1 : Form
         }
 
         editorTextBox.Clear();
-        editorTextBox.ClearUndo();
         SetCurrentFilePath(null);
         MarkDocumentClean();
-        UpdateEditMenuItemStates();
     }
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,10 +54,8 @@ public partial class Form1 : Form
         }
 
         editorTextBox.Text = fileContents;
-        editorTextBox.ClearUndo();
         SetCurrentFilePath(openFileDialog.FileName);
         MarkDocumentClean();
-        UpdateEditMenuItemStates();
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -118,45 +103,6 @@ public partial class Form1 : Form
         }
     }
 
-    private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        if (editorTextBox.CanUndo)
-        {
-            editorTextBox.Undo();
-        }
-
-        UpdateEditMenuItemStates();
-    }
-
-    private void EditToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-    {
-        UpdateEditMenuItemStates();
-    }
-
-    private void CutToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        editorTextBox.Cut();
-        UpdateEditMenuItemStates();
-    }
-
-    private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        editorTextBox.Copy();
-        UpdateEditMenuItemStates();
-    }
-
-    private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        editorTextBox.Paste();
-        UpdateEditMenuItemStates();
-    }
-
-    private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        editorTextBox.SelectAll();
-        UpdateEditMenuItemStates();
-    }
-
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;
@@ -173,14 +119,6 @@ public partial class Form1 : Form
     {
         currentFilePath = filePath;
         UpdateWindowTitle();
-    }
-
-    private void UpdateEditMenuItemStates()
-    {
-        undoToolStripMenuItem.Enabled = editorTextBox.CanUndo;
-        bool hasSelection = editorTextBox.SelectionLength > 0;
-        cutToolStripMenuItem.Enabled = hasSelection;
-        copyToolStripMenuItem.Enabled = hasSelection;
     }
 
     private bool TryReadFile(string filePath, out string fileContents)

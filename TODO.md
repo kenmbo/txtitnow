@@ -50,27 +50,27 @@
 
 ## Milestone 3: Editing features
 
-- [x] Add an `Edit` menu
-- [x] Add `Edit > Undo`
-- [x] Wire `Edit > Undo` to the editor undo command
-- [x] Add `Edit > Cut`
-- [x] Wire `Edit > Cut` to the editor cut command
-- [x] Add `Edit > Copy`
-- [x] Wire `Edit > Copy` to the editor copy command
-- [x] Add `Edit > Paste`
-- [x] Wire `Edit > Paste` to the editor paste command
-- [x] Add `Edit > Select All`
-- [x] Wire `Edit > Select All` to select all editor text
-- [x] Add keyboard shortcut for `New`
-- [x] Add keyboard shortcut for `Open`
-- [x] Add keyboard shortcut for `Save`
-- [x] Add keyboard shortcut for `Save As`
-- [x] Add keyboard shortcut for `Exit`
-- [x] Add keyboard shortcut for `Undo`
-- [x] Add keyboard shortcuts for `Cut`, `Copy`, and `Paste`
-- [x] Add keyboard shortcut for `Select All`
-- [x] Enable or disable `Undo` based on whether undo is available
-- [x] Enable or disable `Cut` and `Copy` based on whether text is selected
+- [ ] Add an `Edit` menu
+- [ ] Add `Edit > Undo`
+- [ ] Wire `Edit > Undo` to the editor undo command
+- [ ] Add `Edit > Cut`
+- [ ] Wire `Edit > Cut` to the editor cut command
+- [ ] Add `Edit > Copy`
+- [ ] Wire `Edit > Copy` to the editor copy command
+- [ ] Add `Edit > Paste`
+- [ ] Wire `Edit > Paste` to the editor paste command
+- [ ] Add `Edit > Select All`
+- [ ] Wire `Edit > Select All` to select all editor text
+- [ ] Add keyboard shortcut for `New`
+- [ ] Add keyboard shortcut for `Open`
+- [ ] Add keyboard shortcut for `Save`
+- [ ] Add keyboard shortcut for `Save As`
+- [ ] Add keyboard shortcut for `Exit`
+- [ ] Add keyboard shortcut for `Undo`
+- [ ] Add keyboard shortcuts for `Cut`, `Copy`, and `Paste`
+- [ ] Add keyboard shortcut for `Select All`
+- [ ] Enable or disable `Undo` based on whether undo is available
+- [ ] Enable or disable `Cut` and `Copy` based on whether text is selected
 
 ## Milestone 4: Polish
 
