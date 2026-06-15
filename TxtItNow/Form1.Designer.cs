@@ -17,6 +17,7 @@ partial class Form1
     private ToolStripMenuItem editToolStripMenuItem;
     private ToolStripMenuItem formatToolStripMenuItem;
     private ToolStripMenuItem wordWrapToolStripMenuItem;
+    private ToolStripMenuItem fontToolStripMenuItem;
     private ToolStripMenuItem undoToolStripMenuItem;
     private ToolStripMenuItem cutToolStripMenuItem;
     private ToolStripMenuItem copyToolStripMenuItem;
@@ -58,6 +59,7 @@ partial class Form1
         editToolStripMenuItem = new ToolStripMenuItem();
         formatToolStripMenuItem = new ToolStripMenuItem();
         wordWrapToolStripMenuItem = new ToolStripMenuItem();
+        fontToolStripMenuItem = new ToolStripMenuItem();
         undoToolStripMenuItem = new ToolStripMenuItem();
         cutToolStripMenuItem = new ToolStripMenuItem();
         copyToolStripMenuItem = new ToolStripMenuItem();
@@ -133,7 +135,7 @@ partial class Form1
         // 
         // formatToolStripMenuItem
         // 
-        formatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wordWrapToolStripMenuItem });
+        formatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wordWrapToolStripMenuItem, fontToolStripMenuItem });
         formatToolStripMenuItem.Name = "formatToolStripMenuItem";
         formatToolStripMenuItem.Size = new Size(57, 20);
         formatToolStripMenuItem.Text = "F&ormat";
@@ -146,6 +148,12 @@ partial class Form1
         wordWrapToolStripMenuItem.Size = new Size(180, 22);
         wordWrapToolStripMenuItem.Text = "&Word Wrap";
         wordWrapToolStripMenuItem.Click += WordWrapToolStripMenuItem_Click;
+        // 
+        // fontToolStripMenuItem
+        // 
+        fontToolStripMenuItem.Name = "fontToolStripMenuItem";
+        fontToolStripMenuItem.Size = new Size(180, 22);
+        fontToolStripMenuItem.Text = "&Font";
         // 
         // undoToolStripMenuItem
         // 

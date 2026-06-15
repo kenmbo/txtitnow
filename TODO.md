@@ -82,7 +82,7 @@
 - [x] Add `Format > Word Wrap`
 - [x] Wire `Word Wrap` to toggle editor wrapping
 - [x] Persist the current word-wrap setting during the app session
-- [ ] Add `Format > Font`
+- [x] Add `Format > Font`
 - [ ] Implement font selection with `FontDialog`
 - [ ] Apply the selected font to the editor
 - [ ] Add a basic application icon
