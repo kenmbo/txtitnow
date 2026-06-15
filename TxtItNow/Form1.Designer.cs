@@ -15,11 +15,15 @@ partial class Form1
     private ToolStripMenuItem saveAsToolStripMenuItem;
     private ToolStripMenuItem exitToolStripMenuItem;
     private ToolStripMenuItem editToolStripMenuItem;
+    private ToolStripMenuItem formatToolStripMenuItem;
+    private ToolStripMenuItem wordWrapToolStripMenuItem;
     private ToolStripMenuItem undoToolStripMenuItem;
     private ToolStripMenuItem cutToolStripMenuItem;
     private ToolStripMenuItem copyToolStripMenuItem;
     private ToolStripMenuItem pasteToolStripMenuItem;
     private ToolStripMenuItem selectAllToolStripMenuItem;
+    private StatusStrip editorStatusStrip;
+    private ToolStripStatusLabel editorStatusLabel;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -52,17 +56,21 @@ partial class Form1
         saveAsToolStripMenuItem = new ToolStripMenuItem();
         exitToolStripMenuItem = new ToolStripMenuItem();
         editToolStripMenuItem = new ToolStripMenuItem();
+        formatToolStripMenuItem = new ToolStripMenuItem();
+        wordWrapToolStripMenuItem = new ToolStripMenuItem();
         undoToolStripMenuItem = new ToolStripMenuItem();
         cutToolStripMenuItem = new ToolStripMenuItem();
         copyToolStripMenuItem = new ToolStripMenuItem();
         pasteToolStripMenuItem = new ToolStripMenuItem();
         selectAllToolStripMenuItem = new ToolStripMenuItem();
+        editorStatusStrip = new StatusStrip();
+        editorStatusLabel = new ToolStripStatusLabel();
         SuspendLayout();
         // 
         // mainMenuStrip
         // 
         mainMenuStrip.Dock = DockStyle.Top;
-        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem });
+        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, formatToolStripMenuItem });
         mainMenuStrip.Location = new Point(0, 0);
         mainMenuStrip.Name = "mainMenuStrip";
         mainMenuStrip.Size = new Size(1000, 24);
@@ -123,6 +131,22 @@ partial class Form1
         editToolStripMenuItem.Text = "&Edit";
         editToolStripMenuItem.DropDownOpening += EditToolStripMenuItem_DropDownOpening;
         // 
+        // formatToolStripMenuItem
+        // 
+        formatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wordWrapToolStripMenuItem });
+        formatToolStripMenuItem.Name = "formatToolStripMenuItem";
+        formatToolStripMenuItem.Size = new Size(57, 20);
+        formatToolStripMenuItem.Text = "F&ormat";
+        // 
+        // wordWrapToolStripMenuItem
+        // 
+        wordWrapToolStripMenuItem.Checked = true;
+        wordWrapToolStripMenuItem.CheckState = CheckState.Checked;
+        wordWrapToolStripMenuItem.Name = "wordWrapToolStripMenuItem";
+        wordWrapToolStripMenuItem.Size = new Size(180, 22);
+        wordWrapToolStripMenuItem.Text = "&Word Wrap";
+        wordWrapToolStripMenuItem.Click += WordWrapToolStripMenuItem_Click;
+        // 
         // undoToolStripMenuItem
         // 
         undoToolStripMenuItem.Enabled = false;
@@ -166,13 +190,28 @@ partial class Form1
         selectAllToolStripMenuItem.Text = "Select &All";
         selectAllToolStripMenuItem.Click += SelectAllToolStripMenuItem_Click;
         // 
+        // editorStatusStrip
+        // 
+        editorStatusStrip.Dock = DockStyle.Bottom;
+        editorStatusStrip.Items.AddRange(new ToolStripItem[] { editorStatusLabel });
+        editorStatusStrip.Location = new Point(0, 678);
+        editorStatusStrip.Name = "editorStatusStrip";
+        editorStatusStrip.Size = new Size(1000, 22);
+        editorStatusStrip.TabIndex = 2;
+        // 
+        // editorStatusLabel
+        // 
+        editorStatusLabel.Name = "editorStatusLabel";
+        editorStatusLabel.Size = new Size(63, 17);
+        editorStatusLabel.Text = "Ln 1, Col 1";
+        // 
         // editorTextBox
         // 
         editorTextBox.Dock = DockStyle.Fill;
         editorTextBox.Multiline = true;
         editorTextBox.Name = "editorTextBox";
         editorTextBox.ScrollBars = ScrollBars.Vertical;
-        editorTextBox.Size = new Size(1000, 700);
+        editorTextBox.Size = new Size(1000, 654);
         editorTextBox.TabIndex = 1;
         editorTextBox.WordWrap = true;
         editorTextBox.KeyUp += EditorTextBox_KeyUp;
@@ -184,6 +223,7 @@ partial class Form1
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1000, 700);
         Controls.Add(editorTextBox);
+        Controls.Add(editorStatusStrip);
         Controls.Add(mainMenuStrip);
         MainMenuStrip = mainMenuStrip;
         Text = "TxtItNow";

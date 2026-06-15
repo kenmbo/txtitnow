@@ -74,14 +74,14 @@
 
 ## Milestone 4: Polish
 
-- [ ] Add a status bar
-- [ ] Show current line number in the status bar
-- [ ] Show current column number in the status bar
-- [ ] Update line and column when the caret moves
-- [ ] Add a `Format` menu
-- [ ] Add `Format > Word Wrap`
-- [ ] Wire `Word Wrap` to toggle editor wrapping
-- [ ] Persist the current word-wrap setting during the app session
+- [x] Add a status bar
+- [x] Show current line number in the status bar
+- [x] Show current column number in the status bar
+- [x] Update line and column when the caret moves
+- [x] Add a `Format` menu
+- [x] Add `Format > Word Wrap`
+- [x] Wire `Word Wrap` to toggle editor wrapping
+- [x] Persist the current word-wrap setting during the app session
 - [ ] Add `Format > Font`
 - [ ] Implement font selection with `FontDialog`
 - [ ] Apply the selected font to the editor
@@ -102,8 +102,10 @@
 - [ ] Add syntax coloring design notes
 - [ ] Choose a syntax-highlighting approach
 - [ ] Add syntax coloring for one language as a prototype
+- [ ] Detect and indicate the language in the status bar checking the filename extension
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
+
 
 ### Dark mode
 

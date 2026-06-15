@@ -6,27 +6,33 @@ public partial class Form1 : Form
 
     private string? currentFilePath;
     private bool isDocumentDirty;
+    private bool isWordWrapEnabled = true;
 
     public Form1()
     {
         InitializeComponent();
         SetCurrentFilePath(null);
+        ApplyWordWrapSetting();
+        UpdateStatusBar();
     }
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
     {
         MarkDocumentDirty();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void EditorTextBox_KeyUp(object sender, KeyEventArgs e)
     {
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void EditorTextBox_MouseUp(object sender, MouseEventArgs e)
     {
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -41,6 +47,7 @@ public partial class Form1 : Form
         SetCurrentFilePath(null);
         MarkDocumentClean();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -71,6 +78,7 @@ public partial class Form1 : Form
         SetCurrentFilePath(openFileDialog.FileName);
         MarkDocumentClean();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -126,6 +134,7 @@ public partial class Form1 : Form
         }
 
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void EditToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
@@ -137,24 +146,35 @@ public partial class Form1 : Form
     {
         editorTextBox.Cut();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.Copy();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.Paste();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
     }
 
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.SelectAll();
         UpdateEditMenuItemStates();
+        UpdateStatusBar();
+    }
+
+    private void WordWrapToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        isWordWrapEnabled = !isWordWrapEnabled;
+        ApplyWordWrapSetting();
+        UpdateStatusBar();
     }
 
     private void MarkDocumentClean()
@@ -181,6 +201,22 @@ public partial class Form1 : Form
         bool hasSelection = editorTextBox.SelectionLength > 0;
         cutToolStripMenuItem.Enabled = hasSelection;
         copyToolStripMenuItem.Enabled = hasSelection;
+    }
+
+    private void ApplyWordWrapSetting()
+    {
+        editorTextBox.WordWrap = isWordWrapEnabled;
+        wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
+    }
+
+    private void UpdateStatusBar()
+    {
+        int currentLineIndex = editorTextBox.GetLineFromCharIndex(editorTextBox.SelectionStart);
+        int lineNumber = currentLineIndex + 1;
+        int lineStartIndex = editorTextBox.GetFirstCharIndexFromLine(currentLineIndex);
+        int columnNumber = editorTextBox.SelectionStart - lineStartIndex + 1;
+
+        editorStatusLabel.Text = $"Ln {lineNumber}, Col {columnNumber}";
     }
 
     private bool TryReadFile(string filePath, out string fileContents)
