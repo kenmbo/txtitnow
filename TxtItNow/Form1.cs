@@ -190,8 +190,11 @@ public partial class Form1 : Form
             return;
         }
 
-        selectedEditorFont?.Dispose();
+        Font? previousSelectedEditorFont = selectedEditorFont;
         selectedEditorFont = (Font)fontDialog.Font.Clone();
+        editorTextBox.Font = selectedEditorFont;
+        previousSelectedEditorFont?.Dispose();
+        UpdateStatusBar();
     }
 
     private void MarkDocumentClean()

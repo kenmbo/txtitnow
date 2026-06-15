@@ -84,7 +84,7 @@
 - [x] Persist the current word-wrap setting during the app session
 - [x] Add `Format > Font`
 - [x] Implement font selection with `FontDialog`
-- [ ] Apply the selected font to the editor
+- [x] Apply the selected font to the editor
 - [ ] Add a basic application icon
 - [ ] Set the form icon to the application icon
 - [ ] Set the executable icon to the application icon
