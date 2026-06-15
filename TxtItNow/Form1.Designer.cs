@@ -154,6 +154,7 @@ partial class Form1
         fontToolStripMenuItem.Name = "fontToolStripMenuItem";
         fontToolStripMenuItem.Size = new Size(180, 22);
         fontToolStripMenuItem.Text = "&Font";
+        fontToolStripMenuItem.Click += FontToolStripMenuItem_Click;
         // 
         // undoToolStripMenuItem
         // 

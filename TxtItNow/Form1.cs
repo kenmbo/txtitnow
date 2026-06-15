@@ -7,6 +7,7 @@ public partial class Form1 : Form
     private string? currentFilePath;
     private bool isDocumentDirty;
     private bool isWordWrapEnabled = true;
+    private Font? selectedEditorFont;
 
     public Form1()
     {
@@ -175,6 +176,22 @@ public partial class Form1 : Form
         isWordWrapEnabled = !isWordWrapEnabled;
         ApplyWordWrapSetting();
         UpdateStatusBar();
+    }
+
+    private void FontToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        using FontDialog fontDialog = new()
+        {
+            Font = selectedEditorFont ?? editorTextBox.Font
+        };
+
+        if (fontDialog.ShowDialog(this) != DialogResult.OK)
+        {
+            return;
+        }
+
+        selectedEditorFont?.Dispose();
+        selectedEditorFont = (Font)fontDialog.Font.Clone();
     }
 
     private void MarkDocumentClean()
