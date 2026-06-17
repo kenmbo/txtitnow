@@ -3,14 +3,17 @@ namespace TxtItNow;
 public partial class Form1 : Form
 {
     private const string ApplicationName = "TxtItNow";
+    private const string ApplicationIconResourceName = "TxtItNow.app.ico";
 
     private string? currentFilePath;
     private bool isDocumentDirty;
     private bool isWordWrapEnabled = true;
+    private Font? selectedEditorFont;
 
     public Form1()
     {
         InitializeComponent();
+        SetApplicationIcon();
         SetCurrentFilePath(null);
         ApplyWordWrapSetting();
         UpdateStatusBar();
@@ -177,6 +180,25 @@ public partial class Form1 : Form
         UpdateStatusBar();
     }
 
+    private void FontToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        using FontDialog fontDialog = new()
+        {
+            Font = selectedEditorFont ?? editorTextBox.Font
+        };
+
+        if (fontDialog.ShowDialog(this) != DialogResult.OK)
+        {
+            return;
+        }
+
+        Font? previousSelectedEditorFont = selectedEditorFont;
+        selectedEditorFont = (Font)fontDialog.Font.Clone();
+        editorTextBox.Font = selectedEditorFont;
+        previousSelectedEditorFont?.Dispose();
+        UpdateStatusBar();
+    }
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;
@@ -207,6 +229,19 @@ public partial class Form1 : Form
     {
         editorTextBox.WordWrap = isWordWrapEnabled;
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
+    }
+
+    private void SetApplicationIcon()
+    {
+        using Stream? iconStream = typeof(Form1).Assembly.GetManifestResourceStream(ApplicationIconResourceName);
+
+        if (iconStream is null)
+        {
+            return;
+        }
+
+        using Icon applicationIcon = new(iconStream);
+        Icon = (Icon)applicationIcon.Clone();
     }
 
     private void UpdateStatusBar()

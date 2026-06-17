@@ -82,12 +82,14 @@
 - [x] Add `Format > Word Wrap`
 - [x] Wire `Word Wrap` to toggle editor wrapping
 - [x] Persist the current word-wrap setting during the app session
-- [ ] Add `Format > Font`
-- [ ] Implement font selection with `FontDialog`
-- [ ] Apply the selected font to the editor
-- [ ] Add a basic application icon
-- [ ] Set the form icon to the application icon
+- [x] Add `Format > Font`
+- [x] Implement font selection with `FontDialog`
+- [x] Apply the selected font to the editor
+- [x] Add a basic application icon
+- [x] Set the form icon to the application icon
 - [ ] Set the executable icon to the application icon
+- [ ] Bug fix: Horizontal scroll-bar not visible on overflowed line, despite word wrap disabled
+- [ ] Bug fix: New lines from source isn't preserved when pasting, despite new lines being preserved when pasting in other text editors
 - [ ] Add an `About` dialog
 - [ ] Add basic manual test notes to the README
 
