@@ -85,7 +85,7 @@
 - [x] Add `Format > Font`
 - [x] Implement font selection with `FontDialog`
 - [x] Apply the selected font to the editor
-- [ ] Add a basic application icon
+- [x] Add a basic application icon
 - [ ] Set the form icon to the application icon
 - [ ] Set the executable icon to the application icon
 - [ ] Add an `About` dialog
