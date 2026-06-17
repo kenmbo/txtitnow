@@ -88,6 +88,8 @@
 - [x] Add a basic application icon
 - [ ] Set the form icon to the application icon
 - [ ] Set the executable icon to the application icon
+- [ ] Bug fix: Horizontal scrollbar not visible on overflowed line, despite word wrap disabled
+- [ ] Bug fix: New lines from source isn't preserved when pasting, despite new lines being preserved when pasting in other text editrors
 - [ ] Add an `About` dialog
 - [ ] Add basic manual test notes to the README
 
