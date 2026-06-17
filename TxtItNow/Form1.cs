@@ -228,6 +228,9 @@ public partial class Form1 : Form
     private void ApplyWordWrapSetting()
     {
         editorTextBox.WordWrap = isWordWrapEnabled;
+        editorTextBox.ScrollBars = isWordWrapEnabled
+            ? ScrollBars.Vertical
+            : ScrollBars.Both;
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
     }
 
