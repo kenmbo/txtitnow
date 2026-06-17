@@ -3,6 +3,7 @@ namespace TxtItNow;
 public partial class Form1 : Form
 {
     private const string ApplicationName = "TxtItNow";
+    private const string ApplicationIconResourceName = "TxtItNow.app.ico";
 
     private string? currentFilePath;
     private bool isDocumentDirty;
@@ -12,6 +13,7 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
+        SetApplicationIcon();
         SetCurrentFilePath(null);
         ApplyWordWrapSetting();
         UpdateStatusBar();
@@ -227,6 +229,19 @@ public partial class Form1 : Form
     {
         editorTextBox.WordWrap = isWordWrapEnabled;
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
+    }
+
+    private void SetApplicationIcon()
+    {
+        using Stream? iconStream = typeof(Form1).Assembly.GetManifestResourceStream(ApplicationIconResourceName);
+
+        if (iconStream is null)
+        {
+            return;
+        }
+
+        using Icon applicationIcon = new(iconStream);
+        Icon = (Icon)applicationIcon.Clone();
     }
 
     private void UpdateStatusBar()
