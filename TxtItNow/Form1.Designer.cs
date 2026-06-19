@@ -224,6 +224,7 @@ partial class Form1
         editorTextBox.Size = new Size(1000, 654);
         editorTextBox.TabIndex = 1;
         editorTextBox.WordWrap = true;
+        editorTextBox.KeyDown += EditorTextBox_KeyDown;
         editorTextBox.KeyUp += EditorTextBox_KeyUp;
         editorTextBox.MouseUp += EditorTextBox_MouseUp;
         editorTextBox.TextChanged += EditorTextBox_TextChanged;
