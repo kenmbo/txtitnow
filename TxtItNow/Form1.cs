@@ -173,6 +173,11 @@ public partial class Form1 : Form
         PasteClipboardText();
     }
 
+    private void FindToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        ShowNotImplementedMessage("Find");
+    }
+
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.SelectAll();

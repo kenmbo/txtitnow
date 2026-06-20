@@ -92,10 +92,11 @@
 - [x] Bug fix: New lines from source isn't preserved when pasting, despite new lines being preserved when pasting in other text editors
 - [x] Add an `About` dialog
 - [ ] Add basic manual test notes to the README
+- [ ] Github: Release 1.0
 
 ## Future
 
-- [ ] Add `Edit > Find`
+- [x] Add `Edit > Find`
 - [ ] Implement basic find-in-document behavior
 - [ ] Add `Edit > Replace`
 - [ ] Implement basic replace behavior
