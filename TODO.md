@@ -97,7 +97,7 @@
 ## Future
 
 - [x] Add `Edit > Find`
-- [ ] Implement basic find-in-document behavior
+- [x] Implement basic find-in-document behavior
 - [ ] Add `Edit > Replace`
 - [ ] Implement basic replace behavior
 - [ ] Add a recent files list

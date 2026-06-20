@@ -9,6 +9,7 @@ public partial class Form1 : Form
     private bool isDocumentDirty;
     private bool isWordWrapEnabled = true;
     private Font? selectedEditorFont;
+    private string lastFindText = string.Empty;
 
     public Form1()
     {
@@ -175,7 +176,15 @@ public partial class Form1 : Form
 
     private void FindToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        ShowNotImplementedMessage("Find");
+        using FindDialog findDialog = new(lastFindText);
+
+        if (findDialog.ShowDialog(this) != DialogResult.OK)
+        {
+            return;
+        }
+
+        lastFindText = findDialog.SearchText;
+        FindInDocument(lastFindText);
     }
 
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -265,6 +274,46 @@ public partial class Form1 : Form
 
         string clipboardText = Clipboard.GetText(TextDataFormat.UnicodeText);
         editorTextBox.SelectedText = NormalizeLineEndings(clipboardText);
+        UpdateEditMenuItemStates();
+        UpdateStatusBar();
+    }
+
+    private void FindInDocument(string searchText)
+    {
+        if (string.IsNullOrEmpty(searchText))
+        {
+            MessageBox.Show(
+                this,
+                "Enter text to find.",
+                ApplicationName,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            return;
+        }
+
+        string editorText = editorTextBox.Text;
+        int startIndex = editorTextBox.SelectionStart + editorTextBox.SelectionLength;
+        int matchIndex = editorText.IndexOf(searchText, startIndex, StringComparison.CurrentCultureIgnoreCase);
+
+        if (matchIndex == -1 && startIndex > 0)
+        {
+            matchIndex = editorText.IndexOf(searchText, 0, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        if (matchIndex == -1)
+        {
+            MessageBox.Show(
+                this,
+                $"Cannot find \"{searchText}\".",
+                ApplicationName,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            return;
+        }
+
+        editorTextBox.Focus();
+        editorTextBox.Select(matchIndex, searchText.Length);
+        editorTextBox.ScrollToCaret();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
     }
