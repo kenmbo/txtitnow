@@ -206,6 +206,16 @@ public partial class Form1 : Form
         UpdateStatusBar();
     }
 
+    private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        MessageBox.Show(
+            this,
+            $"{ApplicationName}{Environment.NewLine}Version 1.0{Environment.NewLine}{Environment.NewLine}A small Notepad-like text editor built with C# and WinForms.",
+            $"About {ApplicationName}",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information);
+    }
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;

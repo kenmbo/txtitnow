@@ -18,6 +18,8 @@ partial class Form1
     private ToolStripMenuItem formatToolStripMenuItem;
     private ToolStripMenuItem wordWrapToolStripMenuItem;
     private ToolStripMenuItem fontToolStripMenuItem;
+    private ToolStripMenuItem helpToolStripMenuItem;
+    private ToolStripMenuItem aboutToolStripMenuItem;
     private ToolStripMenuItem undoToolStripMenuItem;
     private ToolStripMenuItem cutToolStripMenuItem;
     private ToolStripMenuItem copyToolStripMenuItem;
@@ -61,6 +63,8 @@ partial class Form1
         formatToolStripMenuItem = new ToolStripMenuItem();
         wordWrapToolStripMenuItem = new ToolStripMenuItem();
         fontToolStripMenuItem = new ToolStripMenuItem();
+        helpToolStripMenuItem = new ToolStripMenuItem();
+        aboutToolStripMenuItem = new ToolStripMenuItem();
         undoToolStripMenuItem = new ToolStripMenuItem();
         cutToolStripMenuItem = new ToolStripMenuItem();
         copyToolStripMenuItem = new ToolStripMenuItem();
@@ -73,7 +77,7 @@ partial class Form1
         // mainMenuStrip
         // 
         mainMenuStrip.Dock = DockStyle.Top;
-        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, formatToolStripMenuItem });
+        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, formatToolStripMenuItem, helpToolStripMenuItem });
         mainMenuStrip.Location = new Point(0, 0);
         mainMenuStrip.Name = "mainMenuStrip";
         mainMenuStrip.Size = new Size(1000, 24);
@@ -156,6 +160,20 @@ partial class Form1
         fontToolStripMenuItem.Size = new Size(180, 22);
         fontToolStripMenuItem.Text = "&Font";
         fontToolStripMenuItem.Click += FontToolStripMenuItem_Click;
+        // 
+        // helpToolStripMenuItem
+        // 
+        helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
+        helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+        helpToolStripMenuItem.Size = new Size(44, 20);
+        helpToolStripMenuItem.Text = "&Help";
+        // 
+        // aboutToolStripMenuItem
+        // 
+        aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+        aboutToolStripMenuItem.Size = new Size(180, 22);
+        aboutToolStripMenuItem.Text = "&About TxtItNow";
+        aboutToolStripMenuItem.Click += AboutToolStripMenuItem_Click;
         // 
         // undoToolStripMenuItem
         // 
