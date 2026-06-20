@@ -87,11 +87,12 @@
 - [x] Apply the selected font to the editor
 - [x] Add a basic application icon
 - [x] Set the form icon to the application icon
-- [ ] Set the executable icon to the application icon
-- [ ] Bug fix: Horizontal scroll-bar not visible on overflowed line, despite word wrap disabled
-- [ ] Bug fix: New lines from source isn't preserved when pasting, despite new lines being preserved when pasting in other text editors
-- [ ] Add an `About` dialog
+- [x] Set the executable icon to the application icon
+- [x] Bug fix: Horizontal scroll-bar not visible on overflowed line, despite word wrap disabled
+- [x] Bug fix: New lines from source isn't preserved when pasting, despite new lines being preserved when pasting in other text editors
+- [x] Add an `About` dialog
 - [ ] Add basic manual test notes to the README
+- [ ] (Github) Release 1.0
 
 ## Future
 

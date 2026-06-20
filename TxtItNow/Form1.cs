@@ -32,6 +32,15 @@ public partial class Form1 : Form
         UpdateStatusBar();
     }
 
+    private void EditorTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if ((e.Control && e.KeyCode == Keys.V) || (e.Shift && e.KeyCode == Keys.Insert))
+        {
+            PasteClipboardText();
+            e.SuppressKeyPress = true;
+        }
+    }
+
     private void EditorTextBox_MouseUp(object sender, MouseEventArgs e)
     {
         UpdateEditMenuItemStates();
@@ -161,9 +170,7 @@ public partial class Form1 : Form
 
     private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        editorTextBox.Paste();
-        UpdateEditMenuItemStates();
-        UpdateStatusBar();
+        PasteClipboardText();
     }
 
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -199,6 +206,16 @@ public partial class Form1 : Form
         UpdateStatusBar();
     }
 
+    private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        MessageBox.Show(
+            this,
+            $"{ApplicationName}{Environment.NewLine}Version 1.0{Environment.NewLine}{Environment.NewLine}A small Notepad-like text editor built with C# and WinForms.",
+            $"About {ApplicationName}",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information);
+    }
+
     private void MarkDocumentClean()
     {
         isDocumentDirty = false;
@@ -228,7 +245,31 @@ public partial class Form1 : Form
     private void ApplyWordWrapSetting()
     {
         editorTextBox.WordWrap = isWordWrapEnabled;
+        editorTextBox.ScrollBars = isWordWrapEnabled
+            ? ScrollBars.Vertical
+            : ScrollBars.Both;
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
+    }
+
+    private void PasteClipboardText()
+    {
+        if (!Clipboard.ContainsText(TextDataFormat.UnicodeText))
+        {
+            return;
+        }
+
+        string clipboardText = Clipboard.GetText(TextDataFormat.UnicodeText);
+        editorTextBox.SelectedText = NormalizeLineEndings(clipboardText);
+        UpdateEditMenuItemStates();
+        UpdateStatusBar();
+    }
+
+    private static string NormalizeLineEndings(string text)
+    {
+        return text
+            .Replace("\r\n", "\n")
+            .Replace("\r", "\n")
+            .Replace("\n", Environment.NewLine);
     }
 
     private void SetApplicationIcon()
