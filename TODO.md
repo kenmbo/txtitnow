@@ -108,6 +108,7 @@
 - [ ] Detect and indicate the language in the status bar checking the filename extension
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
+- [ ] Add version number to the about to the `About` dialog
 
 
 ### Dark mode
