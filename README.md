@@ -1,6 +1,6 @@
 # TxtItNow
 
-MyNotepad is a small Windows Notepad-like text editor built with C#, .NET 10, and WinForms.
+TxtItNow is a small Windows Notepad-like text editor built with C#, .NET 10, and WinForms.
 
 ## Installation
 
