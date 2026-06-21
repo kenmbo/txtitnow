@@ -98,7 +98,7 @@
 
 - [x] Add `Edit > Find`
 - [x] Implement basic find-in-document behavior
-- [ ] Add `Edit > Replace`
+- [x] Add `Edit > Replace`
 - [ ] Implement basic replace behavior
 - [ ] Add a recent files list
 - [ ] Persist recent files between app launches

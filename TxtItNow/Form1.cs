@@ -187,6 +187,11 @@ public partial class Form1 : Form
         FindInDocument(lastFindText);
     }
 
+    private void ReplaceToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        ShowNotImplementedMessage("Replace");
+    }
+
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.SelectAll();
