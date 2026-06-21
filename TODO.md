@@ -101,13 +101,14 @@
 - [x] Add `Edit > Replace`
 - [x] Implement basic replace behavior
 - [ ] Add a recent files list
-- [ ] Persist recent files between app launches
+- [ ] Implement recent files list for current session
 - [ ] Add syntax coloring design notes
 - [ ] Choose a syntax-highlighting approach
 - [ ] Add syntax coloring for one language as a prototype
 - [ ] Detect and indicate the language in the status bar checking the filename extension
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
+- [ ] Persist recent files between app launches
 - [ ] Add version number to the about to the `About` dialog
 
 
