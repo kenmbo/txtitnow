@@ -91,7 +91,7 @@
 - [x] Bug fix: Horizontal scroll-bar not visible on overflowed line, despite word wrap disabled
 - [x] Bug fix: New lines from source isn't preserved when pasting, despite new lines being preserved when pasting in other text editors
 - [x] Add an `About` dialog
-- [ ] Add basic manual test notes to the README
+- [x] Add basic manual test notes to the README
 - [ ] Github: Release 1.0
 
 ## Future
@@ -100,10 +100,11 @@
 - [x] Implement basic find-in-document behavior
 - [x] Add `Edit > Replace`
 - [x] Implement basic replace behavior
-- [ ] Add a recent files list
-- [ ] Persist recent files between app launches
+- [x] Add a recent files list
 - [ ] Add syntax coloring design notes
 - [ ] Choose a syntax-highlighting approach
 - [ ] Add syntax coloring for one language as a prototype
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
+- [ ] Persist recent files between app launches
+- [ ] Add version number to the about to the `About` dialog

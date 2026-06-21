@@ -11,6 +11,8 @@ partial class Form1
     private ToolStripMenuItem fileToolStripMenuItem;
     private ToolStripMenuItem newToolStripMenuItem;
     private ToolStripMenuItem openToolStripMenuItem;
+    private ToolStripMenuItem recentFilesToolStripMenuItem;
+    private ToolStripMenuItem noRecentFilesToolStripMenuItem;
     private ToolStripMenuItem saveToolStripMenuItem;
     private ToolStripMenuItem saveAsToolStripMenuItem;
     private ToolStripMenuItem exitToolStripMenuItem;
@@ -58,6 +60,8 @@ partial class Form1
         fileToolStripMenuItem = new ToolStripMenuItem();
         newToolStripMenuItem = new ToolStripMenuItem();
         openToolStripMenuItem = new ToolStripMenuItem();
+        recentFilesToolStripMenuItem = new ToolStripMenuItem();
+        noRecentFilesToolStripMenuItem = new ToolStripMenuItem();
         saveToolStripMenuItem = new ToolStripMenuItem();
         saveAsToolStripMenuItem = new ToolStripMenuItem();
         exitToolStripMenuItem = new ToolStripMenuItem();
@@ -89,7 +93,7 @@ partial class Form1
         // 
         // fileToolStripMenuItem
         // 
-        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, exitToolStripMenuItem });
+        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, recentFilesToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, exitToolStripMenuItem });
         fileToolStripMenuItem.Name = "fileToolStripMenuItem";
         fileToolStripMenuItem.Size = new Size(37, 20);
         fileToolStripMenuItem.Text = "&File";
@@ -109,6 +113,20 @@ partial class Form1
         openToolStripMenuItem.Size = new Size(180, 22);
         openToolStripMenuItem.Text = "&Open";
         openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
+        // 
+        // recentFilesToolStripMenuItem
+        // 
+        recentFilesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { noRecentFilesToolStripMenuItem });
+        recentFilesToolStripMenuItem.Name = "recentFilesToolStripMenuItem";
+        recentFilesToolStripMenuItem.Size = new Size(180, 22);
+        recentFilesToolStripMenuItem.Text = "&Recent Files";
+        // 
+        // noRecentFilesToolStripMenuItem
+        // 
+        noRecentFilesToolStripMenuItem.Enabled = false;
+        noRecentFilesToolStripMenuItem.Name = "noRecentFilesToolStripMenuItem";
+        noRecentFilesToolStripMenuItem.Size = new Size(180, 22);
+        noRecentFilesToolStripMenuItem.Text = "(No recent files)";
         // 
         // saveToolStripMenuItem
         // 
