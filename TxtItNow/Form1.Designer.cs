@@ -24,6 +24,8 @@ partial class Form1
     private ToolStripMenuItem cutToolStripMenuItem;
     private ToolStripMenuItem copyToolStripMenuItem;
     private ToolStripMenuItem pasteToolStripMenuItem;
+    private ToolStripMenuItem findToolStripMenuItem;
+    private ToolStripMenuItem replaceToolStripMenuItem;
     private ToolStripMenuItem selectAllToolStripMenuItem;
     private StatusStrip editorStatusStrip;
     private ToolStripStatusLabel editorStatusLabel;
@@ -69,6 +71,8 @@ partial class Form1
         cutToolStripMenuItem = new ToolStripMenuItem();
         copyToolStripMenuItem = new ToolStripMenuItem();
         pasteToolStripMenuItem = new ToolStripMenuItem();
+        findToolStripMenuItem = new ToolStripMenuItem();
+        replaceToolStripMenuItem = new ToolStripMenuItem();
         selectAllToolStripMenuItem = new ToolStripMenuItem();
         editorStatusStrip = new StatusStrip();
         editorStatusLabel = new ToolStripStatusLabel();
@@ -132,7 +136,7 @@ partial class Form1
         // 
         // editToolStripMenuItem
         // 
-        editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { undoToolStripMenuItem, cutToolStripMenuItem, copyToolStripMenuItem, pasteToolStripMenuItem, selectAllToolStripMenuItem });
+        editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { undoToolStripMenuItem, cutToolStripMenuItem, copyToolStripMenuItem, pasteToolStripMenuItem, findToolStripMenuItem, replaceToolStripMenuItem, selectAllToolStripMenuItem });
         editToolStripMenuItem.Name = "editToolStripMenuItem";
         editToolStripMenuItem.Size = new Size(39, 20);
         editToolStripMenuItem.Text = "&Edit";
@@ -209,6 +213,22 @@ partial class Form1
         pasteToolStripMenuItem.Size = new Size(180, 22);
         pasteToolStripMenuItem.Text = "&Paste";
         pasteToolStripMenuItem.Click += PasteToolStripMenuItem_Click;
+        // 
+        // findToolStripMenuItem
+        // 
+        findToolStripMenuItem.Name = "findToolStripMenuItem";
+        findToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.F;
+        findToolStripMenuItem.Size = new Size(180, 22);
+        findToolStripMenuItem.Text = "&Find";
+        findToolStripMenuItem.Click += FindToolStripMenuItem_Click;
+        // 
+        // replaceToolStripMenuItem
+        // 
+        replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
+        replaceToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.H;
+        replaceToolStripMenuItem.Size = new Size(180, 22);
+        replaceToolStripMenuItem.Text = "&Replace";
+        replaceToolStripMenuItem.Click += ReplaceToolStripMenuItem_Click;
         // 
         // selectAllToolStripMenuItem
         // 
