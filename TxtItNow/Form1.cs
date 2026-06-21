@@ -10,6 +10,7 @@ public partial class Form1 : Form
     private bool isWordWrapEnabled = true;
     private Font? selectedEditorFont;
     private string lastFindText = string.Empty;
+    private string lastReplaceText = string.Empty;
 
     public Form1()
     {
@@ -184,12 +185,21 @@ public partial class Form1 : Form
         }
 
         lastFindText = findDialog.SearchText;
-        FindInDocument(lastFindText);
+        TryFindInDocument(lastFindText);
     }
 
     private void ReplaceToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        ShowNotImplementedMessage("Replace");
+        using ReplaceDialog replaceDialog = new(lastFindText, lastReplaceText);
+
+        if (replaceDialog.ShowDialog(this) != DialogResult.OK)
+        {
+            return;
+        }
+
+        lastFindText = replaceDialog.SearchText;
+        lastReplaceText = replaceDialog.ReplacementText;
+        ReplaceInDocument(lastFindText, lastReplaceText);
     }
 
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -283,7 +293,7 @@ public partial class Form1 : Form
         UpdateStatusBar();
     }
 
-    private void FindInDocument(string searchText)
+    private bool TryFindInDocument(string searchText)
     {
         if (string.IsNullOrEmpty(searchText))
         {
@@ -293,7 +303,7 @@ public partial class Form1 : Form
                 ApplicationName,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
-            return;
+            return false;
         }
 
         string editorText = editorTextBox.Text;
@@ -313,7 +323,7 @@ public partial class Form1 : Form
                 ApplicationName,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
-            return;
+            return false;
         }
 
         editorTextBox.Focus();
@@ -321,6 +331,28 @@ public partial class Form1 : Form
         editorTextBox.ScrollToCaret();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        return true;
+    }
+
+    private void ReplaceInDocument(string searchText, string replacementText)
+    {
+        if (!SelectionMatches(searchText) && !TryFindInDocument(searchText))
+        {
+            return;
+        }
+
+        int replacementStart = editorTextBox.SelectionStart;
+        editorTextBox.SelectedText = replacementText;
+        editorTextBox.Select(replacementStart, replacementText.Length);
+        editorTextBox.ScrollToCaret();
+        UpdateEditMenuItemStates();
+        UpdateStatusBar();
+    }
+
+    private bool SelectionMatches(string searchText)
+    {
+        return editorTextBox.SelectionLength == searchText.Length
+            && string.Equals(editorTextBox.SelectedText, searchText, StringComparison.CurrentCultureIgnoreCase);
     }
 
     private static string NormalizeLineEndings(string text)
