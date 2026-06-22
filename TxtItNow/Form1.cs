@@ -458,8 +458,10 @@ public partial class Form1 : Form
         int firstVisibleLineIndex = editorTextBox.GetLineFromCharIndex(firstVisibleCharIndex);
         int lastVisibleCharIndex = editorTextBox.GetCharIndexFromPosition(new Point(editorTextBox.ClientSize.Width - 1, editorTextBox.ClientSize.Height - 1));
         int lastVisibleLineIndex = Math.Max(firstVisibleLineIndex, editorTextBox.GetLineFromCharIndex(lastVisibleCharIndex));
+        int currentLineIndex = editorTextBox.GetLineFromCharIndex(editorTextBox.SelectionStart);
 
         using Brush textBrush = new SolidBrush(SystemColors.GrayText);
+        using Font currentLineFont = new(editorTextBox.Font, FontStyle.Bold);
 
         for (int lineIndex = firstVisibleLineIndex; lineIndex <= lastVisibleLineIndex; lineIndex++)
         {
@@ -472,10 +474,13 @@ public partial class Form1 : Form
 
             Point linePosition = editorTextBox.GetPositionFromCharIndex(lineStartIndex);
             string lineNumber = (lineIndex + 1).ToString();
-            Size lineNumberSize = TextRenderer.MeasureText(lineNumber, editorTextBox.Font);
+            Font lineNumberFont = lineIndex == currentLineIndex
+                ? currentLineFont
+                : editorTextBox.Font;
+            Size lineNumberSize = TextRenderer.MeasureText(lineNumber, lineNumberFont);
             float x = lineNumberGutterPanel.Width - lineNumberSize.Width - 8;
 
-            e.Graphics.DrawString(lineNumber, editorTextBox.Font, textBrush, x, linePosition.Y);
+            e.Graphics.DrawString(lineNumber, lineNumberFont, textBrush, x, linePosition.Y);
         }
     }
 
