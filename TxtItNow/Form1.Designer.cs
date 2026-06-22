@@ -6,7 +6,9 @@ partial class Form1
     ///  Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
-    private TextBox editorTextBox;
+    private EditorTextBox editorTextBox;
+    private Panel editorContainerPanel;
+    private Panel lineNumberGutterPanel;
     private MenuStrip mainMenuStrip;
     private ToolStripMenuItem fileToolStripMenuItem;
     private ToolStripMenuItem newToolStripMenuItem;
@@ -20,6 +22,8 @@ partial class Form1
     private ToolStripMenuItem formatToolStripMenuItem;
     private ToolStripMenuItem wordWrapToolStripMenuItem;
     private ToolStripMenuItem fontToolStripMenuItem;
+    private ToolStripMenuItem viewToolStripMenuItem;
+    private ToolStripMenuItem lineNumbersToolStripMenuItem;
     private ToolStripMenuItem helpToolStripMenuItem;
     private ToolStripMenuItem aboutToolStripMenuItem;
     private ToolStripMenuItem undoToolStripMenuItem;
@@ -55,7 +59,9 @@ partial class Form1
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
-        editorTextBox = new TextBox();
+        editorTextBox = new EditorTextBox();
+        editorContainerPanel = new Panel();
+        lineNumberGutterPanel = new Panel();
         mainMenuStrip = new MenuStrip();
         fileToolStripMenuItem = new ToolStripMenuItem();
         newToolStripMenuItem = new ToolStripMenuItem();
@@ -69,6 +75,8 @@ partial class Form1
         formatToolStripMenuItem = new ToolStripMenuItem();
         wordWrapToolStripMenuItem = new ToolStripMenuItem();
         fontToolStripMenuItem = new ToolStripMenuItem();
+        viewToolStripMenuItem = new ToolStripMenuItem();
+        lineNumbersToolStripMenuItem = new ToolStripMenuItem();
         helpToolStripMenuItem = new ToolStripMenuItem();
         aboutToolStripMenuItem = new ToolStripMenuItem();
         undoToolStripMenuItem = new ToolStripMenuItem();
@@ -80,12 +88,13 @@ partial class Form1
         selectAllToolStripMenuItem = new ToolStripMenuItem();
         editorStatusStrip = new StatusStrip();
         editorStatusLabel = new ToolStripStatusLabel();
+        editorContainerPanel.SuspendLayout();
         SuspendLayout();
         // 
         // mainMenuStrip
         // 
         mainMenuStrip.Dock = DockStyle.Top;
-        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, formatToolStripMenuItem, helpToolStripMenuItem });
+        mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, formatToolStripMenuItem, viewToolStripMenuItem, helpToolStripMenuItem });
         mainMenuStrip.Location = new Point(0, 0);
         mainMenuStrip.Name = "mainMenuStrip";
         mainMenuStrip.Size = new Size(1000, 24);
@@ -183,6 +192,22 @@ partial class Form1
         fontToolStripMenuItem.Text = "&Font";
         fontToolStripMenuItem.Click += FontToolStripMenuItem_Click;
         // 
+        // viewToolStripMenuItem
+        // 
+        viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { lineNumbersToolStripMenuItem });
+        viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+        viewToolStripMenuItem.Size = new Size(44, 20);
+        viewToolStripMenuItem.Text = "&View";
+        // 
+        // lineNumbersToolStripMenuItem
+        // 
+        lineNumbersToolStripMenuItem.Checked = true;
+        lineNumbersToolStripMenuItem.CheckState = CheckState.Checked;
+        lineNumbersToolStripMenuItem.Name = "lineNumbersToolStripMenuItem";
+        lineNumbersToolStripMenuItem.Size = new Size(180, 22);
+        lineNumbersToolStripMenuItem.Text = "&Line Numbers";
+        lineNumbersToolStripMenuItem.Click += LineNumbersToolStripMenuItem_Click;
+        // 
         // helpToolStripMenuItem
         // 
         helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
@@ -271,30 +296,52 @@ partial class Form1
         editorStatusLabel.Size = new Size(63, 17);
         editorStatusLabel.Text = "Ln 1, Col 1";
         // 
+        // editorContainerPanel
+        // 
+        editorContainerPanel.Controls.Add(editorTextBox);
+        editorContainerPanel.Controls.Add(lineNumberGutterPanel);
+        editorContainerPanel.Dock = DockStyle.Fill;
+        editorContainerPanel.Location = new Point(0, 24);
+        editorContainerPanel.Name = "editorContainerPanel";
+        editorContainerPanel.Size = new Size(1000, 654);
+        editorContainerPanel.TabIndex = 1;
+        // 
+        // lineNumberGutterPanel
+        // 
+        lineNumberGutterPanel.BackColor = SystemColors.Control;
+        lineNumberGutterPanel.Dock = DockStyle.Left;
+        lineNumberGutterPanel.Name = "lineNumberGutterPanel";
+        lineNumberGutterPanel.Size = new Size(48, 654);
+        lineNumberGutterPanel.TabIndex = 0;
+        lineNumberGutterPanel.Paint += LineNumberGutterPanel_Paint;
+        // 
         // editorTextBox
         // 
         editorTextBox.Dock = DockStyle.Fill;
         editorTextBox.Multiline = true;
         editorTextBox.Name = "editorTextBox";
         editorTextBox.ScrollBars = ScrollBars.Vertical;
-        editorTextBox.Size = new Size(1000, 654);
+        editorTextBox.Size = new Size(952, 654);
         editorTextBox.TabIndex = 1;
         editorTextBox.WordWrap = true;
         editorTextBox.KeyDown += EditorTextBox_KeyDown;
         editorTextBox.KeyUp += EditorTextBox_KeyUp;
         editorTextBox.MouseUp += EditorTextBox_MouseUp;
         editorTextBox.TextChanged += EditorTextBox_TextChanged;
+        editorTextBox.ViewportChanged += EditorTextBox_ViewportChanged;
         // 
         // Form1
         // 
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1000, 700);
-        Controls.Add(editorTextBox);
+        Controls.Add(editorContainerPanel);
         Controls.Add(editorStatusStrip);
         Controls.Add(mainMenuStrip);
         MainMenuStrip = mainMenuStrip;
         Text = "TxtItNow";
         FormClosing += Form1_FormClosing;
+        editorContainerPanel.ResumeLayout(false);
+        editorContainerPanel.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }

@@ -9,6 +9,7 @@ public partial class Form1 : Form
     private string? currentFilePath;
     private bool isDocumentDirty;
     private bool isWordWrapEnabled = true;
+    private bool isLineNumbersEnabled = true;
     private Font? selectedEditorFont;
     private string lastFindText = string.Empty;
     private string lastReplaceText = string.Empty;
@@ -20,6 +21,7 @@ public partial class Form1 : Form
         SetApplicationIcon();
         SetCurrentFilePath(null);
         ApplyWordWrapSetting();
+        ApplyLineNumbersSetting();
         UpdateStatusBar();
         UpdateRecentFilesMenu();
     }
@@ -29,12 +31,14 @@ public partial class Form1 : Form
         MarkDocumentDirty();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private void EditorTextBox_KeyUp(object sender, KeyEventArgs e)
     {
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private void EditorTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -50,6 +54,12 @@ public partial class Form1 : Form
     {
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
+    }
+
+    private void EditorTextBox_ViewportChanged(object? sender, EventArgs e)
+    {
+        UpdateLineNumberGutter();
     }
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,6 +75,7 @@ public partial class Form1 : Form
         MarkDocumentClean();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -225,6 +236,13 @@ public partial class Form1 : Form
         isWordWrapEnabled = !isWordWrapEnabled;
         ApplyWordWrapSetting();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
+    }
+
+    private void LineNumbersToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        isLineNumbersEnabled = !isLineNumbersEnabled;
+        ApplyLineNumbersSetting();
     }
 
     private void FontToolStripMenuItem_Click(object sender, EventArgs e)
@@ -244,6 +262,7 @@ public partial class Form1 : Form
         editorTextBox.Font = selectedEditorFont;
         previousSelectedEditorFont?.Dispose();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -291,6 +310,13 @@ public partial class Form1 : Form
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
     }
 
+    private void ApplyLineNumbersSetting()
+    {
+        lineNumberGutterPanel.Visible = isLineNumbersEnabled;
+        lineNumbersToolStripMenuItem.Checked = isLineNumbersEnabled;
+        UpdateLineNumberGutter();
+    }
+
     private void PasteClipboardText()
     {
         if (!Clipboard.ContainsText(TextDataFormat.UnicodeText))
@@ -302,6 +328,7 @@ public partial class Form1 : Form
         editorTextBox.SelectedText = NormalizeLineEndings(clipboardText);
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private bool TryFindInDocument(string searchText)
@@ -342,6 +369,7 @@ public partial class Form1 : Form
         editorTextBox.ScrollToCaret();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
         return true;
     }
 
@@ -358,6 +386,7 @@ public partial class Form1 : Form
         editorTextBox.ScrollToCaret();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private bool SelectionMatches(string searchText)
@@ -397,6 +426,59 @@ public partial class Form1 : Form
         editorStatusLabel.Text = $"Ln {lineNumber}, Col {columnNumber}";
     }
 
+    private void UpdateLineNumberGutter()
+    {
+        if (!isLineNumbersEnabled)
+        {
+            return;
+        }
+
+        int lineCount = Math.Max(1, editorTextBox.Lines.Length);
+        int digitCount = lineCount.ToString().Length;
+        int gutterWidth = Math.Max(48, TextRenderer.MeasureText(new string('9', digitCount), editorTextBox.Font).Width + 20);
+
+        if (lineNumberGutterPanel.Width != gutterWidth)
+        {
+            lineNumberGutterPanel.Width = gutterWidth;
+        }
+
+        lineNumberGutterPanel.Invalidate();
+    }
+
+    private void LineNumberGutterPanel_Paint(object sender, PaintEventArgs e)
+    {
+        e.Graphics.Clear(SystemColors.Control);
+
+        if (!isLineNumbersEnabled)
+        {
+            return;
+        }
+
+        int firstVisibleCharIndex = editorTextBox.GetCharIndexFromPosition(new Point(0, 0));
+        int firstVisibleLineIndex = editorTextBox.GetLineFromCharIndex(firstVisibleCharIndex);
+        int lastVisibleCharIndex = editorTextBox.GetCharIndexFromPosition(new Point(editorTextBox.ClientSize.Width - 1, editorTextBox.ClientSize.Height - 1));
+        int lastVisibleLineIndex = Math.Max(firstVisibleLineIndex, editorTextBox.GetLineFromCharIndex(lastVisibleCharIndex));
+
+        using Brush textBrush = new SolidBrush(SystemColors.GrayText);
+
+        for (int lineIndex = firstVisibleLineIndex; lineIndex <= lastVisibleLineIndex; lineIndex++)
+        {
+            int lineStartIndex = editorTextBox.GetFirstCharIndexFromLine(lineIndex);
+
+            if (lineStartIndex < 0)
+            {
+                continue;
+            }
+
+            Point linePosition = editorTextBox.GetPositionFromCharIndex(lineStartIndex);
+            string lineNumber = (lineIndex + 1).ToString();
+            Size lineNumberSize = TextRenderer.MeasureText(lineNumber, editorTextBox.Font);
+            float x = lineNumberGutterPanel.Width - lineNumberSize.Width - 8;
+
+            e.Graphics.DrawString(lineNumber, editorTextBox.Font, textBrush, x, linePosition.Y);
+        }
+    }
+
     private bool OpenDocumentFromPath(string filePath)
     {
         if (!TryReadFile(filePath, out string fileContents))
@@ -411,6 +493,7 @@ public partial class Form1 : Form
         AddRecentFile(filePath);
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
         return true;
     }
 
