@@ -4,6 +4,7 @@ public partial class Form1 : Form
 {
     private const string ApplicationName = "TxtItNow";
     private const string ApplicationIconResourceName = "TxtItNow.app.ico";
+    private const int MaxRecentFiles = 5;
 
     private string? currentFilePath;
     private bool isDocumentDirty;
@@ -11,6 +12,7 @@ public partial class Form1 : Form
     private Font? selectedEditorFont;
     private string lastFindText = string.Empty;
     private string lastReplaceText = string.Empty;
+    private readonly List<string> recentFilePaths = new();
 
     public Form1()
     {
@@ -19,6 +21,7 @@ public partial class Form1 : Form
         SetCurrentFilePath(null);
         ApplyWordWrapSetting();
         UpdateStatusBar();
+        UpdateRecentFilesMenu();
     }
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
@@ -82,17 +85,7 @@ public partial class Form1 : Form
             return;
         }
 
-        if (!TryReadFile(openFileDialog.FileName, out string fileContents))
-        {
-            return;
-        }
-
-        editorTextBox.Text = fileContents;
-        editorTextBox.ClearUndo();
-        SetCurrentFilePath(openFileDialog.FileName);
-        MarkDocumentClean();
-        UpdateEditMenuItemStates();
-        UpdateStatusBar();
+        OpenDocumentFromPath(openFileDialog.FileName);
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -109,6 +102,24 @@ public partial class Form1 : Form
     private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
     {
         SaveDocumentAs();
+    }
+
+    private void RecentFileToolStripMenuItem_Click(object? sender, EventArgs e)
+    {
+        if (sender is not ToolStripMenuItem { Tag: string filePath })
+        {
+            return;
+        }
+
+        if (!ConfirmDiscardUnsavedChanges())
+        {
+            return;
+        }
+
+        if (!OpenDocumentFromPath(filePath))
+        {
+            RemoveRecentFile(filePath);
+        }
     }
 
     private bool SaveDocumentAs()
@@ -386,6 +397,23 @@ public partial class Form1 : Form
         editorStatusLabel.Text = $"Ln {lineNumber}, Col {columnNumber}";
     }
 
+    private bool OpenDocumentFromPath(string filePath)
+    {
+        if (!TryReadFile(filePath, out string fileContents))
+        {
+            return false;
+        }
+
+        editorTextBox.Text = fileContents;
+        editorTextBox.ClearUndo();
+        SetCurrentFilePath(filePath);
+        MarkDocumentClean();
+        AddRecentFile(filePath);
+        UpdateEditMenuItemStates();
+        UpdateStatusBar();
+        return true;
+    }
+
     private bool TryReadFile(string filePath, out string fileContents)
     {
         try
@@ -415,7 +443,54 @@ public partial class Form1 : Form
 
         SetCurrentFilePath(filePath);
         MarkDocumentClean();
+        AddRecentFile(filePath);
         return true;
+    }
+
+    private void AddRecentFile(string filePath)
+    {
+        string normalizedFilePath = Path.GetFullPath(filePath);
+        recentFilePaths.RemoveAll(path => string.Equals(path, normalizedFilePath, StringComparison.OrdinalIgnoreCase));
+        recentFilePaths.Insert(0, normalizedFilePath);
+
+        if (recentFilePaths.Count > MaxRecentFiles)
+        {
+            recentFilePaths.RemoveRange(MaxRecentFiles, recentFilePaths.Count - MaxRecentFiles);
+        }
+
+        UpdateRecentFilesMenu();
+    }
+
+    private void RemoveRecentFile(string filePath)
+    {
+        string normalizedFilePath = Path.GetFullPath(filePath);
+        recentFilePaths.RemoveAll(path => string.Equals(path, normalizedFilePath, StringComparison.OrdinalIgnoreCase));
+        UpdateRecentFilesMenu();
+    }
+
+    private void UpdateRecentFilesMenu()
+    {
+        recentFilesToolStripMenuItem.DropDownItems.Clear();
+
+        if (recentFilePaths.Count == 0)
+        {
+            recentFilesToolStripMenuItem.DropDownItems.Add(noRecentFilesToolStripMenuItem);
+            return;
+        }
+
+        for (int index = 0; index < recentFilePaths.Count; index++)
+        {
+            string filePath = recentFilePaths[index];
+            ToolStripMenuItem recentFileMenuItem = new()
+            {
+                Text = $"&{index + 1} {Path.GetFileName(filePath)}",
+                Tag = filePath,
+                ToolTipText = filePath
+            };
+
+            recentFileMenuItem.Click += RecentFileToolStripMenuItem_Click;
+            recentFilesToolStripMenuItem.DropDownItems.Add(recentFileMenuItem);
+        }
     }
 
     private bool ConfirmDiscardUnsavedChanges()
