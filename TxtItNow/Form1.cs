@@ -483,7 +483,7 @@ public partial class Form1 : Form
             string filePath = recentFilePaths[index];
             ToolStripMenuItem recentFileMenuItem = new()
             {
-                Text = $"&{index + 1} {Path.GetFileName(filePath)}",
+                Text = $"&{index + 1} {filePath.Replace("&", "&&")}",
                 Tag = filePath,
                 ToolTipText = filePath
             };
