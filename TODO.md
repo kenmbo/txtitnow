@@ -104,7 +104,7 @@
 - [x] Implement recent files list for current session
 - [x] Enable/Disable Line Numbers
 - [x] Bold current line number (when line numbers is enabled)
-- [ ] Add syntax coloring design notes
+- [x] Add syntax coloring design notes
 - [ ] Choose a syntax-highlighting approach
 - [ ] Add syntax coloring for one language as a prototype
 - [ ] Add file encoding detection notes
