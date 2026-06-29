@@ -109,5 +109,9 @@
 - [ ] Add syntax coloring for one language as a prototype
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
+- [ ] Add `Format > Smart Indent`
+- [ ] Copy previous line indentation when pressing Enter
+- [ ] Increase indentation after lines ending with `{`
+- [ ] Insert configured indentation when pressing Tab
 - [ ] Persist recent files between app launches
 - [ ] Add version number to the about to the `About` dialog
