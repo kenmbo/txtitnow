@@ -4,13 +4,16 @@ public partial class Form1 : Form
 {
     private const string ApplicationName = "TxtItNow";
     private const string ApplicationIconResourceName = "TxtItNow.app.ico";
+    private const int MaxRecentFiles = 5;
 
     private string? currentFilePath;
     private bool isDocumentDirty;
     private bool isWordWrapEnabled = true;
+    private bool isLineNumbersEnabled = true;
     private Font? selectedEditorFont;
     private string lastFindText = string.Empty;
     private string lastReplaceText = string.Empty;
+    private readonly List<string> recentFilePaths = new();
 
     public Form1()
     {
@@ -18,7 +21,9 @@ public partial class Form1 : Form
         SetApplicationIcon();
         SetCurrentFilePath(null);
         ApplyWordWrapSetting();
+        ApplyLineNumbersSetting();
         UpdateStatusBar();
+        UpdateRecentFilesMenu();
     }
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
@@ -26,12 +31,14 @@ public partial class Form1 : Form
         MarkDocumentDirty();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private void EditorTextBox_KeyUp(object sender, KeyEventArgs e)
     {
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private void EditorTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -47,6 +54,12 @@ public partial class Form1 : Form
     {
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
+    }
+
+    private void EditorTextBox_ViewportChanged(object? sender, EventArgs e)
+    {
+        UpdateLineNumberGutter();
     }
 
     private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -62,6 +75,7 @@ public partial class Form1 : Form
         MarkDocumentClean();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -82,17 +96,7 @@ public partial class Form1 : Form
             return;
         }
 
-        if (!TryReadFile(openFileDialog.FileName, out string fileContents))
-        {
-            return;
-        }
-
-        editorTextBox.Text = fileContents;
-        editorTextBox.ClearUndo();
-        SetCurrentFilePath(openFileDialog.FileName);
-        MarkDocumentClean();
-        UpdateEditMenuItemStates();
-        UpdateStatusBar();
+        OpenDocumentFromPath(openFileDialog.FileName);
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -109,6 +113,24 @@ public partial class Form1 : Form
     private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
     {
         SaveDocumentAs();
+    }
+
+    private void RecentFileToolStripMenuItem_Click(object? sender, EventArgs e)
+    {
+        if (sender is not ToolStripMenuItem { Tag: string filePath })
+        {
+            return;
+        }
+
+        if (!ConfirmDiscardUnsavedChanges())
+        {
+            return;
+        }
+
+        if (!OpenDocumentFromPath(filePath))
+        {
+            RemoveRecentFile(filePath);
+        }
     }
 
     private bool SaveDocumentAs()
@@ -214,6 +236,13 @@ public partial class Form1 : Form
         isWordWrapEnabled = !isWordWrapEnabled;
         ApplyWordWrapSetting();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
+    }
+
+    private void LineNumbersToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        isLineNumbersEnabled = !isLineNumbersEnabled;
+        ApplyLineNumbersSetting();
     }
 
     private void FontToolStripMenuItem_Click(object sender, EventArgs e)
@@ -233,6 +262,7 @@ public partial class Form1 : Form
         editorTextBox.Font = selectedEditorFont;
         previousSelectedEditorFont?.Dispose();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -280,6 +310,13 @@ public partial class Form1 : Form
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
     }
 
+    private void ApplyLineNumbersSetting()
+    {
+        lineNumberGutterPanel.Visible = isLineNumbersEnabled;
+        lineNumbersToolStripMenuItem.Checked = isLineNumbersEnabled;
+        UpdateLineNumberGutter();
+    }
+
     private void PasteClipboardText()
     {
         if (!Clipboard.ContainsText(TextDataFormat.UnicodeText))
@@ -291,6 +328,7 @@ public partial class Form1 : Form
         editorTextBox.SelectedText = NormalizeLineEndings(clipboardText);
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private bool TryFindInDocument(string searchText)
@@ -331,6 +369,7 @@ public partial class Form1 : Form
         editorTextBox.ScrollToCaret();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
         return true;
     }
 
@@ -347,6 +386,7 @@ public partial class Form1 : Form
         editorTextBox.ScrollToCaret();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
+        UpdateLineNumberGutter();
     }
 
     private bool SelectionMatches(string searchText)
@@ -386,6 +426,82 @@ public partial class Form1 : Form
         editorStatusLabel.Text = $"Ln {lineNumber}, Col {columnNumber}";
     }
 
+    private void UpdateLineNumberGutter()
+    {
+        if (!isLineNumbersEnabled)
+        {
+            return;
+        }
+
+        int lineCount = Math.Max(1, editorTextBox.Lines.Length);
+        int digitCount = lineCount.ToString().Length;
+        int gutterWidth = Math.Max(48, TextRenderer.MeasureText(new string('9', digitCount), editorTextBox.Font).Width + 20);
+
+        if (lineNumberGutterPanel.Width != gutterWidth)
+        {
+            lineNumberGutterPanel.Width = gutterWidth;
+        }
+
+        lineNumberGutterPanel.Invalidate();
+    }
+
+    private void LineNumberGutterPanel_Paint(object sender, PaintEventArgs e)
+    {
+        e.Graphics.Clear(SystemColors.Control);
+
+        if (!isLineNumbersEnabled)
+        {
+            return;
+        }
+
+        int firstVisibleCharIndex = editorTextBox.GetCharIndexFromPosition(new Point(0, 0));
+        int firstVisibleLineIndex = editorTextBox.GetLineFromCharIndex(firstVisibleCharIndex);
+        int lastVisibleCharIndex = editorTextBox.GetCharIndexFromPosition(new Point(editorTextBox.ClientSize.Width - 1, editorTextBox.ClientSize.Height - 1));
+        int lastVisibleLineIndex = Math.Max(firstVisibleLineIndex, editorTextBox.GetLineFromCharIndex(lastVisibleCharIndex));
+        int currentLineIndex = editorTextBox.GetLineFromCharIndex(editorTextBox.SelectionStart);
+
+        using Brush textBrush = new SolidBrush(SystemColors.GrayText);
+        using Font currentLineFont = new(editorTextBox.Font, FontStyle.Bold);
+
+        for (int lineIndex = firstVisibleLineIndex; lineIndex <= lastVisibleLineIndex; lineIndex++)
+        {
+            int lineStartIndex = editorTextBox.GetFirstCharIndexFromLine(lineIndex);
+
+            if (lineStartIndex < 0)
+            {
+                continue;
+            }
+
+            Point linePosition = editorTextBox.GetPositionFromCharIndex(lineStartIndex);
+            string lineNumber = (lineIndex + 1).ToString();
+            Font lineNumberFont = lineIndex == currentLineIndex
+                ? currentLineFont
+                : editorTextBox.Font;
+            Size lineNumberSize = TextRenderer.MeasureText(lineNumber, lineNumberFont);
+            float x = lineNumberGutterPanel.Width - lineNumberSize.Width - 8;
+
+            e.Graphics.DrawString(lineNumber, lineNumberFont, textBrush, x, linePosition.Y);
+        }
+    }
+
+    private bool OpenDocumentFromPath(string filePath)
+    {
+        if (!TryReadFile(filePath, out string fileContents))
+        {
+            return false;
+        }
+
+        editorTextBox.Text = fileContents;
+        editorTextBox.ClearUndo();
+        SetCurrentFilePath(filePath);
+        MarkDocumentClean();
+        AddRecentFile(filePath);
+        UpdateEditMenuItemStates();
+        UpdateStatusBar();
+        UpdateLineNumberGutter();
+        return true;
+    }
+
     private bool TryReadFile(string filePath, out string fileContents)
     {
         try
@@ -415,7 +531,54 @@ public partial class Form1 : Form
 
         SetCurrentFilePath(filePath);
         MarkDocumentClean();
+        AddRecentFile(filePath);
         return true;
+    }
+
+    private void AddRecentFile(string filePath)
+    {
+        string normalizedFilePath = Path.GetFullPath(filePath);
+        recentFilePaths.RemoveAll(path => string.Equals(path, normalizedFilePath, StringComparison.OrdinalIgnoreCase));
+        recentFilePaths.Insert(0, normalizedFilePath);
+
+        if (recentFilePaths.Count > MaxRecentFiles)
+        {
+            recentFilePaths.RemoveRange(MaxRecentFiles, recentFilePaths.Count - MaxRecentFiles);
+        }
+
+        UpdateRecentFilesMenu();
+    }
+
+    private void RemoveRecentFile(string filePath)
+    {
+        string normalizedFilePath = Path.GetFullPath(filePath);
+        recentFilePaths.RemoveAll(path => string.Equals(path, normalizedFilePath, StringComparison.OrdinalIgnoreCase));
+        UpdateRecentFilesMenu();
+    }
+
+    private void UpdateRecentFilesMenu()
+    {
+        recentFilesToolStripMenuItem.DropDownItems.Clear();
+
+        if (recentFilePaths.Count == 0)
+        {
+            recentFilesToolStripMenuItem.DropDownItems.Add(noRecentFilesToolStripMenuItem);
+            return;
+        }
+
+        for (int index = 0; index < recentFilePaths.Count; index++)
+        {
+            string filePath = recentFilePaths[index];
+            ToolStripMenuItem recentFileMenuItem = new()
+            {
+                Text = $"&{index + 1} {filePath.Replace("&", "&&")}",
+                Tag = filePath,
+                ToolTipText = filePath
+            };
+
+            recentFileMenuItem.Click += RecentFileToolStripMenuItem_Click;
+            recentFilesToolStripMenuItem.DropDownItems.Add(recentFileMenuItem);
+        }
     }
 
     private bool ConfirmDiscardUnsavedChanges()
