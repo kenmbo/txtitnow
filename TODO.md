@@ -94,7 +94,7 @@
 - [x] Add basic manual test notes to the README
 - [ ] Github: Release 1.0
 
-## Future
+## Milestone 5: Post-Release
 
 - [x] Add `Edit > Find`
 - [x] Implement basic find-in-document behavior
@@ -105,8 +105,13 @@
 - [x] Enable/Disable Line Numbers
 - [x] Bold current line number (when line numbers is enabled)
 - [x] Add syntax coloring design notes
-- [ ] Choose a syntax-highlighting approach
-- [ ] Add syntax coloring for one language as a prototype
+- [ ] Refactor the editor from `TextBox`/`EditorTextBox` to `RichTextBox`
+  - [ ] Preserve existing file, edit, find/replace, word-wrap, font, status bar, and line-number behavior after the `RichTextBox` refactor
+- [ ] Define theme-independent syntax token roles and separate light/dark syntax color palettes
+- [ ] Choose a theme-independent syntax-highlighting approach
+- [ ] Add syntax coloring for one language as a prototype using token roles from the active theme palette
+- [ ] Reapply syntax coloring when editor text, current file type, or active theme changes
+- [ ] Detect and indicate the language in the status bar checking the filename extension
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
 - [ ] Add `Format > Smart Indent`
