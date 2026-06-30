@@ -305,8 +305,8 @@ public partial class Form1 : Form
     {
         editorTextBox.WordWrap = isWordWrapEnabled;
         editorTextBox.ScrollBars = isWordWrapEnabled
-            ? ScrollBars.Vertical
-            : ScrollBars.Both;
+            ? RichTextBoxScrollBars.Vertical
+            : RichTextBoxScrollBars.Both;
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
     }
 

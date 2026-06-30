@@ -6,7 +6,7 @@ partial class Form1
     ///  Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
-    private EditorTextBox editorTextBox;
+    private EditorRichTextBox editorTextBox;
     private Panel editorContainerPanel;
     private Panel lineNumberGutterPanel;
     private MenuStrip mainMenuStrip;
@@ -59,7 +59,7 @@ partial class Form1
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
-        editorTextBox = new EditorTextBox();
+        editorTextBox = new EditorRichTextBox();
         editorContainerPanel = new Panel();
         lineNumberGutterPanel = new Panel();
         mainMenuStrip = new MenuStrip();
@@ -317,10 +317,11 @@ partial class Form1
         // 
         // editorTextBox
         // 
+        editorTextBox.DetectUrls = false;
         editorTextBox.Dock = DockStyle.Fill;
         editorTextBox.Multiline = true;
         editorTextBox.Name = "editorTextBox";
-        editorTextBox.ScrollBars = ScrollBars.Vertical;
+        editorTextBox.ScrollBars = RichTextBoxScrollBars.Vertical;
         editorTextBox.Size = new Size(952, 654);
         editorTextBox.TabIndex = 1;
         editorTextBox.WordWrap = true;

@@ -105,7 +105,7 @@
 - [x] Enable/Disable Line Numbers
 - [x] Bold current line number (when line numbers is enabled)
 - [x] Add syntax coloring design notes
-- [ ] Refactor the editor from `TextBox`/`EditorTextBox` to `RichTextBox`
+- [x] Refactor the editor from `TextBox`/`EditorTextBox` to `RichTextBox`
   - [ ] Preserve existing file, edit, find/replace, word-wrap, font, status bar, and line-number behavior after the `RichTextBox` refactor
 - [ ] Define theme-independent syntax token roles and separate light/dark syntax color palettes
 - [ ] Choose a theme-independent syntax-highlighting approach
