@@ -104,12 +104,20 @@
 - [x] Implement recent files list for current session
 - [x] Enable/Disable Line Numbers
 - [x] Bold current line number (when line numbers is enabled)
-- [ ] Add syntax coloring design notes
-- [ ] Choose a syntax-highlighting approach
-- [ ] Add syntax coloring for one language as a prototype
+- [x] Add syntax coloring design notes
+- [ ] Refactor the editor from `TextBox`/`EditorTextBox` to `RichTextBox`
+  - [ ] Preserve existing file, edit, find/replace, word-wrap, font, status bar, and line-number behavior after the `RichTextBox` refactor
+- [ ] Define theme-independent syntax token roles and separate light/dark syntax color palettes
+- [ ] Choose a theme-independent syntax-highlighting approach
+- [ ] Add syntax coloring for one language as a prototype using token roles from the active theme palette
+- [ ] Reapply syntax coloring when editor text, current file type, or active theme changes
 - [ ] Detect and indicate the language in the status bar checking the filename extension
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
+- [ ] Add `Format > Smart Indent`
+- [ ] Copy previous line indentation when pressing Enter
+- [ ] Increase indentation after lines ending with `{`
+- [ ] Insert configured indentation when pressing Tab
 - [ ] Persist recent files between app launches
 - [ ] Add version number to the about to the `About` dialog
 
@@ -120,8 +128,9 @@
 - [ ] Add `View > Dark Mode`
 - [ ] Store the current theme mode in app state
 - [ ] Apply a dark color palette to the main form
-- [ ] Apply dark mode colors to the editor control
+- [ ] Apply dark mode colors to the editor control, line-number gutter, and syntax color palette
 - [ ] Apply dark mode colors to menus and status UI where practical
+- [ ] Reapply syntax coloring after switching between light mode and dark mode
 - [ ] Toggle back to the default light theme
 - [ ] Update the `Dark Mode` menu item checked state when toggled
 - [ ] Preserve the dark mode setting during the app session
