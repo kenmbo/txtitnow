@@ -2,6 +2,9 @@
 
 TxtItNow is a small Windows Notepad-like text editor built with C#, .NET 10, and WinForms.
 
+![Window demonstration of the TxtItNow GUI. The application currently has the README.md opened.](docs/assets/screenshot-txtitnow.png)
+
+![Demonstration of the font selection. A serif font is used here to demonstrate formal essay-like text. The TxtItNow application is showing notes on the character Captain Ahab in the book Moby Dick by Herman Melville.](docs/assets/screenshot-txtitnow-font-selection.png)
 ## Installation
 
 ```bash
