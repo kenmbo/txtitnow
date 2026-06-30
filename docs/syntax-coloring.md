@@ -18,9 +18,9 @@ This means the same tokenizer can work in light mode and dark mode. Switching th
 
 ## Editor Control Requirement
 
-The current editor is based on `TextBox`/`EditorTextBox`, which cannot color individual spans of text. Syntax coloring should be implemented after refactoring the editor to `RichTextBox`.
+Syntax coloring requires a `RichTextBox` because plain `TextBox` controls cannot color individual spans of text. The editor is now based on `EditorRichTextBox`, a small `RichTextBox` subclass that keeps viewport-change notifications for the line-number gutter.
 
-The refactor should preserve existing behavior:
+Future syntax-coloring work should preserve existing behavior:
 
 - File open, save, and save-as workflows
 - Dirty-state detection
@@ -151,9 +151,8 @@ Syntax coloring should be reapplied when:
 - The active theme changes
 - Font changes, if rendering needs recalculation
 
-## Further Guidance
+## Future Codex Guidance
 
 Do not mix token recognition and theme colors in the same class. If a highlighter emits `Color.Blue` directly, it will make Dark Mode harder. Emit roles such as `Keyword` and let the active theme palette decide what `Keyword` looks like.
 
 Before implementing syntax coloring, refactor to `RichTextBox` as its own task and verify the existing editor behaviors still work.
-
