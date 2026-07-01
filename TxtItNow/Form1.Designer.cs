@@ -33,6 +33,12 @@ partial class Form1
     private ToolStripMenuItem findToolStripMenuItem;
     private ToolStripMenuItem replaceToolStripMenuItem;
     private ToolStripMenuItem selectAllToolStripMenuItem;
+    private ContextMenuStrip editorContextMenuStrip;
+    private ToolStripMenuItem contextUndoToolStripMenuItem;
+    private ToolStripMenuItem contextCutToolStripMenuItem;
+    private ToolStripMenuItem contextCopyToolStripMenuItem;
+    private ToolStripMenuItem contextPasteToolStripMenuItem;
+    private ToolStripMenuItem contextSelectAllToolStripMenuItem;
     private StatusStrip editorStatusStrip;
     private ToolStripStatusLabel editorStatusLabel;
 
@@ -86,6 +92,12 @@ partial class Form1
         findToolStripMenuItem = new ToolStripMenuItem();
         replaceToolStripMenuItem = new ToolStripMenuItem();
         selectAllToolStripMenuItem = new ToolStripMenuItem();
+        editorContextMenuStrip = new ContextMenuStrip(components);
+        contextUndoToolStripMenuItem = new ToolStripMenuItem();
+        contextCutToolStripMenuItem = new ToolStripMenuItem();
+        contextCopyToolStripMenuItem = new ToolStripMenuItem();
+        contextPasteToolStripMenuItem = new ToolStripMenuItem();
+        contextSelectAllToolStripMenuItem = new ToolStripMenuItem();
         editorStatusStrip = new StatusStrip();
         editorStatusLabel = new ToolStripStatusLabel();
         editorContainerPanel.SuspendLayout();
@@ -281,6 +293,51 @@ partial class Form1
         selectAllToolStripMenuItem.Text = "Select &All";
         selectAllToolStripMenuItem.Click += SelectAllToolStripMenuItem_Click;
         // 
+        // editorContextMenuStrip
+        // 
+        editorContextMenuStrip.Items.AddRange(new ToolStripItem[] { contextUndoToolStripMenuItem, contextCutToolStripMenuItem, contextCopyToolStripMenuItem, contextPasteToolStripMenuItem, contextSelectAllToolStripMenuItem });
+        editorContextMenuStrip.Name = "editorContextMenuStrip";
+        editorContextMenuStrip.Size = new Size(181, 136);
+        editorContextMenuStrip.Opening += EditorContextMenuStrip_Opening;
+        // 
+        // contextUndoToolStripMenuItem
+        // 
+        contextUndoToolStripMenuItem.Enabled = false;
+        contextUndoToolStripMenuItem.Name = "contextUndoToolStripMenuItem";
+        contextUndoToolStripMenuItem.Size = new Size(180, 22);
+        contextUndoToolStripMenuItem.Text = "&Undo";
+        contextUndoToolStripMenuItem.Click += UndoToolStripMenuItem_Click;
+        // 
+        // contextCutToolStripMenuItem
+        // 
+        contextCutToolStripMenuItem.Enabled = false;
+        contextCutToolStripMenuItem.Name = "contextCutToolStripMenuItem";
+        contextCutToolStripMenuItem.Size = new Size(180, 22);
+        contextCutToolStripMenuItem.Text = "Cu&t";
+        contextCutToolStripMenuItem.Click += CutToolStripMenuItem_Click;
+        // 
+        // contextCopyToolStripMenuItem
+        // 
+        contextCopyToolStripMenuItem.Enabled = false;
+        contextCopyToolStripMenuItem.Name = "contextCopyToolStripMenuItem";
+        contextCopyToolStripMenuItem.Size = new Size(180, 22);
+        contextCopyToolStripMenuItem.Text = "&Copy";
+        contextCopyToolStripMenuItem.Click += CopyToolStripMenuItem_Click;
+        // 
+        // contextPasteToolStripMenuItem
+        // 
+        contextPasteToolStripMenuItem.Name = "contextPasteToolStripMenuItem";
+        contextPasteToolStripMenuItem.Size = new Size(180, 22);
+        contextPasteToolStripMenuItem.Text = "&Paste";
+        contextPasteToolStripMenuItem.Click += PasteToolStripMenuItem_Click;
+        // 
+        // contextSelectAllToolStripMenuItem
+        // 
+        contextSelectAllToolStripMenuItem.Name = "contextSelectAllToolStripMenuItem";
+        contextSelectAllToolStripMenuItem.Size = new Size(180, 22);
+        contextSelectAllToolStripMenuItem.Text = "Select &All";
+        contextSelectAllToolStripMenuItem.Click += SelectAllToolStripMenuItem_Click;
+        // 
         // editorStatusStrip
         // 
         editorStatusStrip.Dock = DockStyle.Bottom;
@@ -317,6 +374,7 @@ partial class Form1
         // 
         // editorTextBox
         // 
+        editorTextBox.ContextMenuStrip = editorContextMenuStrip;
         editorTextBox.DetectUrls = false;
         editorTextBox.Dock = DockStyle.Fill;
         editorTextBox.Multiline = true;
@@ -327,6 +385,7 @@ partial class Form1
         editorTextBox.WordWrap = true;
         editorTextBox.KeyDown += EditorTextBox_KeyDown;
         editorTextBox.KeyUp += EditorTextBox_KeyUp;
+        editorTextBox.MouseDown += EditorTextBox_MouseDown;
         editorTextBox.MouseUp += EditorTextBox_MouseUp;
         editorTextBox.TextChanged += EditorTextBox_TextChanged;
         editorTextBox.ViewportChanged += EditorTextBox_ViewportChanged;
