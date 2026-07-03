@@ -118,5 +118,7 @@
 - [ ] Copy previous line indentation when pressing Enter
 - [ ] Increase indentation after lines ending with `{`
 - [ ] Insert configured indentation when pressing Tab
+- [ ] Add an option for the Find dialog to Highlight All tokens
+- [ ] Add Replace All
 - [ ] Persist recent files between app launches
 - [ ] Add version number to the about to the `About` dialog
