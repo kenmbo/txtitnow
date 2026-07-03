@@ -43,10 +43,35 @@ public partial class Form1 : Form
 
     private void EditorTextBox_KeyDown(object sender, KeyEventArgs e)
     {
+        if (e.KeyCode == Keys.Apps || (e.Shift && e.KeyCode == Keys.F10))
+        {
+            ShowEditorContextMenuNearCaret();
+            e.SuppressKeyPress = true;
+            return;
+        }
+
         if ((e.Control && e.KeyCode == Keys.V) || (e.Shift && e.KeyCode == Keys.Insert))
         {
             PasteClipboardText();
             e.SuppressKeyPress = true;
+        }
+    }
+
+    private void EditorTextBox_MouseDown(object sender, MouseEventArgs e)
+    {
+        if (e.Button != MouseButtons.Right)
+        {
+            return;
+        }
+
+        int clickedIndex = editorTextBox.GetCharIndexFromPosition(e.Location);
+        bool clickedSelection = editorTextBox.SelectionLength > 0
+            && clickedIndex >= editorTextBox.SelectionStart
+            && clickedIndex <= editorTextBox.SelectionStart + editorTextBox.SelectionLength;
+
+        if (!clickedSelection)
+        {
+            editorTextBox.Select(clickedIndex, 0);
         }
     }
 
@@ -178,6 +203,11 @@ public partial class Form1 : Form
         UpdateEditMenuItemStates();
     }
 
+    private void EditorContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        UpdateEditMenuItemStates();
+    }
+
     private void CutToolStripMenuItem_Click(object sender, EventArgs e)
     {
         editorTextBox.Cut();
@@ -299,14 +329,19 @@ public partial class Form1 : Form
         bool hasSelection = editorTextBox.SelectionLength > 0;
         cutToolStripMenuItem.Enabled = hasSelection;
         copyToolStripMenuItem.Enabled = hasSelection;
+        contextUndoToolStripMenuItem.Enabled = editorTextBox.CanUndo;
+        contextCutToolStripMenuItem.Enabled = hasSelection;
+        contextCopyToolStripMenuItem.Enabled = hasSelection;
+        contextPasteToolStripMenuItem.Enabled = Clipboard.ContainsText(TextDataFormat.UnicodeText);
+        contextSelectAllToolStripMenuItem.Enabled = editorTextBox.TextLength > 0;
     }
 
     private void ApplyWordWrapSetting()
     {
         editorTextBox.WordWrap = isWordWrapEnabled;
         editorTextBox.ScrollBars = isWordWrapEnabled
-            ? ScrollBars.Vertical
-            : ScrollBars.Both;
+            ? RichTextBoxScrollBars.Vertical
+            : RichTextBoxScrollBars.Both;
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
     }
 
@@ -329,6 +364,15 @@ public partial class Form1 : Form
         UpdateEditMenuItemStates();
         UpdateStatusBar();
         UpdateLineNumberGutter();
+    }
+
+    private void ShowEditorContextMenuNearCaret()
+    {
+        UpdateEditMenuItemStates();
+
+        Point caretPosition = editorTextBox.GetPositionFromCharIndex(editorTextBox.SelectionStart);
+        caretPosition.Offset(0, editorTextBox.Font.Height);
+        editorContextMenuStrip.Show(editorTextBox, caretPosition);
     }
 
     private bool TryFindInDocument(string searchText)

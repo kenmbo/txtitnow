@@ -18,9 +18,9 @@ This means the same tokenizer can work in light mode and dark mode. Switching th
 
 ## Editor Control Requirement
 
-The current editor is based on `TextBox`/`EditorTextBox`, which cannot color individual spans of text. Syntax coloring should be implemented after refactoring the editor to `RichTextBox`.
+Syntax coloring requires a `RichTextBox` because plain `TextBox` controls cannot color individual spans of text. The editor is now based on `EditorRichTextBox`, a small `RichTextBox` subclass that keeps viewport-change notifications for the line-number gutter.
 
-The refactor should preserve existing behavior:
+Future syntax-coloring work should preserve existing behavior:
 
 - File open, save, and save-as workflows
 - Dirty-state detection
@@ -38,7 +38,7 @@ The highlighter should emit roles, not colors. Suggested initial roles:
 
 - `PlainText`
 - `Keyword`
-- `String`
+- `StringLiteral`
 - `Comment`
 - `Number`
 - `Preprocessor`
@@ -53,7 +53,7 @@ internal enum SyntaxTokenRole
 {
     PlainText,
     Keyword,
-    String,
+    StringLiteral,
     Comment,
     Number,
     Preprocessor,
@@ -68,7 +68,7 @@ internal sealed class SyntaxColorPalette
 {
     public Color PlainText { get; init; }
     public Color Keyword { get; init; }
-    public Color String { get; init; }
+    public Color StringLiteral { get; init; }
     public Color Comment { get; init; }
     public Color Number { get; init; }
     public Color Preprocessor { get; init; }
@@ -129,7 +129,7 @@ Keep the tokenizer separate from WinForms UI code. A useful shape is:
 ISyntaxHighlighter
   -> returns syntax spans with start, length, and SyntaxTokenRole
 
-SyntaxTheme
+SyntaxColorPalette
   -> maps SyntaxTokenRole to Color for the current light/dark mode
 
 RichTextBox formatting code

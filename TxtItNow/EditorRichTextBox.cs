@@ -1,6 +1,6 @@
 namespace TxtItNow;
 
-internal sealed class EditorTextBox : TextBox
+internal sealed class EditorRichTextBox : RichTextBox
 {
     private const int WmHScroll = 0x0114;
     private const int WmVScroll = 0x0115;
