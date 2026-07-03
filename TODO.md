@@ -107,7 +107,7 @@
 - [x] Add syntax coloring design notes
 - [x] Refactor the editor from `TextBox`/`EditorTextBox` to `RichTextBox`
   - [x] Preserve existing file, edit, find/replace, word-wrap, font, status bar, and line-number behavior after the `RichTextBox` refactor
-- [ ] Define theme-independent syntax token roles and separate light/dark syntax color palettes
+- [x] Define theme-independent syntax token roles and separate light/dark syntax color palettes
 - [ ] Choose a theme-independent syntax-highlighting approach
 - [ ] Add syntax coloring for one language as a prototype using token roles from the active theme palette
 - [ ] Reapply syntax coloring when editor text, current file type, or active theme changes

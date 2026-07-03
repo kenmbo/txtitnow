@@ -38,7 +38,7 @@ The highlighter should emit roles, not colors. Suggested initial roles:
 
 - `PlainText`
 - `Keyword`
-- `String`
+- `StringLiteral`
 - `Comment`
 - `Number`
 - `Preprocessor`
@@ -53,7 +53,7 @@ internal enum SyntaxTokenRole
 {
     PlainText,
     Keyword,
-    String,
+    StringLiteral,
     Comment,
     Number,
     Preprocessor,
@@ -68,7 +68,7 @@ internal sealed class SyntaxColorPalette
 {
     public Color PlainText { get; init; }
     public Color Keyword { get; init; }
-    public Color String { get; init; }
+    public Color StringLiteral { get; init; }
     public Color Comment { get; init; }
     public Color Number { get; init; }
     public Color Preprocessor { get; init; }
@@ -129,7 +129,7 @@ Keep the tokenizer separate from WinForms UI code. A useful shape is:
 ISyntaxHighlighter
   -> returns syntax spans with start, length, and SyntaxTokenRole
 
-SyntaxTheme
+SyntaxColorPalette
   -> maps SyntaxTokenRole to Color for the current light/dark mode
 
 RichTextBox formatting code
@@ -156,3 +156,4 @@ Syntax coloring should be reapplied when:
 Do not mix token recognition and theme colors in the same class. If a highlighter emits `Color.Blue` directly, it will make Dark Mode harder. Emit roles such as `Keyword` and let the active theme palette decide what `Keyword` looks like.
 
 Before implementing syntax coloring, refactor to `RichTextBox` as its own task and verify the existing editor behaviors still work.
+
