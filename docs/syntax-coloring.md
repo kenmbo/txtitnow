@@ -121,6 +121,30 @@ C is a good first prototype because the current manual examples already include 
 
 The prototype does not need full compiler-level parsing. A small tokenizer is enough for the first pass.
 
+## Chosen Approach
+
+TxtItNow will use a small, standard-library tokenizer/highlighter built for this project. Do not add an external syntax-highlighting package for the first prototype.
+
+The chosen architecture is:
+
+```text
+ISyntaxHighlighter
+  -> accepts plain text and language information
+  -> returns spans with start, length, and SyntaxTokenRole
+
+SyntaxColorPalette
+  -> maps SyntaxTokenRole to Color for the active EditorThemeMode
+
+RichTextBox syntax applicator
+  -> applies colors to spans without changing the document text
+```
+
+The tokenizer/highlighter must stay theme-independent. It should only identify what a span means, such as `Keyword`, `StringLiteral`, or `Comment`. It must not choose `Color` values, and it must not know whether the app is in light mode or dark mode.
+
+The first implementation should favor a simple deterministic scanner over complex regular-expression chains. Regex can still be used for narrow, well-contained pieces if it keeps the code clearer, but the core highlighter should be easy to debug and should not attempt full compiler-level parsing.
+
+The first pass can re-highlight the whole document because TxtItNow is a small learning editor. If performance becomes noticeable on larger files, a later milestone can add debouncing, visible-range highlighting, or incremental highlighting.
+
 ## Implementation Notes
 
 Keep the tokenizer separate from WinForms UI code. A useful shape is:
