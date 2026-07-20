@@ -121,6 +121,8 @@ C is a good first prototype because the current manual examples already include 
 
 The prototype does not need full compiler-level parsing. A small tokenizer is enough for the first pass.
 
+The initial prototype is implemented by `CSyntaxHighlighter`. It emits `SyntaxTokenSpan` values with `SyntaxTokenRole` roles and leaves color selection to `SyntaxColorPalette`. The first wiring applies syntax coloring when opening `.c` and `.h` files; broader reapply behavior is tracked as a separate TODO item.
+
 ## Chosen Approach
 
 TxtItNow will use a small, standard-library tokenizer/highlighter built for this project. Do not add an external syntax-highlighting package for the first prototype.
