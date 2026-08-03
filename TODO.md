@@ -122,3 +122,15 @@
 - [ ] Add Replace All
 - [ ] Persist recent files between app launches
 - [ ] Add version number to the about to the `About` dialog
+
+### Dark Mode
+- [ ] Add `View > Dark Mode`
+- [ ] Store the current theme mode in app state
+- [ ] Apply a dark palette to the main form
+
+### Tabs
+- [ ] Add a tab container to the main window
+- [ ] Move the editor control into the first tab
+- [ ] Create a document state model for each tab
+- [ ] Add `File > New Tab`
+- [ ] Create a new blank editor tab from `File > New Tab`
