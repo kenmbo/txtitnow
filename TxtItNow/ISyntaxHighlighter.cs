@@ -2,6 +2,5 @@ namespace TxtItNow;
 
 internal interface ISyntaxHighlighter
 {
-    IReadOnlyList<SyntaxTokenSpan> GetSyntaxSpans(string text);
+    IReadOnlyList<SyntaxSpan> Highlight(string text);
 }
-
