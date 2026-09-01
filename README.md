@@ -58,9 +58,6 @@ Polish checks:
 ## Future ideas
 
 - Syntax highlighting
-- Find and replace
-- Status bar with line/column
-- Recent files
 - Font settings
 - Encoding options
 
