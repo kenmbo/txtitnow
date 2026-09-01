@@ -5,4 +5,3 @@ internal enum EditorThemeMode
     Light,
     Dark
 }
-

@@ -12,4 +12,3 @@ internal enum SyntaxTokenRole
     FunctionName,
     Operator
 }
-
