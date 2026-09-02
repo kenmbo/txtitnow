@@ -109,8 +109,8 @@
   - [x] Preserve existing file, edit, find/replace, word-wrap, font, status bar, and line-number behavior after the `RichTextBox` refactor
 - [x] Define theme-independent syntax token roles and separate light/dark syntax color palettes
 - [x] Choose a theme-independent syntax-highlighting approach
-- [ ] Add syntax coloring for one language as a prototype using token roles from the active theme palette
-- [ ] Reapply syntax coloring when editor text, current file type, or active theme changes
+- [x] Add syntax coloring for one language as a prototype using token roles from the active theme palette
+- [x] Reapply syntax coloring when editor text, current file type, or active theme changes
 - [ ] Detect and indicate the language in the status bar checking the filename extension
 - [ ] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
