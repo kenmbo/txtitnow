@@ -331,6 +331,7 @@ public partial class Form1 : Form
     {
         currentFilePath = filePath;
         UpdateWindowTitle();
+        UpdateLanguageStatus();
         ApplySyntaxColoring();
     }
 
@@ -414,12 +415,17 @@ public partial class Form1 : Form
 
     private ISyntaxHighlighter? GetSyntaxHighlighterForCurrentFile()
     {
+        return IsCurrentFileCSource()
+            ? CPrototypeHighlighter
+            : null;
+    }
+
+    private bool IsCurrentFileCSource()
+    {
         string extension = Path.GetExtension(currentFilePath) ?? string.Empty;
 
         return extension.Equals(".c", StringComparison.OrdinalIgnoreCase)
-            || extension.Equals(".h", StringComparison.OrdinalIgnoreCase)
-            ? CPrototypeHighlighter
-            : null;
+            || extension.Equals(".h", StringComparison.OrdinalIgnoreCase);
     }
 
     private void PasteClipboardText()
@@ -538,6 +544,13 @@ public partial class Form1 : Form
         int columnNumber = editorTextBox.SelectionStart - lineStartIndex + 1;
 
         editorStatusLabel.Text = $"Ln {lineNumber}, Col {columnNumber}";
+    }
+
+    private void UpdateLanguageStatus()
+    {
+        languageStatusLabel.Text = IsCurrentFileCSource()
+            ? "C"
+            : "Plain Text";
     }
 
     private void UpdateLineNumberGutter()
