@@ -5,24 +5,25 @@ public partial class Form1 : Form
     private const string ApplicationName = "TxtItNow";
     private const string ApplicationIconResourceName = "TxtItNow.app.ico";
     private const int MaxRecentFiles = 5;
+    private static readonly ISyntaxHighlighter CPrototypeHighlighter = new CSyntaxHighlighter();
 
     private string? currentFilePath;
     private bool isDocumentDirty;
+    private bool isApplyingSyntaxColors;
     private bool isWordWrapEnabled = true;
     private bool isLineNumbersEnabled = true;
-    private bool isApplyingSyntaxColoring;
-    private EditorThemeMode currentThemeMode = EditorThemeMode.Light;
+    private EditorThemeMode currentThemeMode;
     private Font? selectedEditorFont;
     private string lastFindText = string.Empty;
     private string lastReplaceText = string.Empty;
     private readonly List<string> recentFilePaths = new();
-    private readonly ISyntaxHighlighter cSyntaxHighlighter = new CSyntaxHighlighter();
 
     public Form1()
     {
         InitializeComponent();
         SetApplicationIcon();
         SetCurrentFilePath(null);
+        SetEditorThemeMode(EditorThemeMode.Light);
         ApplyWordWrapSetting();
         ApplyLineNumbersSetting();
         UpdateStatusBar();
@@ -31,11 +32,13 @@ public partial class Form1 : Form
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
     {
-        if (!isApplyingSyntaxColoring)
+        if (isApplyingSyntaxColors)
         {
-            MarkDocumentDirty();
+            return;
         }
 
+        MarkDocumentDirty();
+        ApplySyntaxColoring();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
         UpdateLineNumberGutter();
@@ -328,6 +331,13 @@ public partial class Form1 : Form
     {
         currentFilePath = filePath;
         UpdateWindowTitle();
+        ApplySyntaxColoring();
+    }
+
+    private void SetEditorThemeMode(EditorThemeMode themeMode)
+    {
+        currentThemeMode = themeMode;
+        ApplySyntaxColoring();
     }
 
     private void UpdateEditMenuItemStates()
@@ -357,6 +367,59 @@ public partial class Form1 : Form
         lineNumberGutterPanel.Visible = isLineNumbersEnabled;
         lineNumbersToolStripMenuItem.Checked = isLineNumbersEnabled;
         UpdateLineNumberGutter();
+    }
+
+    private void ApplySyntaxColoring()
+    {
+        if (isApplyingSyntaxColors)
+        {
+            return;
+        }
+
+        ISyntaxHighlighter? syntaxHighlighter = GetSyntaxHighlighterForCurrentFile();
+        SyntaxColorPalette palette = SyntaxColorPalette.ForTheme(currentThemeMode);
+        int selectionStart = editorTextBox.SelectionStart;
+        int selectionLength = editorTextBox.SelectionLength;
+
+        isApplyingSyntaxColors = true;
+        editorTextBox.SetRedrawEnabled(false);
+
+        try
+        {
+            editorTextBox.SelectAll();
+            editorTextBox.SelectionColor = palette.PlainText;
+
+            if (syntaxHighlighter is not null)
+            {
+                foreach (SyntaxSpan span in syntaxHighlighter.Highlight(editorTextBox.Text))
+                {
+                    editorTextBox.Select(span.Start, span.Length);
+                    editorTextBox.SelectionColor = palette.GetColor(span.Role);
+                }
+            }
+
+            editorTextBox.Select(selectionStart, selectionLength);
+
+            if (selectionLength == 0)
+            {
+                editorTextBox.SelectionColor = palette.PlainText;
+            }
+        }
+        finally
+        {
+            editorTextBox.SetRedrawEnabled(true);
+            isApplyingSyntaxColors = false;
+        }
+    }
+
+    private ISyntaxHighlighter? GetSyntaxHighlighterForCurrentFile()
+    {
+        string extension = Path.GetExtension(currentFilePath) ?? string.Empty;
+
+        return extension.Equals(".c", StringComparison.OrdinalIgnoreCase)
+            || extension.Equals(".h", StringComparison.OrdinalIgnoreCase)
+            ? CPrototypeHighlighter
+            : null;
     }
 
     private void PasteClipboardText()
@@ -545,8 +608,6 @@ public partial class Form1 : Form
         editorTextBox.Text = fileContents;
         editorTextBox.ClearUndo();
         SetCurrentFilePath(filePath);
-        ApplySyntaxColoringForCurrentDocument();
-        editorTextBox.ClearUndo();
         MarkDocumentClean();
         AddRecentFile(filePath);
         UpdateEditMenuItemStates();
@@ -586,70 +647,6 @@ public partial class Form1 : Form
         MarkDocumentClean();
         AddRecentFile(filePath);
         return true;
-    }
-
-    private void ApplySyntaxColoringForCurrentDocument()
-    {
-        SyntaxColorPalette palette = SyntaxColorPalette.ForTheme(currentThemeMode);
-        IReadOnlyList<SyntaxTokenSpan> syntaxSpans = IsCFilePath(currentFilePath)
-            ? cSyntaxHighlighter.GetSyntaxSpans(editorTextBox.Text)
-            : Array.Empty<SyntaxTokenSpan>();
-
-        ApplySyntaxSpans(syntaxSpans, palette);
-    }
-
-    private void ApplySyntaxSpans(IReadOnlyList<SyntaxTokenSpan> syntaxSpans, SyntaxColorPalette palette)
-    {
-        int selectionStart = editorTextBox.SelectionStart;
-        int selectionLength = editorTextBox.SelectionLength;
-        bool wasFocused = editorTextBox.Focused;
-
-        isApplyingSyntaxColoring = true;
-        editorTextBox.SuspendLayout();
-
-        try
-        {
-            editorTextBox.SelectAll();
-            editorTextBox.SelectionColor = palette.PlainText;
-
-            foreach (SyntaxTokenSpan span in syntaxSpans)
-            {
-                if (span.Start < 0 || span.Length <= 0 || span.Start + span.Length > editorTextBox.TextLength)
-                {
-                    continue;
-                }
-
-                editorTextBox.Select(span.Start, span.Length);
-                editorTextBox.SelectionColor = palette.GetColor(span.Role);
-            }
-        }
-        finally
-        {
-            int restoredSelectionStart = Math.Min(selectionStart, editorTextBox.TextLength);
-            int restoredSelectionLength = Math.Min(selectionLength, editorTextBox.TextLength - restoredSelectionStart);
-
-            editorTextBox.Select(restoredSelectionStart, restoredSelectionLength);
-
-            if (restoredSelectionLength == 0)
-            {
-                editorTextBox.SelectionColor = palette.PlainText;
-            }
-
-            editorTextBox.ResumeLayout();
-            isApplyingSyntaxColoring = false;
-
-            if (wasFocused)
-            {
-                editorTextBox.Focus();
-            }
-        }
-    }
-
-    private static bool IsCFilePath(string? filePath)
-    {
-        string? extension = Path.GetExtension(filePath);
-        return string.Equals(extension, ".c", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(extension, ".h", StringComparison.OrdinalIgnoreCase);
     }
 
     private void AddRecentFile(string filePath)
@@ -742,4 +739,3 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
-
