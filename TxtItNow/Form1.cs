@@ -5,11 +5,14 @@ public partial class Form1 : Form
     private const string ApplicationName = "TxtItNow";
     private const string ApplicationIconResourceName = "TxtItNow.app.ico";
     private const int MaxRecentFiles = 5;
+    private static readonly ISyntaxHighlighter CPrototypeHighlighter = new CSyntaxHighlighter();
 
     private string? currentFilePath;
     private bool isDocumentDirty;
+    private bool isApplyingSyntaxColors;
     private bool isWordWrapEnabled = true;
     private bool isLineNumbersEnabled = true;
+    private EditorThemeMode currentThemeMode;
     private Font? selectedEditorFont;
     private string lastFindText = string.Empty;
     private string lastReplaceText = string.Empty;
@@ -20,6 +23,7 @@ public partial class Form1 : Form
         InitializeComponent();
         SetApplicationIcon();
         SetCurrentFilePath(null);
+        SetEditorThemeMode(EditorThemeMode.Light);
         ApplyWordWrapSetting();
         ApplyLineNumbersSetting();
         UpdateStatusBar();
@@ -28,7 +32,13 @@ public partial class Form1 : Form
 
     private void EditorTextBox_TextChanged(object sender, EventArgs e)
     {
+        if (isApplyingSyntaxColors)
+        {
+            return;
+        }
+
         MarkDocumentDirty();
+        ApplySyntaxColoring();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
         UpdateLineNumberGutter();
@@ -321,6 +331,13 @@ public partial class Form1 : Form
     {
         currentFilePath = filePath;
         UpdateWindowTitle();
+        ApplySyntaxColoring();
+    }
+
+    private void SetEditorThemeMode(EditorThemeMode themeMode)
+    {
+        currentThemeMode = themeMode;
+        ApplySyntaxColoring();
     }
 
     private void UpdateEditMenuItemStates()
@@ -350,6 +367,59 @@ public partial class Form1 : Form
         lineNumberGutterPanel.Visible = isLineNumbersEnabled;
         lineNumbersToolStripMenuItem.Checked = isLineNumbersEnabled;
         UpdateLineNumberGutter();
+    }
+
+    private void ApplySyntaxColoring()
+    {
+        if (isApplyingSyntaxColors)
+        {
+            return;
+        }
+
+        ISyntaxHighlighter? syntaxHighlighter = GetSyntaxHighlighterForCurrentFile();
+        SyntaxColorPalette palette = SyntaxColorPalette.ForTheme(currentThemeMode);
+        int selectionStart = editorTextBox.SelectionStart;
+        int selectionLength = editorTextBox.SelectionLength;
+
+        isApplyingSyntaxColors = true;
+        editorTextBox.SetRedrawEnabled(false);
+
+        try
+        {
+            editorTextBox.SelectAll();
+            editorTextBox.SelectionColor = palette.PlainText;
+
+            if (syntaxHighlighter is not null)
+            {
+                foreach (SyntaxSpan span in syntaxHighlighter.Highlight(editorTextBox.Text))
+                {
+                    editorTextBox.Select(span.Start, span.Length);
+                    editorTextBox.SelectionColor = palette.GetColor(span.Role);
+                }
+            }
+
+            editorTextBox.Select(selectionStart, selectionLength);
+
+            if (selectionLength == 0)
+            {
+                editorTextBox.SelectionColor = palette.PlainText;
+            }
+        }
+        finally
+        {
+            editorTextBox.SetRedrawEnabled(true);
+            isApplyingSyntaxColors = false;
+        }
+    }
+
+    private ISyntaxHighlighter? GetSyntaxHighlighterForCurrentFile()
+    {
+        string extension = Path.GetExtension(currentFilePath) ?? string.Empty;
+
+        return extension.Equals(".c", StringComparison.OrdinalIgnoreCase)
+            || extension.Equals(".h", StringComparison.OrdinalIgnoreCase)
+            ? CPrototypeHighlighter
+            : null;
     }
 
     private void PasteClipboardText()
