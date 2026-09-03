@@ -42,6 +42,7 @@ partial class Form1
     private StatusStrip editorStatusStrip;
     private ToolStripStatusLabel editorStatusLabel;
     private ToolStripStatusLabel languageStatusLabel;
+    private ToolStripStatusLabel encodingStatusLabel;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -102,6 +103,7 @@ partial class Form1
         editorStatusStrip = new StatusStrip();
         editorStatusLabel = new ToolStripStatusLabel();
         languageStatusLabel = new ToolStripStatusLabel();
+        encodingStatusLabel = new ToolStripStatusLabel();
         editorContainerPanel.SuspendLayout();
         SuspendLayout();
         // 
@@ -343,7 +345,7 @@ partial class Form1
         // editorStatusStrip
         // 
         editorStatusStrip.Dock = DockStyle.Bottom;
-        editorStatusStrip.Items.AddRange(new ToolStripItem[] { editorStatusLabel, languageStatusLabel });
+        editorStatusStrip.Items.AddRange(new ToolStripItem[] { editorStatusLabel, languageStatusLabel, encodingStatusLabel });
         editorStatusStrip.Location = new Point(0, 678);
         editorStatusStrip.Name = "editorStatusStrip";
         editorStatusStrip.Size = new Size(1000, 22);
@@ -358,10 +360,18 @@ partial class Form1
         // languageStatusLabel
         //
         languageStatusLabel.Name = "languageStatusLabel";
-        languageStatusLabel.Size = new Size(922, 17);
+        languageStatusLabel.Size = new Size(874, 17);
         languageStatusLabel.Spring = true;
         languageStatusLabel.Text = "Plain Text";
         languageStatusLabel.TextAlign = ContentAlignment.MiddleRight;
+        //
+        // encodingStatusLabel
+        //
+        encodingStatusLabel.BorderSides = ToolStripStatusLabelBorderSides.Left;
+        encodingStatusLabel.Name = "encodingStatusLabel";
+        encodingStatusLabel.Padding = new Padding(8, 0, 8, 0);
+        encodingStatusLabel.Size = new Size(76, 17);
+        encodingStatusLabel.Text = "UTF-8";
         // 
         // editorContainerPanel
         // 

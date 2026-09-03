@@ -4,17 +4,19 @@
 
 TxtItNow should open common Unicode text files without corrupting their contents and should make encoding behavior predictable. Encoding detection should remain separate from filename-based language detection: a `.c` file can use any supported text encoding.
 
-These notes define a future approach only. They do not add encoding selection or change the current file-reading and file-writing code.
+The initial encoding-selection implementation follows the approach described here.
 
-## Current Behavior
+## Implemented Behavior
 
-TxtItNow currently reads files with `File.ReadAllText(path)`. .NET detects UTF-8, UTF-16 little-endian, UTF-16 big-endian, UTF-32 little-endian, and UTF-32 big-endian when the file begins with the corresponding byte-order mark (BOM). Without a recognized BOM, the overload uses UTF-8.
+Open and Recent Files show an encoding dialog after a file is selected. The default is `Auto-detect`, or the user can explicitly select one of the supported Unicode encodings.
 
-TxtItNow currently saves with `File.WriteAllText(path, text)`, which writes UTF-8 without a BOM. Consequently, opening a BOM-marked UTF-16 or UTF-32 file and saving it currently converts it to UTF-8 without a BOM.
+Automatic detection recognizes UTF-8, UTF-16 little-endian, UTF-16 big-endian, UTF-32 little-endian, and UTF-32 big-endian when the file begins with the corresponding byte-order mark (BOM). A file without a recognized BOM is decoded as strict UTF-8. Invalid byte sequences produce a user-facing error instead of replacement characters.
 
-## Proposed Detection Order
+Save As shows an encoding dialog after a path is selected. A normal Save preserves the document's current encoding and BOM choice. New documents default to UTF-8 without a BOM, and the active encoding appears in the status bar.
 
-When encoding support is implemented, file loading should return both decoded text and an encoding description. Detection should proceed in this order:
+## Detection Order
+
+File loading returns both decoded text and its encoding description. Automatic detection proceeds in this order:
 
 1. Inspect the beginning of the file for a BOM, checking longer signatures before shorter overlapping signatures:
    - UTF-32 big-endian: `00 00 FE FF`
@@ -23,40 +25,39 @@ When encoding support is implemented, file loading should return both decoded te
    - UTF-16 big-endian: `FE FF`
    - UTF-16 little-endian: `FF FE`
 2. If there is no BOM, try strict UTF-8 decoding with invalid-byte detection enabled.
-3. If strict UTF-8 decoding fails, do not silently guess a legacy code page. Report that the encoding could not be determined and allow the user to choose an encoding once the encoding-selection UI exists.
+3. If strict UTF-8 decoding fails, do not silently guess a legacy code page. Report the decoding error so the user can open the file again with an explicit encoding.
 
 Checking UTF-32 little-endian before UTF-16 little-endian is important because both signatures begin with `FF FE`.
 
 ## Document Encoding State
 
-The document state should eventually retain:
+The document state retains:
 
-- The selected `Encoding` used to decode and encode the file
-- Whether the original file included a BOM
-- A short display name suitable for a future status-bar or dialog indicator
+- The selected strict `Encoding` used to decode and encode the file
+- Whether saves should include a BOM
+- A short display name shown in the status bar and encoding dialog
 
-New untitled documents should default to UTF-8 without a BOM. Opening a file should set the document encoding state from detection. `Save` should preserve that state, while a future `Save As` encoding choice may replace it.
+New untitled documents default to UTF-8 without a BOM. Opening a file sets the document encoding state from detection or the explicit selection. `Save` preserves that state, while `Save As` can replace it.
 
 ## Saving and Error Handling
 
-- Preserve the detected or user-selected encoding during a normal Save.
-- Preserve the BOM choice separately from the encoding where the encoding supports a preamble.
-- Use strict decoder and encoder fallbacks so invalid input or unrepresentable characters cause a user-facing error instead of silent replacement.
-- Do not modify the current document encoding state when opening or saving fails.
-- Keep newline handling independent from encoding handling.
+- Normal Save preserves the detected or user-selected encoding.
+- The BOM choice is preserved separately from character encoding behavior.
+- Strict decoder and encoder fallbacks make invalid input or unrepresentable characters produce a user-facing error instead of silent replacement.
+- Failed open and save operations do not modify the current document encoding state.
+- Newline handling remains independent from encoding handling.
 
 ## Scope of the First Encoding Implementation
 
-The first implementation should support the Unicode formats detectable by BOM plus BOM-less UTF-8. Support for legacy Windows code pages can be considered later, but it should require an explicit user choice rather than an unreliable content heuristic.
+The first implementation supports Unicode formats detectable by BOM plus BOM-less UTF-8. The same Unicode formats can be selected explicitly, which also permits opening BOM-less UTF-16 and UTF-32 files when their byte order is known.
 
-The next roadmap item, optional encoding selection for open/save operations, should decide:
+Support for legacy Windows code pages can be considered later, but it should require an explicit user choice rather than an unreliable content heuristic. Remaining decisions include:
 
-- Which encodings appear in the UI
-- Whether encoding is selected in the existing dialogs or a separate dialog
-- Whether the selected encoding is shown in the status bar
-- How the app handles a BOM-less file that is not valid UTF-8
+- Whether legacy code-page support is useful for this project
+- Whether encoding selection should eventually be integrated into a custom file dialog
+- Whether an automatic decoding failure should immediately reopen the encoding dialog
 
-## Manual Test Cases for Future Implementation
+## Manual Test Cases
 
 - Open UTF-8 files with and without a BOM.
 - Open UTF-16 little-endian and big-endian files with BOMs.

@@ -113,7 +113,7 @@
 - [x] Reapply syntax coloring when editor text, current file type, or active theme changes
 - [x] Detect and indicate the language in the status bar checking the filename extension
 - [x] Add file encoding detection notes
-- [ ] Add optional encoding selection for open/save operations
+- [x] Add optional encoding selection for open/save operations
 - [ ] Add `Format > Smart Indent`
 - [ ] Copy previous line indentation when pressing Enter
 - [ ] Increase indentation after lines ending with `{`
