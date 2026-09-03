@@ -21,6 +21,7 @@ partial class Form1
     private ToolStripMenuItem editToolStripMenuItem;
     private ToolStripMenuItem formatToolStripMenuItem;
     private ToolStripMenuItem wordWrapToolStripMenuItem;
+    private ToolStripMenuItem smartIndentToolStripMenuItem;
     private ToolStripMenuItem fontToolStripMenuItem;
     private ToolStripMenuItem viewToolStripMenuItem;
     private ToolStripMenuItem lineNumbersToolStripMenuItem;
@@ -82,6 +83,7 @@ partial class Form1
         editToolStripMenuItem = new ToolStripMenuItem();
         formatToolStripMenuItem = new ToolStripMenuItem();
         wordWrapToolStripMenuItem = new ToolStripMenuItem();
+        smartIndentToolStripMenuItem = new ToolStripMenuItem();
         fontToolStripMenuItem = new ToolStripMenuItem();
         viewToolStripMenuItem = new ToolStripMenuItem();
         lineNumbersToolStripMenuItem = new ToolStripMenuItem();
@@ -187,7 +189,7 @@ partial class Form1
         // 
         // formatToolStripMenuItem
         // 
-        formatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wordWrapToolStripMenuItem, fontToolStripMenuItem });
+        formatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wordWrapToolStripMenuItem, smartIndentToolStripMenuItem, fontToolStripMenuItem });
         formatToolStripMenuItem.Name = "formatToolStripMenuItem";
         formatToolStripMenuItem.Size = new Size(57, 20);
         formatToolStripMenuItem.Text = "F&ormat";
@@ -200,6 +202,15 @@ partial class Form1
         wordWrapToolStripMenuItem.Size = new Size(180, 22);
         wordWrapToolStripMenuItem.Text = "&Word Wrap";
         wordWrapToolStripMenuItem.Click += WordWrapToolStripMenuItem_Click;
+        //
+        // smartIndentToolStripMenuItem
+        //
+        smartIndentToolStripMenuItem.Checked = true;
+        smartIndentToolStripMenuItem.CheckState = CheckState.Checked;
+        smartIndentToolStripMenuItem.Name = "smartIndentToolStripMenuItem";
+        smartIndentToolStripMenuItem.Size = new Size(180, 22);
+        smartIndentToolStripMenuItem.Text = "&Smart Indent";
+        smartIndentToolStripMenuItem.Click += SmartIndentToolStripMenuItem_Click;
         // 
         // fontToolStripMenuItem
         // 
