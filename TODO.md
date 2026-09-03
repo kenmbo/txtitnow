@@ -114,7 +114,7 @@
 - [x] Detect and indicate the language in the status bar checking the filename extension
 - [x] Add file encoding detection notes
 - [x] Add optional encoding selection for open/save operations
-- [ ] Add `Format > Smart Indent`
+- [x] Add `Format > Smart Indent`
 - [ ] Copy previous line indentation when pressing Enter
 - [ ] Increase indentation after lines ending with `{`
 - [ ] Insert configured indentation when pressing Tab

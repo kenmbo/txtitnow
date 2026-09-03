@@ -11,6 +11,7 @@ public partial class Form1 : Form
     private bool isDocumentDirty;
     private bool isApplyingSyntaxColors;
     private bool isWordWrapEnabled = true;
+    private bool isSmartIndentEnabled = true;
     private bool isLineNumbersEnabled = true;
     private EditorThemeMode currentThemeMode;
     private TextFileEncoding currentFileEncoding = TextFileEncoding.Utf8WithoutBom;
@@ -27,6 +28,7 @@ public partial class Form1 : Form
         SetCurrentFileEncoding(TextFileEncoding.Utf8WithoutBom);
         SetEditorThemeMode(EditorThemeMode.Light);
         ApplyWordWrapSetting();
+        ApplySmartIndentSetting();
         ApplyLineNumbersSetting();
         UpdateStatusBar();
         UpdateRecentFilesMenu();
@@ -298,6 +300,12 @@ public partial class Form1 : Form
         UpdateLineNumberGutter();
     }
 
+    private void SmartIndentToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        isSmartIndentEnabled = !isSmartIndentEnabled;
+        ApplySmartIndentSetting();
+    }
+
     private void LineNumbersToolStripMenuItem_Click(object sender, EventArgs e)
     {
         isLineNumbersEnabled = !isLineNumbersEnabled;
@@ -406,6 +414,11 @@ public partial class Form1 : Form
             ? RichTextBoxScrollBars.Vertical
             : RichTextBoxScrollBars.Both;
         wordWrapToolStripMenuItem.Checked = isWordWrapEnabled;
+    }
+
+    private void ApplySmartIndentSetting()
+    {
+        smartIndentToolStripMenuItem.Checked = isSmartIndentEnabled;
     }
 
     private void ApplyLineNumbersSetting()
