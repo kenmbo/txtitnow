@@ -13,6 +13,7 @@ public partial class Form1 : Form
     private bool isWordWrapEnabled = true;
     private bool isLineNumbersEnabled = true;
     private EditorThemeMode currentThemeMode;
+    private TextFileEncoding currentFileEncoding = TextFileEncoding.Utf8WithoutBom;
     private Font? selectedEditorFont;
     private string lastFindText = string.Empty;
     private string lastReplaceText = string.Empty;
@@ -23,6 +24,7 @@ public partial class Form1 : Form
         InitializeComponent();
         SetApplicationIcon();
         SetCurrentFilePath(null);
+        SetCurrentFileEncoding(TextFileEncoding.Utf8WithoutBom);
         SetEditorThemeMode(EditorThemeMode.Light);
         ApplyWordWrapSetting();
         ApplyLineNumbersSetting();
@@ -107,6 +109,7 @@ public partial class Form1 : Form
         editorTextBox.Clear();
         editorTextBox.ClearUndo();
         SetCurrentFilePath(null);
+        SetCurrentFileEncoding(TextFileEncoding.Utf8WithoutBom);
         MarkDocumentClean();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
@@ -131,7 +134,12 @@ public partial class Form1 : Form
             return;
         }
 
-        OpenDocumentFromPath(openFileDialog.FileName);
+        if (!TrySelectEncoding("Open", allowAutoDetect: true, out TextFileEncoding? selectedEncoding))
+        {
+            return;
+        }
+
+        OpenDocumentFromPath(openFileDialog.FileName, selectedEncoding);
     }
 
     private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -142,7 +150,7 @@ public partial class Form1 : Form
             return;
         }
 
-        SaveDocumentToPath(currentFilePath);
+        SaveDocumentToPath(currentFilePath, currentFileEncoding);
     }
 
     private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -162,7 +170,12 @@ public partial class Form1 : Form
             return;
         }
 
-        if (!OpenDocumentFromPath(filePath))
+        if (!TrySelectEncoding("Open", allowAutoDetect: true, out TextFileEncoding? selectedEncoding))
+        {
+            return;
+        }
+
+        if (!OpenDocumentFromPath(filePath, selectedEncoding) && !File.Exists(filePath))
         {
             RemoveRecentFile(filePath);
         }
@@ -181,7 +194,13 @@ public partial class Form1 : Form
             return false;
         }
 
-        return SaveDocumentToPath(saveFileDialog.FileName);
+        if (!TrySelectEncoding("Save", allowAutoDetect: false, out TextFileEncoding? selectedEncoding)
+            || selectedEncoding is null)
+        {
+            return false;
+        }
+
+        return SaveDocumentToPath(saveFileDialog.FileName, selectedEncoding);
     }
 
     private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -339,6 +358,32 @@ public partial class Form1 : Form
     {
         currentThemeMode = themeMode;
         ApplySyntaxColoring();
+    }
+
+    private void SetCurrentFileEncoding(TextFileEncoding encoding)
+    {
+        currentFileEncoding = encoding;
+        encodingStatusLabel.Text = encoding.DisplayName;
+    }
+
+    private bool TrySelectEncoding(
+        string operationName,
+        bool allowAutoDetect,
+        out TextFileEncoding? selectedEncoding)
+    {
+        using EncodingSelectionDialog encodingDialog = new(
+            operationName,
+            allowAutoDetect,
+            currentFileEncoding);
+
+        if (encodingDialog.ShowDialog(this) != DialogResult.OK)
+        {
+            selectedEncoding = null;
+            return false;
+        }
+
+        selectedEncoding = encodingDialog.SelectedEncoding;
+        return true;
     }
 
     private void UpdateEditMenuItemStates()
@@ -611,16 +656,21 @@ public partial class Form1 : Form
         }
     }
 
-    private bool OpenDocumentFromPath(string filePath)
+    private bool OpenDocumentFromPath(string filePath, TextFileEncoding? selectedEncoding)
     {
-        if (!TryReadFile(filePath, out string fileContents))
+        if (!TryReadFile(
+            filePath,
+            selectedEncoding,
+            out string fileContents,
+            out TextFileEncoding detectedEncoding))
         {
             return false;
         }
 
         editorTextBox.Text = fileContents;
-        editorTextBox.ClearUndo();
         SetCurrentFilePath(filePath);
+        SetCurrentFileEncoding(detectedEncoding);
+        editorTextBox.ClearUndo();
         MarkDocumentClean();
         AddRecentFile(filePath);
         UpdateEditMenuItemStates();
@@ -629,26 +679,50 @@ public partial class Form1 : Form
         return true;
     }
 
-    private bool TryReadFile(string filePath, out string fileContents)
+    private bool TryReadFile(
+        string filePath,
+        TextFileEncoding? selectedEncoding,
+        out string fileContents,
+        out TextFileEncoding detectedEncoding)
     {
         try
         {
-            fileContents = File.ReadAllText(filePath);
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            int byteOrderMarkLength;
+
+            if (selectedEncoding is null)
+            {
+                bool foundByteOrderMark = TextFileEncoding.TryDetectFromByteOrderMark(
+                    fileBytes,
+                    out TextFileEncoding? byteOrderMarkEncoding,
+                    out byteOrderMarkLength);
+                detectedEncoding = foundByteOrderMark
+                    ? byteOrderMarkEncoding!
+                    : TextFileEncoding.Utf8WithoutBom;
+            }
+            else
+            {
+                detectedEncoding = selectedEncoding;
+                byteOrderMarkLength = selectedEncoding.GetMatchingByteOrderMarkLength(fileBytes);
+            }
+
+            fileContents = detectedEncoding.Decode(fileBytes, byteOrderMarkLength);
             return true;
         }
         catch (Exception ex)
         {
             fileContents = string.Empty;
+            detectedEncoding = currentFileEncoding;
             ShowFileError("open", filePath, ex);
             return false;
         }
     }
 
-    private bool SaveDocumentToPath(string filePath)
+    private bool SaveDocumentToPath(string filePath, TextFileEncoding encoding)
     {
         try
         {
-            File.WriteAllText(filePath, editorTextBox.Text);
+            File.WriteAllBytes(filePath, encoding.Encode(editorTextBox.Text));
         }
         catch (Exception ex)
         {
@@ -657,6 +731,7 @@ public partial class Form1 : Form
         }
 
         SetCurrentFilePath(filePath);
+        SetCurrentFileEncoding(encoding);
         MarkDocumentClean();
         AddRecentFile(filePath);
         return true;
