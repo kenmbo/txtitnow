@@ -111,8 +111,8 @@
 - [x] Choose a theme-independent syntax-highlighting approach
 - [x] Add syntax coloring for one language as a prototype using token roles from the active theme palette
 - [x] Reapply syntax coloring when editor text, current file type, or active theme changes
-- [ ] Detect and indicate the language in the status bar checking the filename extension
-- [ ] Add file encoding detection notes
+- [x] Detect and indicate the language in the status bar checking the filename extension
+- [x] Add file encoding detection notes
 - [ ] Add optional encoding selection for open/save operations
 - [ ] Add `Format > Smart Indent`
 - [ ] Copy previous line indentation when pressing Enter

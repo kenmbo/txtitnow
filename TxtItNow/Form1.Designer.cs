@@ -41,6 +41,7 @@ partial class Form1
     private ToolStripMenuItem contextSelectAllToolStripMenuItem;
     private StatusStrip editorStatusStrip;
     private ToolStripStatusLabel editorStatusLabel;
+    private ToolStripStatusLabel languageStatusLabel;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -100,6 +101,7 @@ partial class Form1
         contextSelectAllToolStripMenuItem = new ToolStripMenuItem();
         editorStatusStrip = new StatusStrip();
         editorStatusLabel = new ToolStripStatusLabel();
+        languageStatusLabel = new ToolStripStatusLabel();
         editorContainerPanel.SuspendLayout();
         SuspendLayout();
         // 
@@ -341,7 +343,7 @@ partial class Form1
         // editorStatusStrip
         // 
         editorStatusStrip.Dock = DockStyle.Bottom;
-        editorStatusStrip.Items.AddRange(new ToolStripItem[] { editorStatusLabel });
+        editorStatusStrip.Items.AddRange(new ToolStripItem[] { editorStatusLabel, languageStatusLabel });
         editorStatusStrip.Location = new Point(0, 678);
         editorStatusStrip.Name = "editorStatusStrip";
         editorStatusStrip.Size = new Size(1000, 22);
@@ -352,6 +354,14 @@ partial class Form1
         editorStatusLabel.Name = "editorStatusLabel";
         editorStatusLabel.Size = new Size(63, 17);
         editorStatusLabel.Text = "Ln 1, Col 1";
+        //
+        // languageStatusLabel
+        //
+        languageStatusLabel.Name = "languageStatusLabel";
+        languageStatusLabel.Size = new Size(922, 17);
+        languageStatusLabel.Spring = true;
+        languageStatusLabel.Text = "Plain Text";
+        languageStatusLabel.TextAlign = ContentAlignment.MiddleRight;
         // 
         // editorContainerPanel
         // 
