@@ -27,7 +27,7 @@ Future releases may add:
 
 ## Technical constraints
 
-- Use C# and .NET 9.
+- Use C# and .NET 10.
 - Use WinForms.
 - Keep the first version simple and maintainable.
 - Prefer standard .NET libraries before adding external packages.
