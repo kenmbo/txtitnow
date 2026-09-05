@@ -1,5 +1,13 @@
 # Syntax Coloring Design Notes
 
+## Documentation Ownership
+
+This document is the authoritative shared architecture document for syntax coloring. It owns theme-independent token roles, palettes, shared highlighter and formatting architecture, and editor-integration requirements.
+
+`syntax-languages.md` is the authoritative document for filename-based language detection, language display names, and per-language scanner contracts. `file-encoding.md` is authoritative only for text encoding and byte-order-mark behavior. The root `README.md` documents implemented, user-facing features, while `AGENTS.md` contains mandatory constraints and the development workflow.
+
+`TxtItNow/TxtItNow.csproj` is the authoritative source for the target framework.
+
 ## Goal
 
 Syntax coloring should make source files easier to scan while keeping TxtItNow simple and maintainable. The first implementation should support one prototype language, then leave room for more languages, dark mode, and future editor features.
@@ -108,20 +116,9 @@ Dark mode:
 
 These values should be adjusted visually when Dark Mode is implemented.
 
-## Prototype Language
+## Current Prototype
 
-C is a good first prototype because the current manual examples already include C-like files. Initial C support can recognize:
-
-- Preprocessor lines beginning with `#`
-- Keywords such as `int`, `return`, `if`, `else`, `for`, `while`, `void`, and `include`
-- String literals in double quotes
-- Line comments using `//`
-- Block comments using `/* ... */`
-- Numeric literals
-
-The prototype does not need full compiler-level parsing. A small tokenizer is enough for the first pass.
-
-The initial prototype is implemented by `CSyntaxHighlighter`. It emits `SyntaxTokenSpan` values with `SyntaxTokenRole` roles and leaves color selection to `SyntaxColorPalette`. The first wiring applies syntax coloring when opening `.c` and `.h` files; broader reapply behavior is tracked as a separate TODO item.
+C is the current prototype language. Its detection and scanner rules belong in `syntax-languages.md`; this document intentionally does not define per-language rules.
 
 ## Chosen Approach
 
@@ -182,4 +179,3 @@ Syntax coloring should be reapplied when:
 Do not mix token recognition and theme colors in the same class. If a highlighter emits `Color.Blue` directly, it will make Dark Mode harder. Emit roles such as `Keyword` and let the active theme palette decide what `Keyword` looks like.
 
 Before implementing syntax coloring, refactor to `RichTextBox` as its own task and verify the existing editor behaviors still work.
-

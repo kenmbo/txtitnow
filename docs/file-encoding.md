@@ -1,8 +1,12 @@
 # File Encoding Detection Notes
 
+## Documentation Ownership
+
+This document is authoritative only for text encoding selection, decoding and encoding behavior, and byte-order-mark (BOM) handling. It does not define language detection, scanner contracts, or syntax-coloring architecture.
+
 ## Goal
 
-TxtItNow should open common Unicode text files without corrupting their contents and should make encoding behavior predictable. Encoding detection should remain separate from filename-based language detection: a `.c` file can use any supported text encoding.
+TxtItNow should open common Unicode text files without corrupting their contents and should make encoding behavior predictable.
 
 The initial encoding-selection implementation follows the approach described here.
 
