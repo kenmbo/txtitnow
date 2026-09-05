@@ -123,6 +123,51 @@
 - [ ] Persist recent files between app launches
 - [ ] Add version number to the about to the `About` dialog
 
+## Milestone 6: Expanded syntax-coloring specification
+
+### Documentation ownership
+
+- [x] Define `syntax-coloring.md` as the authoritative shared architecture document
+- [x] Create `syntax-languages.md` as the authoritative language-detection and scanner-contract document
+- [x] Keep `README.md` limited to user-facing implemented features
+- [x] State that `TxtItNow.csproj` is authoritative for the target framework
+
+
+### Shared syntax-coloring documentation
+
+- [ ] Update `syntax-coloring.md` from prototype planning to the current implemented state
+- [ ] Document the existing C implementation as the compatibility baseline
+- [ ] Document the expanded theme-independent token roles
+- [ ] Document explicit light- and dark-palette mapping requirements
+- [ ] Document ordered, non-overlapping, in-range `SyntaxSpan` invariants
+- [ ] Document UTF-16 syntax-span indexing
+- [ ] Document language-registry responsibilities
+- [ ] Require one language decision to control both the highlighter and status-bar name
+- [ ] Document selection, viewport, dirty-state, undo, and workflow preservation
+- [ ] Document the initial debounce and full-document highlighting policy
+- [ ] Document when incremental highlighting may be considered
+
+### Language scanner documentation
+
+- [ ] Add an implementation-status table to `syntax-languages.md`
+- [ ] Add the authoritative filename-extension table
+- [ ] Document that `.h` remains C initially
+- [ ] Document Plain Text fallback behavior
+- [ ] Document shebang detection as a later task
+- [ ] Add the first-pass scanner contract for C++
+- [ ] Add the first-pass scanner contract for Markdown
+- [ ] Add the first-pass scanner contract for C#
+- [ ] Add the first-pass scanner contract for Java
+- [ ] Add the first-pass scanner contract for JSON
+- [ ] Add the first-pass scanner contract for Python
+- [ ] Add the first-pass scanner contract for Bash
+- [ ] Add the first-pass scanner contract for HTML/XML
+- [ ] Add the first-pass scanner contract for CSS
+- [ ] Add the first-pass scanner contract for JavaScript
+- [ ] Add the first-pass scanner contract for SQL
+- [ ] Add the first-pass scanner contract for YAML
+- [ ] Record deliberately deferred features for every language
+
 ### Dark Mode
 - [ ] Add `View > Dark Mode`
 - [ ] Store the current theme mode in app state
