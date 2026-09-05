@@ -4,6 +4,7 @@ public partial class Form1 : Form
 {
     private const string ApplicationName = "TxtItNow";
     private const string ApplicationIconResourceName = "TxtItNow.app.ico";
+    private const string ConfiguredIndentation = "    ";
     private const int MaxRecentFiles = 5;
     private static readonly ISyntaxHighlighter CPrototypeHighlighter = new CSyntaxHighlighter();
 
@@ -64,11 +65,67 @@ public partial class Form1 : Form
             return;
         }
 
+        if (isSmartIndentEnabled && e.KeyCode == Keys.Enter && !e.Control && !e.Alt)
+        {
+            InsertSmartIndentedNewLine();
+            e.SuppressKeyPress = true;
+            return;
+        }
+
+        if (isSmartIndentEnabled
+            && e.KeyCode == Keys.Tab
+            && !e.Shift
+            && !e.Control
+            && !e.Alt)
+        {
+            editorTextBox.SelectedText = ConfiguredIndentation;
+            e.SuppressKeyPress = true;
+            return;
+        }
+
         if ((e.Control && e.KeyCode == Keys.V) || (e.Shift && e.KeyCode == Keys.Insert))
         {
             PasteClipboardText();
             e.SuppressKeyPress = true;
         }
+    }
+
+    private void InsertSmartIndentedNewLine()
+    {
+        int selectionStart = editorTextBox.SelectionStart;
+        int currentLineIndex = editorTextBox.GetLineFromCharIndex(selectionStart);
+        int currentLineStart = editorTextBox.GetFirstCharIndexFromLine(currentLineIndex);
+
+        if (currentLineStart < 0)
+        {
+            editorTextBox.SelectedText = Environment.NewLine;
+            return;
+        }
+
+        string lineBeforeCaret = editorTextBox.Text.Substring(
+            currentLineStart,
+            selectionStart - currentLineStart);
+        string indentation = GetLeadingIndentation(lineBeforeCaret);
+
+        if (lineBeforeCaret.TrimEnd(' ', '\t').EndsWith("{", StringComparison.Ordinal))
+        {
+            indentation += ConfiguredIndentation;
+        }
+
+        editorTextBox.SelectedText = Environment.NewLine + indentation;
+    }
+
+    private static string GetLeadingIndentation(string line)
+    {
+        int indentationLength = 0;
+
+        while (indentationLength < line.Length
+            && (line[indentationLength] == ' ' || line[indentationLength] == '\t'))
+        {
+            indentationLength++;
+        }
+
+        return line[..indentationLength];
     }
 
     private void EditorTextBox_MouseDown(object sender, MouseEventArgs e)

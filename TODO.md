@@ -115,9 +115,9 @@
 - [x] Add file encoding detection notes
 - [x] Add optional encoding selection for open/save operations
 - [x] Add `Format > Smart Indent`
-- [ ] Copy previous line indentation when pressing Enter
-- [ ] Increase indentation after lines ending with `{`
-- [ ] Insert configured indentation when pressing Tab
+- [x] Copy previous line indentation when pressing Enter
+- [x] Increase indentation after lines ending with `{`
+- [x] Insert configured indentation when pressing Tab
 - [ ] Persist recent files between app launches
 - [ ] Add version number to the about to the `About` dialog
 
