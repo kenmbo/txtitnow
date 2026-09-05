@@ -4,6 +4,7 @@ public partial class Form1 : Form
 {
     private const string ApplicationName = "TxtItNow";
     private const string ApplicationIconResourceName = "TxtItNow.app.ico";
+    private const string ConfiguredIndentation = "    ";
     private const int MaxRecentFiles = 5;
     private static readonly ISyntaxHighlighter CPrototypeHighlighter = new CSyntaxHighlighter();
 
@@ -68,6 +69,24 @@ public partial class Form1 : Form
         {
             PasteClipboardText();
             e.SuppressKeyPress = true;
+        }
+
+        if (isSmartIndentEnabled && e.KeyCode == Keys.Enter && !e.Control && !e.Alt)
+        {
+            InsertSmartIndentedNewLine();
+            e.SuppressKeyPress = true;
+            return;
+        }
+
+        if (isSmartIndentEnabled
+            && e.KeyCode == Keys.Tab
+            && !e.Shift
+            && !e.Control
+            && !e.Alt)
+        {
+            editorTextBox.SelectedText = ConfiguredIndentation;
+            e.SuppressKeyPress = true;
+            return;
         }
     }
 
