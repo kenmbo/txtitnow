@@ -90,6 +90,31 @@ public partial class Form1 : Form
         }
     }
 
+    private void InsertSmartIndentedNewLine()
+    {
+        int selectionStart = editorTextBox.SelectionStart;
+        int currentLineIndex = editorTextBox.GetLineFromCharIndex(selectionStart);
+        int currentLineStart = editorTextBox.GetFirstCharIndexFromLine(currentLineIndex);
+
+        if (currentLineStart < 0)
+        {
+            editorTextBox.SelectedText = Environment.NewLine;
+            return;
+        }
+
+        string lineBeforeCaret = editorTextBox.Text.Substring(
+            currentLineStart,
+            selectionStart - currentLineStart);
+        string indentation = GetLeadingIndentation(lineBeforeCaret);
+
+        if (lineBeforeCaret.TrimEnd(' ', '\t').EndsWith("{", StringComparison.Ordinal))
+        {
+            indentation += ConfiguredIndentation;
+        }
+
+        editorTextBox.SelectedText = Environment.NewLine + indentation;
+    }
+
     private void EditorTextBox_MouseDown(object sender, MouseEventArgs e)
     {
         if (e.Button != MouseButtons.Right)
