@@ -69,3 +69,5 @@ Polish checks:
 - Syntax highlighting
 - Cloud sync
 
+# License
+[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html) 
