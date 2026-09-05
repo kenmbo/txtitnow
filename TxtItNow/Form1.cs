@@ -115,6 +115,19 @@ public partial class Form1 : Form
         editorTextBox.SelectedText = Environment.NewLine + indentation;
     }
 
+    private static string GetLeadingIndentation(string line)
+    {
+        int indentationLength = 0;
+
+        while (indentationLength < line.Length
+            && (line[indentationLength] == ' ' || line[indentationLength] == '\t'))
+        {
+            indentationLength++;
+        }
+
+        return line[..indentationLength];
+    }
+
     private void EditorTextBox_MouseDown(object sender, MouseEventArgs e)
     {
         if (e.Button != MouseButtons.Right)
