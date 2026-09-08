@@ -408,7 +408,7 @@ partial class Form1
         editorTextBox.ContextMenuStrip = editorContextMenuStrip;
         editorTextBox.DetectUrls = false;
         editorTextBox.Dock = DockStyle.Fill;
-	editorTextBox.AcceptsTab = true;
+        editorTextBox.AcceptsTab = true;
         editorTextBox.Multiline = true;
         editorTextBox.Name = "editorTextBox";
         editorTextBox.ScrollBars = RichTextBoxScrollBars.Vertical;

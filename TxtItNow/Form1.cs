@@ -65,12 +65,6 @@ public partial class Form1 : Form
             return;
         }
 
-        if ((e.Control && e.KeyCode == Keys.V) || (e.Shift && e.KeyCode == Keys.Insert))
-        {
-            PasteClipboardText();
-            e.SuppressKeyPress = true;
-        }
-
         if (isSmartIndentEnabled && e.KeyCode == Keys.Enter && !e.Control && !e.Alt)
         {
             InsertSmartIndentedNewLine();
@@ -87,6 +81,12 @@ public partial class Form1 : Form
             editorTextBox.SelectedText = ConfiguredIndentation;
             e.SuppressKeyPress = true;
             return;
+        }
+
+        if ((e.Control && e.KeyCode == Keys.V) || (e.Shift && e.KeyCode == Keys.Insert))
+        {
+            PasteClipboardText();
+            e.SuppressKeyPress = true;
         }
     }
 
