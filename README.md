@@ -1,10 +1,7 @@
 # TxtItNow
 
-TxtItNow is a small Windows Notepad-like text editor built with C#, .NET 10, and WinForms.
+TxtItNow is a Windows Notepad-like text editor built with C# and WinForms.
 
-![Window demonstration of the TxtItNow GUI. The application currently has the README.md opened.](docs/assets/screenshot-txtitnow.png)
-
-![Demonstration of the font selection. A serif font is used here to demonstrate formal essay-like text. The TxtItNow application is showing notes on the character Captain Ahab in the book Moby Dick by Herman Melville.](docs/assets/screenshot-txtitnow-font-selection.png)
 ## Installation
 
 ```bash
@@ -15,16 +12,21 @@ dotnet run --project TxtItNow/TxtItNow.csproj
 # Wait around a minute, then a notepad application will appear.
 ```
 
-## Version 1 goals
+## Implemented features
 
 - New file
-- Open `.txt` files
+- Open and save plain-text files
+- Choose or automatically detect supported Unicode encodings when opening files
+- Preserve the selected encoding and byte-order-mark choice when saving
 - Edit text
-- Save
-- Save As
 - Detect unsaved changes
 - Prompt before closing with unsaved changes
-- Basic menu bar and keyboard shortcuts
+- File, Edit, Format, View, and Help menus with common keyboard shortcuts
+- Undo, cut, copy, paste, select all, find, and replace
+- Recent files for the current app session
+- Word wrap, smart indentation, and font selection
+- Line numbers and line/column status information
+- C syntax coloring
 
 ## Manual test notes
 
@@ -54,20 +56,3 @@ Polish checks:
 - Move the caret with the mouse and arrow keys; the status bar should update line and column.
 - Confirm the window and executable use the TxtItNow icon.
 - Open `Help > About TxtItNow` and confirm the About dialog appears.
-
-## Future ideas
-
-- Syntax highlighting
-- Font settings
-- Encoding options
-
-## Non-goals for v1
-
-- Tabs
-- Rich text formatting
-- Plugin system
-- Syntax highlighting
-- Cloud sync
-
-# License
-[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html) 
