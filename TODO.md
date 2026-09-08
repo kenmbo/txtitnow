@@ -125,12 +125,12 @@
 
 ### Documentation ownership
 
-- [ ] Define `syntax-coloring.md` as the authoritative shared architecture document
-- [ ] Create `syntax-languages.md` as the authoritative language-detection and scanner-contract document
-- [ ] Keep `file-encoding.md` authoritative only for encoding and BOM behavior
-- [ ] Keep `README.md` limited to user-facing implemented features
-- [ ] Keep `AGENTS.md` limited to mandatory constraints and development workflow
-- [ ] State that `TxtItNow.csproj` is authoritative for the target framework
+- [x] Define `syntax-coloring.md` as the authoritative shared architecture document
+- [x] Create `syntax-languages.md` as the authoritative language-detection and scanner-contract document
+- [x] Keep `file-encoding.md` authoritative only for encoding and BOM behavior
+- [x] Keep `README.md` limited to user-facing implemented features
+- [x] Keep `AGENTS.md` limited to mandatory constraints and development workflow
+- [x] State that `TxtItNow.csproj` is authoritative for the target framework
 
 ### Shared syntax-coloring documentation
 

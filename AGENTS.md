@@ -1,40 +1,17 @@
 # txtitnow Agent Instructions
 
-## Project goal
+## Mandatory project constraints
 
 Build a small Windows Notepad-like text editor in C# using WinForms.
 
-## Release Goals
-
-Release 1.0 should have:
-- Create new notes
-- Open plain text files
-- Edit text
-- Save files
-- Save As
-- Unsaved-change detection
-- Basic keyboard shortcuts
-- Simple menu bar similar to Windows Notepad
-
-Future releases may add:
-- Syntax highlighting
-- Recently opened files
-- Find/replace
-- Status bar
-- Line/column indicator
-- Font customization
-- Encoding options
-
-## Technical constraints
-
-- Use C# and .NET 10.
+- Use C#.
 - Use WinForms.
+- `TxtItNow/TxtItNow.csproj` is the authoritative source for the target framework. Do not duplicate its changing value in other documentation.
 - Keep the first version simple and maintainable.
 - Prefer standard .NET libraries before adding external packages.
-- Do not add syntax highlighting in the first milestone unless explicitly requested.
 - Avoid over-engineering. This is a toy learning project.
 
-## Coding style
+## Mandatory coding practices
 
 - Keep UI code readable.
 - Use descriptive method names.

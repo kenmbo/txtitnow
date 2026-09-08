@@ -1,6 +1,6 @@
 # TxtItNow
 
-MyNotepad is a small Windows Notepad-like text editor built with C#, .NET 10, and WinForms.
+TxtItNow is a Windows Notepad-like text editor built with C# and WinForms.
 
 ## Installation
 
@@ -12,16 +12,21 @@ dotnet run --project TxtItNow/TxtItNow.csproj
 # Wait around a minute, then a notepad application will appear.
 ```
 
-## Version 1 goals
+## Implemented features
 
 - New file
-- Open `.txt` files
+- Open and save plain-text files
+- Choose or automatically detect supported Unicode encodings when opening files
+- Preserve the selected encoding and byte-order-mark choice when saving
 - Edit text
-- Save
-- Save As
 - Detect unsaved changes
 - Prompt before closing with unsaved changes
-- Basic menu bar and keyboard shortcuts
+- File, Edit, Format, View, and Help menus with common keyboard shortcuts
+- Undo, cut, copy, paste, select all, find, and replace
+- Recent files for the current app session
+- Word wrap, smart indentation, and font selection
+- Line numbers and line/column status information
+- C syntax coloring
 
 ## Manual test notes
 
@@ -51,17 +56,3 @@ Polish checks:
 - Move the caret with the mouse and arrow keys; the status bar should update line and column.
 - Confirm the window and executable use the TxtItNow icon.
 - Open `Help > About TxtItNow` and confirm the About dialog appears.
-
-## Future ideas
-
-- Syntax highlighting
-- Recent files
-- Encoding options
-
-## Non-goals for v1
-
-- Tabs
-- Rich text formatting
-- Plugin system
-- Syntax highlighting
-- Cloud sync
