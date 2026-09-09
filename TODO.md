@@ -142,8 +142,8 @@ Complete this documentation milestone before changing the multi-language impleme
 - [x] Document the existing C highlighter as the regression baseline that must remain supported
 - [x] Document that scanners emit theme-independent `SyntaxTokenRole` values and must not contain light- or dark-theme colors
 - [x] Document how every token role maps explicitly in both the light and dark palettes
-- [ ] Document that source indices and lengths use .NET UTF-16 string positions
-- [ ] Document that `SyntaxSpan` results must be in ascending order, within the source bounds, positive-length, and non-overlapping
+- [x] Document that source indices and lengths use .NET UTF-16 string positions
+- [x] Document that `SyntaxSpan` results must be in ascending order, within the source bounds, positive-length, and non-overlapping
 - [ ] Document scanner precedence: protected multiline constructs first, then comments and literals, then language-specific structures, identifiers, numbers, and longest-match operators
 - [ ] Document that uncertain text remains `PlainText` rather than being guessed aggressively
 - [ ] Document that one language decision selects both the highlighter and the status-bar language name

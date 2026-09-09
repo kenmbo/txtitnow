@@ -54,3 +54,16 @@ Scanners emit only these `SyntaxTokenRole` values. A scanner may omit a span for
 
 `SyntaxColorPalette.Light` and `SyntaxColorPalette.Dark` implement this mapping. Its `GetColor` fallback is `PlainText`; a future role must not rely on that fallback instead of receiving both explicit palette entries.
 
+## Syntax Span Contract
+
+A `SyntaxSpan` contains `Start`, `Length`, and `SyntaxTokenRole`. `Start` and `Length` use .NET `string` positions: UTF-16 code units, not Unicode scalar values, grapheme clusters, UTF-8 bytes, or visual columns. Consequently, a character outside the Basic Multilingual Plane occupies two string positions.
+
+For the source passed to `Highlight`, every returned span must satisfy all of these invariants:
+
+- `Start` is at least zero.
+- `Length` is positive.
+- `Start + Length` is at most `text.Length`.
+- Spans are returned in ascending `Start` order.
+- Spans do not overlap; each span starts at or after the end of its predecessor.
+
+Scanners must always advance their source index, including for malformed input, so syntax coloring cannot loop indefinitely. Shared validation may enforce these invariants during development, but each scanner remains responsible for producing valid spans.
