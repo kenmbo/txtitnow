@@ -4,7 +4,7 @@
 
 This document is the authoritative source for filename-based language detection, language display names, and per-language scanner contracts. It will define which highlighter is used for each recognized language and the token-recognition responsibilities of that highlighter.
 
-Shared syntax-coloring architecture, token roles, palettes, and RichTextBox formatting behavior belong in `syntax-coloring.md`. Text encoding and byte-order-mark behavior belong only in `file-encoding.md`.
+[`syntax-languages.md`](syntax-languages.md) is the authoritative document for filename-based language detection, language display names, and per-language scanner contracts. [`file-encoding.md`](file-encoding.md) is authoritative only for text encoding and byte-order-mark behavior. The root [`README.md`](../README.md) documents implemented, user-facing feaatures.
 
 ## Current Scope
 

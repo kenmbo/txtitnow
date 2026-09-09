@@ -4,6 +4,8 @@
 
 This document is authoritative only for text encoding selection, decoding and encoding behavior, and byte-order-mark (BOM) handling. It does not define language detection, scanner contracts, or syntax-coloring architecture.
 
+For those responsibilities, see [`syntax-coloring.md`](syntax-coloring.md) and [`syntax-languages.md`](syntax-languages.md). The root [`README.md`](../README.md) describes the implemented user experience.
+
 ## Goal
 
 TxtItNow should open common Unicode text files without corrupting their contents and should make encoding behavior predictable.
