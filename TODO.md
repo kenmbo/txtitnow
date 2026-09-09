@@ -134,8 +134,8 @@ Complete this documentation milestone before changing the multi-language impleme
 - [x] Keep `README.md` focused on user-visible features, supported languages, limitations, build instructions, and manual test entry points
 - [x] Keep `AGENTS.md` focused on mandatory project constraints and the incremental implementation workflow
 - [x] State that the target framework in `TxtItNow.csproj` is authoritative when documentation disagrees
-- [ ] Cross-link the syntax-coloring, language, encoding, README, and contributor documentation where their responsibilities meet
-- [ ] Keep the language specifications in one document initially; split them into per-language documents only if `syntax-languages.md` becomes difficult to navigate
+- [x] Cross-link the syntax-coloring, language, encoding, README, and contributor documentation where their responsibilities meet
+- [x] Keep the language specifications in one document initially; split them into per-language documents only if `syntax-languages.md` becomes difficult to navigate
 
 ### Shared syntax-coloring documentation
 

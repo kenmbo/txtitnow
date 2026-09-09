@@ -4,7 +4,7 @@
 
 This document is the authoritative shared architecture document for syntax coloring. It owns theme-independent token roles, palettes, shared highlighter and formatting architecture, and editor-integration requirements.
 
-`syntax-languages.md` is the authoritative document for filename-based language detection, language display names, and per-language scanner contracts. `file-encoding.md` is authoritative only for text encoding and byte-order-mark behavior. The root `README.md` documents implemented, user-facing features, while `AGENTS.md` contains mandatory constraints and the development workflow.
+[`syntax-languages.md`](syntax-languages.md) is the authoritative document for filename-based language detection, language display names, and per-language scanner contracts. [`file-encoding.md`](file-encoding.md) is authoritative only for text encoding and byte-order-mark behavior. The root [`README.md`](../README.md) documents implemented, user-facing features, while [`AGENTS.md`](../AGENTS.md) contains mandatory constraints and the development workflow.
 
 `TxtItNow/TxtItNow.csproj` is the authoritative source for the target framework.
 

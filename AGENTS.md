@@ -23,6 +23,13 @@ Build a small Windows Notepad-like text editor in C# using WinForms.
 
 When asked to implement a milestone, do not implement the whole milestone unless explicitly requested.
 
+When work affects syntax coloring, use the applicable authoritative documentation:
+
+- [`docs/syntax-coloring.md`](docs/syntax-coloring.md) for shared architecture, token roles, palettes, and editor integration.
+- [`docs/syntax-languages.md`](docs/syntax-languages.md) for language identification and per-language scanner contracts.
+- [`docs/file-encoding.md`](docs/file-encoding.md) for encoding and BOM behavior.
+- [`README.md`](README.md) for implemented, user-facing features and manual test entry points.
+
 Before making changes:
 1. Briefly summarize the current project structure.
 2. Identify the exact TODO.md bullet point(s) being implemented.

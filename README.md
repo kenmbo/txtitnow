@@ -28,6 +28,13 @@ dotnet run --project TxtItNow/TxtItNow.csproj
 - Line numbers and line/column status information
 - C syntax coloring
 
+## Documentation
+
+- [Syntax-coloring architecture](docs/syntax-coloring.md) explains shared token, palette, and editor-formatting design.
+- [Language identification and scanner contracts](docs/syntax-languages.md) owns language detection and per-language scanner specifications.
+- [File encoding behavior](docs/file-encoding.md) owns encoding selection, decoding, saving, and BOM behavior.
+- [Contributor instructions](AGENTS.md) contain the mandatory project constraints and development workflow.
+
 ## Manual test notes
 
 Run the app:
