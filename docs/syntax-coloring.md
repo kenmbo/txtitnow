@@ -36,3 +36,21 @@ The language decision must be made once and used both to select the highlighter 
 
 This is a behavioral regression baseline, not a requirement to turn the C scanner into a compiler. Its detailed language contract belongs in [`syntax-languages.md`](syntax-languages.md).
 
+## Theme-Independent Token Roles and Palettes
+
+Scanners emit only these `SyntaxTokenRole` values. A scanner may omit a span for ordinary text; the formatter supplies `PlainText` as the default. Every role must map explicitly in both palettes in the same change that introduces or changes the role.
+
+| Role | Light palette | Dark palette |
+| --- | --- | --- |
+| `PlainText` | `#1F1F1F` | `#D4D4D4` |
+| `Keyword` | `#0000B4` | `#569CD6` |
+| `StringLiteral` | `#A31515` | `#CE9178` |
+| `Comment` | `#008000` | `#6A9955` |
+| `Number` | `#800080` | `#B5CEA8` |
+| `Preprocessor` | `#008080` | `#4EC9B0` |
+| `TypeName` | `#2B91AF` | `#4EC9B0` |
+| `FunctionName` | `#795E26` | `#DCDCAA` |
+| `Operator` | `#404040` | `#B4B4B4` |
+
+`SyntaxColorPalette.Light` and `SyntaxColorPalette.Dark` implement this mapping. Its `GetColor` fallback is `PlainText`; a future role must not rely on that fallback instead of receiving both explicit palette entries.
+

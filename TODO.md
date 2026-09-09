@@ -128,20 +128,20 @@ Complete this documentation milestone before changing the multi-language impleme
 
 ### Documentation ownership and organization
 
-- [ ] Keep `syntax-coloring.md` as the authoritative document for shared syntax-coloring architecture, token roles, palettes, span invariants, editor integration, and performance policy
-- [ ] Create `syntax-languages.md` as the authoritative document for language identification and per-language scanner contracts
-- [ ] Keep `file-encoding.md` focused on encoding detection, BOM handling, open/save choices, and encoding preservation
-- [ ] Keep `README.md` focused on user-visible features, supported languages, limitations, build instructions, and manual test entry points
-- [ ] State that the target framework in `TxtItNow.csproj` is authoritative when documentation disagrees
-- [ ] Cross-link the syntax-coloring, language, encoding, README, and contributor documentation where their responsibilities meet
-- [ ] Keep the language specifications in one document initially; split them into per-language documents only if `syntax-languages.md` becomes difficult to navigate
+- [x] Keep `syntax-coloring.md` as the authoritative document for shared syntax-coloring architecture, token roles, palettes, span invariants, editor integration, and performance policy
+- [x] Create `syntax-languages.md` as the authoritative document for language identification and per-language scanner contracts
+- [x] Keep `file-encoding.md` focused on encoding detection, BOM handling, open/save choices, and encoding preservation
+- [x] Keep `README.md` focused on user-visible features, supported languages, limitations, build instructions, and manual test entry points
+- [x] State that the target framework in `TxtItNow.csproj` is authoritative when documentation disagrees
+- [x] Cross-link the syntax-coloring, language, encoding, README, and contributor documentation where their responsibilities meet
+- [x] Keep the language specifications in one document initially; split them into per-language documents only if `syntax-languages.md` becomes difficult to navigate
 
 ### Shared syntax-coloring documentation
 
-- [ ] Update `syntax-coloring.md` from a C-prototype description to the current shared architecture
-- [ ] Document the existing C highlighter as the regression baseline that must remain supported
-- [ ] Document that scanners emit theme-independent `SyntaxTokenRole` values and must not contain light- or dark-theme colors
-- [ ] Document how every token role maps explicitly in both the light and dark palettes
+- [x] Update `syntax-coloring.md` from a C-prototype description to the current shared architecture
+- [x] Document the existing C highlighter as the regression baseline that must remain supported
+- [x] Document that scanners emit theme-independent `SyntaxTokenRole` values and must not contain light- or dark-theme colors
+- [x] Document how every token role maps explicitly in both the light and dark palettes
 - [ ] Document that source indices and lengths use .NET UTF-16 string positions
 - [ ] Document that `SyntaxSpan` results must be in ascending order, within the source bounds, positive-length, and non-overlapping
 - [ ] Document scanner precedence: protected multiline constructs first, then comments and literals, then language-specific structures, identifiers, numbers, and longest-match operators
