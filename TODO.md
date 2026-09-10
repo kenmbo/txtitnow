@@ -153,10 +153,10 @@ Complete this documentation milestone before changing the multi-language impleme
 
 ### Language identification and scanner contracts
 
-- [ ] Document extension matching as case-insensitive
-- [ ] Document the initial ambiguity policy for `.h`: continue treating it as C unless a future explicit language override is added
-- [ ] Document `Plain Text` as the fallback for unknown or missing extensions
-- [ ] Defer shebang detection for extensionless Bash and Python files until the corresponding highlighters exist
+- [x] Document extension matching as case-insensitive
+- [x] Document the initial ambiguity policy for `.h`: continue treating it as C unless a future explicit language override is added
+- [x] Document `Plain Text` as the fallback for unknown or missing extensions
+- [x] Defer shebang detection for extensionless Bash and Python files until the corresponding highlighters exist
 - [ ] Document a C++ first-pass contract based on the C++23 lexical surface supported by the scanner, including explicit deferrals
 - [ ] Document a pragmatic Markdown first-pass contract, including the supported block and inline constructs and explicit CommonMark limitations
 - [ ] Document a C# first-pass contract based on C# 14 because the project targets .NET 10 and does not set another language version
