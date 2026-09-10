@@ -109,3 +109,8 @@ The first pass must recognize:
 - Conservative function-name heuristics for declarations and invocations while excluding control-flow keywords, attribute lists with attribute identifiers as `Annotation`, and longest-match operators.
 
 Uncertain generic type arguments, LINQ contextual keywords, pattern variables, aliases, namespaces, and semantic symbol classifications remain plain identifiers. The scanner explicitly defers semantic parsing and symbol resolution, inactive preprocessor-region dimming, XML documentation parsing, and nested interpolation-expression highlighting.
+
+## Contract Maintenance
+
+When a language becomes implemented, update its row in the status table in the same change with its active extensions, display name, supported constructs, deferred constructs, and concrete manual-test coverage. Update the relevant scanner contract before changing its lexical behavior; do not register a partially documented or unsupported language.
+
