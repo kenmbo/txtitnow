@@ -95,7 +95,7 @@ Syntax formatting changes only `SelectionColor`; it must never replace document 
 The existing applicator already guards reentrancy, suspends redraw, captures and restores selection, and resets an empty caret selection to `PlainText`. The shared integration must add explicit viewport preservation while retaining those safeguards. File open/save workflows, unsaved-change prompts, undo, cut, copy, paste, find, replace, word wrap, smart indentation, font selection, status updates, line-number gutter behavior, and recent-file behavior must continue to work exactly as they do without syntax coloring.
 
 
-## Recoloring Policy
+## Recoloring Policy and Performance
 
 The current C prototype recolors the entire document immediately on text changes and when the file type or active theme changes. It is the behavioral baseline, but the initial shared multi-language policy is a full-document recoloring pass after a 150 ms text-change debounce:
 
@@ -104,3 +104,5 @@ The current C prototype recolors the entire document immediately on text changes
 - Keep all RichTextBox formatting on the UI thread and discard a stale scheduled request when a newer text change, document, language, or theme supersedes it.
 
 Full-document recoloring is intentionally the initial strategy. Do not add visible-range or incremental highlighting merely because they are possible. First instrument representative documents and record document length in UTF-16 positions, scanner duration, formatting duration, total recoloring duration, and the elapsed time from the last edit to completed redraw.
+
+Consider visible-range or incremental highlighting only when a 30-second sustained-edit sample on representative files shows either a 95th-percentile total recoloring duration above 50 ms, any repeatable recoloring duration above 100 ms, or a user-visible typing delay attributable to coloring. Measurements must identify whether scanning or RichTextBox formatting is the bottleneck before choosing an optimization.
