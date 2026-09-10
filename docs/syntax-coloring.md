@@ -106,3 +106,10 @@ The current C prototype recolors the entire document immediately on text changes
 Full-document recoloring is intentionally the initial strategy. Do not add visible-range or incremental highlighting merely because they are possible. First instrument representative documents and record document length in UTF-16 positions, scanner duration, formatting duration, total recoloring duration, and the elapsed time from the last edit to completed redraw.
 
 Consider visible-range or incremental highlighting only when a 30-second sustained-edit sample on representative files shows either a 95th-percentile total recoloring duration above 50 ms, any repeatable recoloring duration above 100 ms, or a user-visible typing delay attributable to coloring. Measurements must identify whether scanning or RichTextBox formatting is the bottleneck before choosing an optimization.
+
+## Implementation Boundaries
+
+Keep scanners separate from WinForms UI code and favor small, deterministic scanners over broad regular-expression chains. A narrowly scoped regular expression is acceptable when it makes a scanner clearer, but scanners must not attempt full compiler parsing or recovery.
+
+Language-specific recognition belongs in [`syntax-languages.md`](syntax-languages.md). Encoding is resolved before the editor receives text and belongs in [`file-encoding.md`](file-encoding.md); syntax spans always operate on the resulting .NET string.
+
