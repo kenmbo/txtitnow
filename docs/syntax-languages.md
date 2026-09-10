@@ -6,6 +6,10 @@ This document is the authoritative source for filename-based language detection,
 
 [`syntax-languages.md`](syntax-languages.md) is the authoritative document for filename-based language detection, language display names, and per-language scanner contracts. [`file-encoding.md`](file-encoding.md) is authoritative only for text encoding and byte-order-mark behavior. The root [`README.md`](../README.md) documents implemented, user-facing feaatures.
 
+## Organization
+
+Keep all language specifications in this document initially so language-identification rules and scanner contracts are easy to compare. Do not create per-language specification documents unless this document becomes difficult to navigate; if that threshold is reached, retain this document as the index and authoritative location for shared language-detection rules.
+
 ## Language Identification
 
 Language detection is filename-extension based. Match extensions case-insensitively with ordinal comparison; `.C`, `.CPP`, and `.Md` must resolve the same as their lowercase spellings. Do not infer a language from file contents, encoding, or a partial filename.
