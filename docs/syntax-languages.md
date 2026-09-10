@@ -54,3 +54,35 @@ The first pass must recognize the following without changing source text:
 
 Uncertain namespace-qualified names, template arguments, macro names, aliases, and declarations remain plain identifiers. The scanner explicitly defers macro expansion, translation-phase emulation, semantic template parsing, namespace and scope resolution, contextual type inference, and nested-language highlighting. It must not claim compiler-level C++23 conformance.
 
+## Pragmatic Markdown First-Pass Contract
+
+### Scope and detection
+
+The Markdown scanner is planned for Milestone 9 as a deterministic, Markdown-aware scanner, not whole-document regular-expression passes or a full CommonMark parser. It will resolve `.md` and `.markdown` as `Markdown` and will add `Heading`, `Emphasis`, `Link`, `Code`, and `Quote` roles with explicit palette mappings when implemented.
+
+This contract is a deliberately conservative subset of [CommonMark 0.31.2](https://spec.commonmark.org/0.31.2/). It favors stable, non-overlapping spans for live editing over complete parsing of every valid or ambiguous CommonMark construct.
+
+### Supported block constructs
+
+The first pass must recognize:
+
+- ATX headings with up to three leading spaces, one through six `#` markers, a required following space or end of line, and optional closing markers.
+- Setext headings using `=` or `-` underline lines after eligible nonblank text. When that context is absent, a thematic-break interpretation wins where the line qualifies; the scanner must apply this ambiguity rule consistently.
+- Backtick and tilde fenced code blocks with at least three opening markers; a closing fence must use the same marker and at least the opening length. An unclosed fence remains code through end of input, and its info string does not select another highlighter.
+- One or more block-quote markers, unordered and ordered list markers after permitted indentation, and thematic breaks without confusing them with list markers or Setext underlines.
+- A conservative protected subset of HTML comments, declarations, and common block-tag regions. These regions remain plain text and prevent inline Markdown recognition inside them.
+
+### Supported inline constructs
+
+Inside unclaimed, non-protected text, the first pass must recognize:
+
+- Variable-length inline backtick code spans only when closed by a run of the same length, without normalizing source text or span positions.
+- Inline links and images with labels and destinations, including one balanced parenthesis level in a destination and escaped delimiters.
+- Full and collapsed reference-link syntax without semantic resolution of reference definitions.
+- Same-line, non-nested emphasis and strong emphasis with `*` and `_`, selecting strong emphasis before single emphasis when both begin at the same position.
+- Escaped punctuation as literal text for these supported rules.
+
+Do not classify intraword underscores, unmatched delimiters, or ambiguous punctuation as emphasis. Fenced code and protected HTML blocks take precedence over other block rules; inline code takes precedence over links, images, emphasis, and strong emphasis.
+
+The first pass explicitly defers nested syntax coloring in fenced code, complete CommonMark delimiter-stack behavior and deeply nested emphasis, semantic reference-link resolution, autolinks, tables, task lists, footnotes, other flavor-specific extensions, complete HTML-block classification, and nested HTML syntax coloring.
+

@@ -158,7 +158,7 @@ Complete this documentation milestone before changing the multi-language impleme
 - [x] Document `Plain Text` as the fallback for unknown or missing extensions
 - [x] Defer shebang detection for extensionless Bash and Python files until the corresponding highlighters exist
 - [x] Document a C++ first-pass contract based on the C++23 lexical surface supported by the scanner, including explicit deferrals
-- [ ] Document a pragmatic Markdown first-pass contract, including the supported block and inline constructs and explicit CommonMark limitations
+- [x] Document a pragmatic Markdown first-pass contract, including the supported block and inline constructs and explicit CommonMark limitations
 - [ ] Document a C# first-pass contract based on C# 14 because the project targets .NET 10 and does not set another language version
 - [ ] Record Java, Bash, Python, CSS, JSON, HTML/XML, JavaScript, SQL, and YAML as planned languages without registering unsupported highlighters
 - [x] For every implemented language, maintain an implementation-status table with extensions, display name, supported constructs, deferred constructs, and manual-test coverage
