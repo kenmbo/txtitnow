@@ -144,9 +144,9 @@ Complete this documentation milestone before changing the multi-language impleme
 - [x] Document how every token role maps explicitly in both the light and dark palettes
 - [x] Document that source indices and lengths use .NET UTF-16 string positions
 - [x] Document that `SyntaxSpan` results must be in ascending order, within the source bounds, positive-length, and non-overlapping
-- [ ] Document scanner precedence: protected multiline constructs first, then comments and literals, then language-specific structures, identifiers, numbers, and longest-match operators
-- [ ] Document that uncertain text remains `PlainText` rather than being guessed aggressively
-- [ ] Document that one language decision selects both the highlighter and the status-bar language name
+- [x] Document scanner precedence: protected multiline constructs first, then comments and literals, then language-specific structures, identifiers, numbers, and longest-match operators
+- [x] Document that uncertain text remains `PlainText` rather than being guessed aggressively
+- [x] Document that one language decision selects both the highlighter and the status-bar language name
 - [ ] Document how syntax formatting preserves the caret, selection, viewport, dirty state, undo history, and existing editor workflows
 - [ ] Document the initial full-document recoloring strategy and the short text-change debounce policy
 - [ ] Define measurements that would justify later visible-range or incremental highlighting instead of adding it preemptively

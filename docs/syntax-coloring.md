@@ -67,3 +67,19 @@ For the source passed to `Highlight`, every returned span must satisfy all of th
 - Spans do not overlap; each span starts at or after the end of its predecessor.
 
 Scanners must always advance their source index, including for malformed input, so syntax coloring cannot loop indefinitely. Shared validation may enforce these invariants during development, but each scanner remains responsible for producing valid spans.
+
+## Scanner Rules
+
+Scanners favor deterministic lexical recognition over compiler-level parsing. Their precedence is:
+
+1. Protect multiline constructs whose content must not be reinterpreted, such as block comments, multiline strings, or language-specific fenced regions.
+2. Recognize comments and literals.
+3. Recognize language-specific structures, such as directives or declarations.
+4. Recognize identifiers.
+5. Recognize numbers.
+6. Recognize operators using longest-match rules.
+
+The C baseline preserves its existing visible behavior; its numeric check occurs before its identifier check because their starting characters cannot conflict, and its current operator characters are emitted one at a time. New or revised scanners must use the shared precedence above, including longest-match handling where operator spelling overlaps.
+
+When text is malformed, incomplete, or ambiguous, scanners must leave it as `PlainText` rather than guess aggressively. This keeps highlighting stable while a document is being edited and prevents a false classification from claiming unrelated text.
+
