@@ -86,3 +86,26 @@ Do not classify intraword underscores, unmatched delimiters, or ambiguous punctu
 
 The first pass explicitly defers nested syntax coloring in fenced code, complete CommonMark delimiter-stack behavior and deeply nested emphasis, semantic reference-link resolution, autolinks, tables, task lists, footnotes, other flavor-specific extensions, complete HTML-block classification, and nested HTML syntax coloring.
 
+## C# 14 First-Pass Contract
+
+### Scope and detection
+
+The C# scanner is planned for Milestone 10 as a separate `CSharpSyntaxHighlighter`. It will resolve `.cs` as `C#` and add an `Annotation` token role for attribute names when implemented.
+
+`TxtItNow.csproj` targets .NET 10 and does not set `LangVersion`. The compiler's [default C# language version for that target is C# 14](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-versioning), so this contract uses the C# 14 lexical surface. This describes lexical coloring only; it does not require a semantic C# parser.
+
+### Supported lexical recognition
+
+The first pass must recognize:
+
+- Line comments and multiline block comments, including deterministic handling of an unterminated block comment.
+- Preprocessor directives only when `#` is the first non-whitespace character on a line. Directive lines use `Preprocessor`; conditional-compilation expressions are not evaluated.
+- Character literals and normal string literals with standard escape sequences.
+- Verbatim strings with doubled-quote escaping, interpolated normal and verbatim strings in either valid prefix order, and single-line or multiline raw strings with three or more quote delimiters.
+- Interpolated raw strings with multiple `$` prefixes and their corresponding brace-count rules. Each interpolated string is colored as a string in this pass; expressions in interpolation holes are not highlighted separately.
+- Deterministic handling of incomplete normal, verbatim, interpolated, and raw strings without scanning past their permitted boundary.
+- Decimal, hexadecimal, and binary integer literals; real literals; digit separators; exponents; and standard numeric suffixes.
+- Reserved and documented contextual keywords using conservative lexical context, predefined C# types as `TypeName`, and conservative type-name heuristics after `class`, `struct`, `interface`, `record`, `enum`, and `delegate`.
+- Conservative function-name heuristics for declarations and invocations while excluding control-flow keywords, attribute lists with attribute identifiers as `Annotation`, and longest-match operators.
+
+Uncertain generic type arguments, LINQ contextual keywords, pattern variables, aliases, namespaces, and semantic symbol classifications remain plain identifiers. The scanner explicitly defers semantic parsing and symbol resolution, inactive preprocessor-region dimming, XML documentation parsing, and nested interpolation-expression highlighting.
