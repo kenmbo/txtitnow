@@ -1,181 +1,113 @@
-# Syntax Coloring Design Notes
+# Syntax Coloring Architecture
 
 ## Documentation Ownership
 
-This document is the authoritative shared architecture document for syntax coloring. It owns theme-independent token roles, palettes, shared highlighter and formatting architecture, and editor-integration requirements.
+This document is the authoritative shared architecture document for syntax coloring. It owns token roles, light and dark palettes, span invariants, scanner composition rules, RichTextBox integration, and recoloring performance policy.
 
-[`syntax-languages.md`](syntax-languages.md) is the authoritative document for filename-based language detection, language display names, and per-language scanner contracts. [`file-encoding.md`](file-encoding.md) is authoritative only for text encoding and byte-order-mark behavior. The root [`README.md`](../README.md) documents implemented, user-facing features, while [`AGENTS.md`](../AGENTS.md) contains mandatory constraints and the development workflow.
+[`syntax-languages.md`](syntax-languages.md) is authoritative for language identification, display names, extension mappings, and per-language scanner contracts. [`file-encoding.md`](file-encoding.md) is authoritative only for encoding and byte-order-mark behavior. The root [`README.md`](../README.md) documents implemented, user-facing features, while [`AGENTS.md`](../AGENTS.md) contains mandatory contributor constraints and workflow.
 
 `TxtItNow/TxtItNow.csproj` is the authoritative source for the target framework.
 
-## Goal
+## Scope and Current State
 
-Syntax coloring should make source files easier to scan while keeping TxtItNow simple and maintainable. The first implementation should support one prototype language, then leave room for more languages, dark mode, and future editor features.
-
-## Dark Mode Relationship
-
-Syntax coloring must acknowledge the Dark Mode TODO section from the start. The highlighter should not hardcode light-mode colors. Instead, it should identify semantic token roles, and the active editor theme should map those roles to colors.
-
-The intended flow is:
+Syntax coloring makes source text easier to scan without changing document text. The shared pipeline is:
 
 ```text
-source text -> tokenizer/highlighter -> syntax token roles -> active theme palette -> RichTextBox formatting
+file path -> one language decision -> highlighter and status-bar display name
+decoded editor text -> ISyntaxHighlighter -> SyntaxSpan token roles
+token roles + active theme -> SyntaxColorPalette -> RichTextBox formatting
 ```
 
-This means the same tokenizer can work in light mode and dark mode. Switching themes should only swap palettes and reapply formatting.
+The language decision must be made once and used both to select the highlighter and to choose the status-bar name. The current C prototype derives both outcomes from the same `IsCurrentFileCSource` predicate; the future language registry must replace those repeated checks with one resolved decision.
 
-## Editor Control Requirement
+`ISyntaxHighlighter` accepts a .NET `string` and returns `SyntaxSpan` values. A highlighter recognizes semantic roles only. `SyntaxColorPalette` owns the conversion from those roles to `Color`, and the RichTextBox applicator performs the formatting. No scanner may reference `Color`, `EditorThemeMode`, light-mode values, or dark-mode values.
 
-Syntax coloring requires a `RichTextBox` because plain `TextBox` controls cannot color individual spans of text. The editor is now based on `EditorRichTextBox`, a small `RichTextBox` subclass that keeps viewport-change notifications for the line-number gutter.
+## C Regression Baseline
 
-Future syntax-coloring work should preserve existing behavior:
+`CSyntaxHighlighter` is the existing compatibility baseline. It remains supported while the shared multi-language architecture is introduced. A regression in these behaviors requires correction before expanding language support:
 
-- File open, save, and save-as workflows
-- Dirty-state detection
-- Undo, cut, copy, paste, select all
-- Find and replace
-- Word wrap
-- Font selection
-- Status bar line/column updates
-- Line-number gutter behavior
-- Recent files behavior
+- `.c` and `.h` files are recognized case-insensitively as C and display `C` in the status bar.
+- Preprocessor directives beginning with `#` after only leading whitespace are colored as `Preprocessor`, including directives continued by a trailing backslash.
+- `//` line comments and `/* ... */` block comments are colored as `Comment`; unterminated block comments continue to the end of the source.
+- Escaped single- and double-quoted literals are colored as `StringLiteral`; an unterminated literal stops at its line boundary or the end of the source.
+- Decimal, hexadecimal, and binary numeric forms, along with their current C suffix handling, are colored as `Number`.
+- C keywords, built-in type names, and identifiers followed by `(` are colored as `Keyword`, `TypeName`, and `FunctionName`, respectively.
+- The currently recognized C operator characters are colored as `Operator`.
 
-## Theme-Independent Token Roles
+This is a behavioral regression baseline, not a requirement to turn the C scanner into a compiler. Its detailed language contract belongs in [`syntax-languages.md`](syntax-languages.md).
 
-The highlighter should emit roles, not colors. Suggested initial roles:
+## Theme-Independent Token Roles and Palettes
 
-- `PlainText`
-- `Keyword`
-- `StringLiteral`
-- `Comment`
-- `Number`
-- `Preprocessor`
-- `TypeName`
-- `FunctionName`
-- `Operator`
+Scanners emit only these `SyntaxTokenRole` values. A scanner may omit a span for ordinary text; the formatter supplies `PlainText` as the default. Every role must map explicitly in both palettes in the same change that introduces or changes the role.
 
-The theme layer should own the colors for each role. Example shape:
+| Role | Light palette | Dark palette |
+| --- | --- | --- |
+| `PlainText` | `#1F1F1F` | `#D4D4D4` |
+| `Keyword` | `#0000B4` | `#569CD6` |
+| `StringLiteral` | `#A31515` | `#CE9178` |
+| `Comment` | `#008000` | `#6A9955` |
+| `Number` | `#800080` | `#B5CEA8` |
+| `Preprocessor` | `#008080` | `#4EC9B0` |
+| `TypeName` | `#2B91AF` | `#4EC9B0` |
+| `FunctionName` | `#795E26` | `#DCDCAA` |
+| `Operator` | `#404040` | `#B4B4B4` |
 
-```csharp
-internal enum SyntaxTokenRole
-{
-    PlainText,
-    Keyword,
-    StringLiteral,
-    Comment,
-    Number,
-    Preprocessor,
-    TypeName,
-    FunctionName,
-    Operator
-}
-```
+`SyntaxColorPalette.Light` and `SyntaxColorPalette.Dark` implement this mapping. Its `GetColor` fallback is `PlainText`; a future role must not rely on that fallback instead of receiving both explicit palette entries.
 
-```csharp
-internal sealed class SyntaxColorPalette
-{
-    public Color PlainText { get; init; }
-    public Color Keyword { get; init; }
-    public Color StringLiteral { get; init; }
-    public Color Comment { get; init; }
-    public Color Number { get; init; }
-    public Color Preprocessor { get; init; }
-    public Color TypeName { get; init; }
-    public Color FunctionName { get; init; }
-    public Color Operator { get; init; }
-}
-```
+## Syntax Span Contract
 
-## Suggested Palettes
+A `SyntaxSpan` contains `Start`, `Length`, and `SyntaxTokenRole`. `Start` and `Length` use .NET `string` positions: UTF-16 code units, not Unicode scalar values, grapheme clusters, UTF-8 bytes, or visual columns. Consequently, a character outside the Basic Multilingual Plane occupies two string positions.
 
-Use restrained, readable colors with enough contrast against each editor background.
+For the source passed to `Highlight`, every returned span must satisfy all of these invariants:
 
-Light mode:
+- `Start` is at least zero.
+- `Length` is positive.
+- `Start + Length` is at most `text.Length`.
+- Spans are returned in ascending `Start` order.
+- Spans do not overlap; each span starts at or after the end of its predecessor.
 
-- Plain text: near black
-- Keywords: medium blue
-- Strings: dark red
-- Comments: muted green
-- Numbers: purple
-- Preprocessor: teal
-- Types: dark cyan
-- Functions: dark gold/brown
-- Operators: dark gray
+Scanners must always advance their source index, including for malformed input, so syntax coloring cannot loop indefinitely. Shared validation may enforce these invariants during development, but each scanner remains responsible for producing valid spans.
 
-Dark mode:
+## Scanner Rules
 
-- Plain text: light gray
-- Keywords: soft blue
-- Strings: warm orange
-- Comments: soft green
-- Numbers: lavender
-- Preprocessor: cyan
-- Types: light teal
-- Functions: pale yellow
-- Operators: medium gray
+Scanners favor deterministic lexical recognition over compiler-level parsing. Their precedence is:
 
-These values should be adjusted visually when Dark Mode is implemented.
+1. Protect multiline constructs whose content must not be reinterpreted, such as block comments, multiline strings, or language-specific fenced regions.
+2. Recognize comments and literals.
+3. Recognize language-specific structures, such as directives or declarations.
+4. Recognize identifiers.
+5. Recognize numbers.
+6. Recognize operators using longest-match rules.
 
-## Current Prototype
+The C baseline preserves its existing visible behavior; its numeric check occurs before its identifier check because their starting characters cannot conflict, and its current operator characters are emitted one at a time. New or revised scanners must use the shared precedence above, including longest-match handling where operator spelling overlaps.
 
-C is the current prototype language. Its detection and scanner rules belong in `syntax-languages.md`; this document intentionally does not define per-language rules.
+When text is malformed, incomplete, or ambiguous, scanners must leave it as `PlainText` rather than guess aggressively. This keeps highlighting stable while a document is being edited and prevents a false classification from claiming unrelated text.
 
-## Chosen Approach
+## Formatting and Editor Preservation
 
-TxtItNow will use a small, standard-library tokenizer/highlighter built for this project. Do not add an external syntax-highlighting package for the first prototype.
+Syntax formatting changes only `SelectionColor`; it must never replace document text. A formatting pass must:
 
-The chosen architecture is:
+1. Capture the selection start and length, including the zero-length caret case, and capture the current viewport position.
+2. Guard against reentrant text-change handling and suspend redraw while applying the default `PlainText` color and individual token colors.
+3. Restore the selection, caret color, and viewport after formatting, then re-enable redraw.
+4. Avoid document text assignments, `SelectedText` changes, and undo-stack operations so dirty-state tracking and undo history are unchanged by coloring alone.
 
-```text
-ISyntaxHighlighter
-  -> accepts plain text and language information
-  -> returns spans with start, length, and SyntaxTokenRole
+The existing applicator already guards reentrancy, suspends redraw, captures and restores selection, and resets an empty caret selection to `PlainText`. The shared integration must add explicit viewport preservation while retaining those safeguards. File open/save workflows, unsaved-change prompts, undo, cut, copy, paste, find, replace, word wrap, smart indentation, font selection, status updates, line-number gutter behavior, and recent-file behavior must continue to work exactly as they do without syntax coloring.
 
-SyntaxColorPalette
-  -> maps SyntaxTokenRole to Color for the active EditorThemeMode
+## Recoloring Policy and Performance
 
-RichTextBox syntax applicator
-  -> applies colors to spans without changing the document text
-```
+The current C prototype recolors the entire document immediately on text changes and when the file type or active theme changes. It is the behavioral baseline, but the initial shared multi-language policy is a full-document recoloring pass after a 150 ms text-change debounce:
 
-The tokenizer/highlighter must stay theme-independent. It should only identify what a span means, such as `Keyword`, `StringLiteral`, or `Comment`. It must not choose `Color` values, and it must not know whether the app is in light mode or dark mode.
+- Restart the 150 ms timer on each text change; color only the latest document snapshot when it expires.
+- Recolor immediately after a successful open, a current-file-path or language change, and a theme change.
+- Keep all RichTextBox formatting on the UI thread and discard a stale scheduled request when a newer text change, document, language, or theme supersedes it.
 
-The first implementation should favor a simple deterministic scanner over complex regular-expression chains. Regex can still be used for narrow, well-contained pieces if it keeps the code clearer, but the core highlighter should be easy to debug and should not attempt full compiler-level parsing.
+Full-document recoloring is intentionally the initial strategy. Do not add visible-range or incremental highlighting merely because they are possible. First instrument representative documents and record document length in UTF-16 positions, scanner duration, formatting duration, total recoloring duration, and the elapsed time from the last edit to completed redraw.
 
-The first pass can re-highlight the whole document because TxtItNow is a small learning editor. If performance becomes noticeable on larger files, a later milestone can add debouncing, visible-range highlighting, or incremental highlighting.
+Consider visible-range or incremental highlighting only when a 30-second sustained-edit sample on representative files shows either a 95th-percentile total recoloring duration above 50 ms, any repeatable recoloring duration above 100 ms, or a user-visible typing delay attributable to coloring. Measurements must identify whether scanning or RichTextBox formatting is the bottleneck before choosing an optimization.
 
-## Implementation Notes
+## Implementation Boundaries
 
-Keep the tokenizer separate from WinForms UI code. A useful shape is:
+Keep scanners separate from WinForms UI code and favor small, deterministic scanners over broad regular-expression chains. A narrowly scoped regular expression is acceptable when it makes a scanner clearer, but scanners must not attempt full compiler parsing or recovery.
 
-```text
-ISyntaxHighlighter
-  -> returns syntax spans with start, length, and SyntaxTokenRole
-
-SyntaxColorPalette
-  -> maps SyntaxTokenRole to Color for the current light/dark mode
-
-RichTextBox formatting code
-  -> applies spans to the editor without changing text content
-```
-
-When applying formatting, preserve:
-
-- Current selection
-- Scroll position where practical
-- Dirty-state behavior
-- Undo behavior as much as WinForms allows
-
-Syntax coloring should be reapplied when:
-
-- Text changes
-- A file is opened
-- The current file extension changes
-- The active theme changes
-- Font changes, if rendering needs recalculation
-
-## Future Codex Guidance
-
-Do not mix token recognition and theme colors in the same class. If a highlighter emits `Color.Blue` directly, it will make Dark Mode harder. Emit roles such as `Keyword` and let the active theme palette decide what `Keyword` looks like.
-
-Before implementing syntax coloring, refactor to `RichTextBox` as its own task and verify the existing editor behaviors still work.
+Language-specific recognition belongs in [`syntax-languages.md`](syntax-languages.md). Encoding is resolved before the editor receives text and belongs in [`file-encoding.md`](file-encoding.md); syntax spans always operate on the resulting .NET string.

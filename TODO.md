@@ -139,18 +139,18 @@ Complete this documentation milestone before changing the multi-language impleme
 
 ### Shared syntax-coloring documentation
 
-- [ ] Update `syntax-coloring.md` from a C-prototype description to the current shared architecture
-- [ ] Document the existing C highlighter as the regression baseline that must remain supported
-- [ ] Document that scanners emit theme-independent `SyntaxTokenRole` values and must not contain light- or dark-theme colors
-- [ ] Document how every token role maps explicitly in both the light and dark palettes
-- [ ] Document that source indices and lengths use .NET UTF-16 string positions
-- [ ] Document that `SyntaxSpan` results must be in ascending order, within the source bounds, positive-length, and non-overlapping
-- [ ] Document scanner precedence: protected multiline constructs first, then comments and literals, then language-specific structures, identifiers, numbers, and longest-match operators
-- [ ] Document that uncertain text remains `PlainText` rather than being guessed aggressively
-- [ ] Document that one language decision selects both the highlighter and the status-bar language name
-- [ ] Document how syntax formatting preserves the caret, selection, viewport, dirty state, undo history, and existing editor workflows
-- [ ] Document the initial full-document recoloring strategy and the short text-change debounce policy
-- [ ] Define measurements that would justify later visible-range or incremental highlighting instead of adding it preemptively
+- [x] Update `syntax-coloring.md` from a C-prototype description to the current shared architecture
+- [x] Document the existing C highlighter as the regression baseline that must remain supported
+- [x] Document that scanners emit theme-independent `SyntaxTokenRole` values and must not contain light- or dark-theme colors
+- [x] Document how every token role maps explicitly in both the light and dark palettes
+- [x] Document that source indices and lengths use .NET UTF-16 string positions
+- [x] Document that `SyntaxSpan` results must be in ascending order, within the source bounds, positive-length, and non-overlapping
+- [x] Document scanner precedence: protected multiline constructs first, then comments and literals, then language-specific structures, identifiers, numbers, and longest-match operators
+- [x] Document that uncertain text remains `PlainText` rather than being guessed aggressively
+- [x] Document that one language decision selects both the highlighter and the status-bar language name
+- [x] Document how syntax formatting preserves the caret, selection, viewport, dirty state, undo history, and existing editor workflows
+- [x] Document the initial full-document recoloring strategy and the short text-change debounce policy
+- [x] Define measurements that would justify later visible-range or incremental highlighting instead of adding it preemptively
 
 ### Language identification and scanner contracts
 
