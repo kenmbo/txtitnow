@@ -148,7 +148,7 @@ Complete this documentation milestone before changing the multi-language impleme
 - [x] Document that uncertain text remains `PlainText` rather than being guessed aggressively
 - [x] Document that one language decision selects both the highlighter and the status-bar language name
 - [x] Document how syntax formatting preserves the caret, selection, viewport, dirty state, undo history, and existing editor workflows
-- [ ] Document the initial full-document recoloring strategy and the short text-change debounce policy
+- [x] Document the initial full-document recoloring strategy and the short text-change debounce policy
 - [ ] Define measurements that would justify later visible-range or incremental highlighting instead of adding it preemptively
 
 ### Language identification and scanner contracts
