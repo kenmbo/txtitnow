@@ -83,3 +83,14 @@ The C baseline preserves its existing visible behavior; its numeric check occurs
 
 When text is malformed, incomplete, or ambiguous, scanners must leave it as `PlainText` rather than guess aggressively. This keeps highlighting stable while a document is being edited and prevents a false classification from claiming unrelated text.
 
+## Formatting and Editor Preservation
+
+Syntax formatting changes only `SelectionColor`; it must never replace document text. A formatting pass must:
+
+1. Capture the selection start and length, including the zero-length caret case, and capture the current viewport position.
+2. Guard against reentrant text-change handling and suspend redraw while applying the default `PlainText` color and individual token colors.
+3. Restore the selection, caret color, and viewport after formatting, then re-enable redraw.
+4. Avoid document text assignments, `SelectedText` changes, and undo-stack operations so dirty-state tracking and undo history are unchanged by coloring alone.
+
+The existing applicator already guards reentrancy, suspends redraw, captures and restores selection, and resets an empty caret selection to `PlainText`. The shared integration must add explicit viewport preservation while retaining those safeguards. File open/save workflows, unsaved-change prompts, undo, cut, copy, paste, find, replace, word wrap, smart indentation, font selection, status updates, line-number gutter behavior, and recent-file behavior must continue to work exactly as they do without syntax coloring.
+
