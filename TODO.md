@@ -161,7 +161,7 @@ Complete this documentation milestone before changing the multi-language impleme
 - [ ] Document a pragmatic Markdown first-pass contract, including the supported block and inline constructs and explicit CommonMark limitations
 - [ ] Document a C# first-pass contract based on C# 14 because the project targets .NET 10 and does not set another language version
 - [ ] Record Java, Bash, Python, CSS, JSON, HTML/XML, JavaScript, SQL, and YAML as planned languages without registering unsupported highlighters
-- [ ] For every implemented language, maintain an implementation-status table with extensions, display name, supported constructs, deferred constructs, and manual-test coverage
+- [x] For every implemented language, maintain an implementation-status table with extensions, display name, supported constructs, deferred constructs, and manual-test coverage
 
 ### Documentation consistency checks
 
