@@ -6,9 +6,9 @@ public partial class Form1 : Form
     private const string ApplicationIconResourceName = "TxtItNow.app.ico";
     private const string ConfiguredIndentation = "    ";
     private const int MaxRecentFiles = 5;
-    private static readonly ISyntaxHighlighter CPrototypeHighlighter = new CSyntaxHighlighter();
 
     private string? currentFilePath;
+    private LanguageDefinition currentLanguage = LanguageRegistry.PlainText;
     private bool isDocumentDirty;
     private bool isApplyingSyntaxColors;
     private bool isWordWrapEnabled = true;
@@ -414,6 +414,7 @@ public partial class Form1 : Form
     private void SetCurrentFilePath(string? filePath)
     {
         currentFilePath = filePath;
+        currentLanguage = LanguageRegistry.Resolve(currentFilePath);
         UpdateWindowTitle();
         UpdateLanguageStatus();
         ApplySyntaxColoring();
@@ -492,7 +493,7 @@ public partial class Form1 : Form
             return;
         }
 
-        ISyntaxHighlighter? syntaxHighlighter = GetSyntaxHighlighterForCurrentFile();
+        ISyntaxHighlighter? syntaxHighlighter = currentLanguage.SyntaxHighlighter;
         SyntaxColorPalette palette = SyntaxColorPalette.ForTheme(currentThemeMode);
         int selectionStart = editorTextBox.SelectionStart;
         int selectionLength = editorTextBox.SelectionLength;
@@ -526,21 +527,6 @@ public partial class Form1 : Form
             editorTextBox.SetRedrawEnabled(true);
             isApplyingSyntaxColors = false;
         }
-    }
-
-    private ISyntaxHighlighter? GetSyntaxHighlighterForCurrentFile()
-    {
-        return IsCurrentFileCSource()
-            ? CPrototypeHighlighter
-            : null;
-    }
-
-    private bool IsCurrentFileCSource()
-    {
-        string extension = Path.GetExtension(currentFilePath) ?? string.Empty;
-
-        return extension.Equals(".c", StringComparison.OrdinalIgnoreCase)
-            || extension.Equals(".h", StringComparison.OrdinalIgnoreCase);
     }
 
     private void PasteClipboardText()
@@ -663,9 +649,7 @@ public partial class Form1 : Form
 
     private void UpdateLanguageStatus()
     {
-        languageStatusLabel.Text = IsCurrentFileCSource()
-            ? "C"
-            : "Plain Text";
+        languageStatusLabel.Text = currentLanguage.StatusBarDisplayName;
     }
 
     private void UpdateLineNumberGutter()
@@ -897,3 +881,4 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
+
