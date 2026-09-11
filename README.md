@@ -26,7 +26,7 @@ dotnet run --project TxtItNow/TxtItNow.csproj
 - Recent files for the current app session
 - Word wrap, smart indentation, and font selection
 - Line numbers and line/column status information
-- C syntax coloring
+- C syntax coloring; other language highlighters are planned, not implemented
 
 ## Documentation
 
@@ -62,3 +62,10 @@ Polish checks:
 - Move the caret with the mouse and arrow keys; the status bar should update line and column.
 - Confirm the window and executable use the TxtItNow icon.
 - Open `Help > About TxtItNow` and confirm the About dialog appears.
+
+Syntax coloring and encoding:
+
+- Create a UTF-16 little-endian C file with a BOM that includes non-ASCII text in a comment, string literal, and identifier, such as `int café = 1; // Grüß 🌍`.
+- Open it with `Auto-detect`, confirm the status bar shows `C` and the expected encoding, then edit the non-ASCII text and save.
+- Reopen the file with `Auto-detect` and confirm its non-ASCII text, encoding and BOM choice, and C syntax coloring are all preserved without replacement characters or an unexpected encoding change.
+

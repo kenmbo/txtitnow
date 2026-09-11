@@ -121,7 +121,6 @@
 - [ ] Persist recent files between app launches
 - [ ] Add version number to the about to the `About` dialog
 
-
 ## Milestone 6: Expanded syntax-coloring specification
 
 Complete this documentation milestone before changing the multi-language implementation.
@@ -165,9 +164,9 @@ Complete this documentation milestone before changing the multi-language impleme
 
 ### Documentation consistency checks
 
-- [ ] Document that syntax spans operate on decoded text and that encoding detection occurs before highlighting
-- [ ] Add a cross-feature test note for opening, editing, saving, and reopening a syntax-colored non-ASCII file without changing its encoding unexpectedly
-- [ ] Update documentation in the same change whenever a language contract, extension mapping, token role, or known limitation changes
+- [x] Document that syntax spans operate on decoded text and that encoding detection occurs before highlighting
+- [x] Add a cross-feature test note for opening, editing, saving, and reopening a syntax-colored non-ASCII file without changing its encoding unexpectedly
+- [x] Update documentation in the same change whenever a language contract, extension mapping, token role, or known limitation changes
 
 ## Milestone 7: Multi-language syntax-coloring foundation
 
