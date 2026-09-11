@@ -26,7 +26,7 @@ dotnet run --project TxtItNow/TxtItNow.csproj
 - Recent files for the current app session
 - Word wrap, smart indentation, and font selection
 - Line numbers and line/column status information
-- C syntax coloring; other language highlighters are planned, not implemented
+- C syntax coloring; C++, Markdown, and C# filenames are recognized in the status bar but remain plain text until their planned highlighters are implemented
 
 ## Documentation
 
@@ -68,4 +68,5 @@ Syntax coloring and encoding:
 - Create a UTF-16 little-endian C file with a BOM that includes non-ASCII text in a comment, string literal, and identifier, such as `int café = 1; // Grüß 🌍`.
 - Open it with `Auto-detect`, confirm the status bar shows `C` and the expected encoding, then edit the non-ASCII text and save.
 - Reopen the file with `Auto-detect` and confirm its non-ASCII text, encoding and BOM choice, and C syntax coloring are all preserved without replacement characters or an unexpected encoding change.
+- Open `.C` and `.H` files and confirm both still show `C` and use the existing C syntax coloring. Open `.cpp`, `.md`, and `.cs` files and confirm their language name is shown while the text remains uncolored.
 

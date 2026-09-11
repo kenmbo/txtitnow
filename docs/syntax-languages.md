@@ -14,7 +14,9 @@ Keep all language specifications in this document initially so language-identifi
 
 Language detection is filename-extension based. Match extensions case-insensitively with ordinal comparison; `.C`, `.CPP`, and `.Md` must resolve the same as their lowercase spellings. Do not infer a language from file contents, encoding, or a partial filename.
 
-The resolver returns one language decision that supplies both the status-bar display name and the optional highlighter. An unknown extension, a missing file path, or a path with no extension resolves to `Plain Text`, which has no highlighter and displays `Plain Text` in the status bar.
+`LanguageRegistry` is the authoritative extension-to-language mapping. It resolves one `LanguageDefinition` that supplies both the status-bar display name and the optional highlighter. An unknown extension, a missing file path, or a path with no extension resolves to `Plain Text`, which has no highlighter and displays `Plain Text` in the status bar.
+
+The registry holds definitions for C, C++, Markdown, and C# so their documented extensions resolve consistently. Only a definition with an implemented scanner receives an `ISyntaxHighlighter`: C is the only such definition today. C++, Markdown, and C# therefore show their language name in the status bar but retain plain-text formatting until their respective milestones implement a scanner.
 
 The initial ambiguous-header policy is deliberately conservative: `.h` continues to resolve to C, even after C++ support is introduced. A future explicit per-document language override may revisit that choice; automatic content heuristics must not do so.
 
@@ -22,14 +24,14 @@ Do not inspect shebangs yet. An extensionless file beginning with `#!` remains `
 
 ## Implementation Status and Intended Mappings
 
-This table is the maintained status record for implemented languages and the planned registration record for the next supported languages. An intended extension must not be added to the runtime registry until its highlighter exists.
+This table is the maintained status record for implemented languages and the language definitions registered for the next supported languages. An unimplemented definition may provide extension recognition and a status-bar display name, but it must not receive an `ISyntaxHighlighter` until its scanner exists.
 
 | Language | Extensions and display name | Status | Supported constructs | Deferred constructs | Manual-test coverage |
 | --- | --- | --- | --- | --- | --- |
 | C | `.c`, `.h` → `C` | Implemented: `CSyntaxHighlighter` | Directives, comments, quoted literals, decimal/hexadecimal/binary numbers, keywords, built-in types, simple function-name heuristic, and operator characters | Compiler parsing, macro expansion, semantic symbols, and complete C lexical coverage | Required regression: open, edit, save, reopen, and Save As C files; cover directives, comments, literals, numbers, and uppercase extensions. |
-| C++ | `.cpp`, `.cc`, `.cxx`, `.c++`, `.hpp`, `.hh`, `.hxx`, `.h++` → `C++` | Planned; no registry entry or highlighter before Milestone 8 | Defined in the C++23 first-pass contract below | Defined in the C++23 first-pass contract below | Not yet available; Milestone 8 defines the required coverage. |
-| Markdown | `.md`, `.markdown` → `Markdown` | Planned; no registry entry or highlighter before Milestone 9 | Defined in the pragmatic Markdown contract below | Defined in the pragmatic Markdown contract below | Not yet available; Milestone 9 defines the required coverage. |
-| C# | `.cs` → `C#` | Planned; no registry entry or highlighter before Milestone 10 | Defined in the C# 14 first-pass contract below | Defined in the C# 14 first-pass contract below | Not yet available; Milestone 10 defines the required coverage. |
+| C++ | `.cpp`, `.cc`, `.cxx`, `.c++`, `.hpp`, `.hh`, `.hxx`, `.h++` → `C++` | Recognized; scanner planned for Milestone 8, no highlighter assigned | Defined in the C++23 first-pass contract below | Defined in the C++23 first-pass contract below | Language-status coverage only; Milestone 8 defines syntax-coloring coverage. |
+| Markdown | `.md`, `.markdown` → `Markdown` | Recognized; scanner planned for Milestone 9, no highlighter assigned | Defined in the pragmatic Markdown contract below | Defined in the pragmatic Markdown contract below | Language-status coverage only; Milestone 9 defines syntax-coloring coverage. |
+| C# | `.cs` → `C#` | Recognized; scanner planned for Milestone 10, no highlighter assigned | Defined in the C# 14 first-pass contract below | Defined in the C# 14 first-pass contract below | Language-status coverage only; Milestone 10 defines syntax-coloring coverage. |
 
 Java, Bash, Python, CSS, JSON, HTML/XML, JavaScript, SQL, and YAML are planned languages only. They have no runtime registry entry, display-name selection, extension mapping, or highlighter until an implementation milestone defines all four together.
 
