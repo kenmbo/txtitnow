@@ -177,14 +177,14 @@ Keep this milestone limited to shared infrastructure and preservation of existin
 
 ### Language model and registry
 
-- [ ] Introduce a small `SupportedLanguage` value that includes `PlainText`, `C`, `Cpp`, `Markdown`, and `CSharp`
-- [ ] Introduce a `LanguageDefinition` containing the language value, status-bar display name, supported extensions, and optional `ISyntaxHighlighter`
-- [ ] Add one language registry as the authoritative extension-to-language mapping
-- [ ] Make extension matching case-insensitive and include a `Plain Text` fallback definition
-- [ ] Register only highlighters that have actually been implemented
-- [ ] Keep `.c` and `.h` mapped to C and verify that existing C detection does not change
-- [ ] Replace separate highlighter and status-name decisions with one resolved `LanguageDefinition`
-- [ ] Re-resolve the language after Open, Save As, New, and any other current-file-path change
+- [x] Introduce a small `SupportedLanguage` value that includes `PlainText`, `C`, `Cpp`, `Markdown`, and `CSharp`
+- [x] Introduce a `LanguageDefinition` containing the language value, status-bar display name, supported extensions, and optional `ISyntaxHighlighter`
+- [x] Add one language registry as the authoritative extension-to-language mapping
+- [x] Make extension matching case-insensitive and include a `Plain Text` fallback definition
+- [x] Register only highlighters that have actually been implemented
+- [x] Keep `.c` and `.h` mapped to C and verify that existing C detection does not change
+- [x] Replace separate highlighter and status-name decisions with one resolved `LanguageDefinition`
+- [x] Re-resolve the language after Open, Save As, New, and any other current-file-path change
 
 ### Scanner composition and span correctness
 
