@@ -45,6 +45,12 @@ The document state retains:
 
 New untitled documents default to UTF-8 without a BOM. Opening a file sets the document encoding state from detection or the explicit selection. `Save` preserves that state, while `Save As` can replace it.
 
+## Syntax-Coloring Interaction
+
+Encoding detection and decoding occur before syntax coloring. After a selected or detected encoding successfully decodes file bytes, the editor and highlighter receive the resulting .NET string; `SyntaxSpan` start and length values refer to that decoded string's UTF-16 positions. File bytes and the BOM are never part of editor text or syntax-span offsets.
+
+Language selection remains filename based and independent of encoding. A failed decode does not provide text to a highlighter or replace the current document state. Syntax formatting never changes document text, so it cannot alter the selected encoding or BOM choice; normal Save continues to preserve both.
+
 ## Saving and Error Handling
 
 - Normal Save preserves the detected or user-selected encoding.
@@ -74,6 +80,6 @@ Support for legacy Windows code pages can be considered later, but it should req
 
 ## References
 
-- [File.ReadAllText documentation](https://learn.microsoft.com/en-us/dotnet/api/system.io.file.readalltext?view=net-10.0)
-- [File.WriteAllText documentation](https://learn.microsoft.com/en-us/dotnet/api/system.io.file.writealltext?view=net-10.0)
-- [StreamReader encoding detection documentation](https://learn.microsoft.com/en-us/dotnet/api/system.io.streamreader.-ctor?view=net-10.0)
+- [File.ReadAllText documentation](https://learn.microsoft.com/en-us/dotnet/api/system.io.file.readalltext)
+- [File.WriteAllText documentation](https://learn.microsoft.com/en-us/dotnet/api/system.io.file.writealltext)
+- [StreamReader encoding detection documentation](https://learn.microsoft.com/en-us/dotnet/api/system.io.streamreader.-ctor)

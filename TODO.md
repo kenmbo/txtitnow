@@ -166,10 +166,10 @@ Complete this documentation milestone before changing the multi-language impleme
 
 ### Documentation consistency checks
 
-- [ ] Reconcile stale application names, framework versions, syntax-coloring status, and supported-language claims across `README.md`, `AGENTS.md`, and the design documents
-- [ ] Document that syntax spans operate on decoded text and that encoding detection occurs before highlighting
-- [ ] Add a cross-feature test note for opening, editing, saving, and reopening a syntax-colored non-ASCII file without changing its encoding unexpectedly
-- [ ] Update documentation in the same change whenever a language contract, extension mapping, token role, or known limitation changes
+- [x] Reconcile stale application names, framework versions, syntax-coloring status, and supported-language claims across `README.md`, `AGENTS.md`, and the design documents
+- [x] Document that syntax spans operate on decoded text and that encoding detection occurs before highlighting
+- [x] Add a cross-feature test note for opening, editing, saving, and reopening a syntax-colored non-ASCII file without changing its encoding unexpectedly
+- [x] Update documentation in the same change whenever a language contract, extension mapping, token role, or known limitation changes
 
 ## Milestone 7: Multi-language syntax-coloring foundation
 

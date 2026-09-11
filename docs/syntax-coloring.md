@@ -20,7 +20,7 @@ token roles + active theme -> SyntaxColorPalette -> RichTextBox formatting
 
 The language decision must be made once and used both to select the highlighter and to choose the status-bar name. The current C prototype derives both outcomes from the same `IsCurrentFileCSource` predicate; the future language registry must replace those repeated checks with one resolved decision.
 
-`ISyntaxHighlighter` accepts a .NET `string` and returns `SyntaxSpan` values. A highlighter recognizes semantic roles only. `SyntaxColorPalette` owns the conversion from those roles to `Color`, and the RichTextBox applicator performs the formatting. No scanner may reference `Color`, `EditorThemeMode`, light-mode values, or dark-mode values.
+`ISyntaxHighlighter` accepts decoded .NET `string` text and returns `SyntaxSpan` values. Encoding detection and decoding happen before the editor supplies text to a highlighter; scanners never receive file bytes or a BOM. A highlighter recognizes semantic roles only. `SyntaxColorPalette` owns the conversion from those roles to `Color`, and the RichTextBox applicator performs the formatting. No scanner may reference `Color`, `EditorThemeMode`, light-mode values, or dark-mode values.
 
 ## C Regression Baseline
 

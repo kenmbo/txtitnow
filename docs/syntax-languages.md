@@ -92,7 +92,7 @@ The first pass explicitly defers nested syntax coloring in fenced code, complete
 
 The C# scanner is planned for Milestone 10 as a separate `CSharpSyntaxHighlighter`. It will resolve `.cs` as `C#` and add an `Annotation` token role for attribute names when implemented.
 
-`TxtItNow.csproj` targets .NET 10 and does not set `LangVersion`. The compiler's [default C# language version for that target is C# 14](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-versioning), so this contract uses the C# 14 lexical surface. This describes lexical coloring only; it does not require a semantic C# parser.
+`TxtItNow.csproj` does not set `LangVersion`. The compiler's [default C# language version for its declared target framework is C# 14](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-versioning), so this contract uses the C# 14 lexical surface. This describes lexical coloring only; it does not require a semantic C# parser.
 
 ### Supported lexical recognition
 

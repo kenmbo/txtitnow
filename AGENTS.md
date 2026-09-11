@@ -30,6 +30,13 @@ When work affects syntax coloring, use the applicable authoritative documentatio
 - [`docs/file-encoding.md`](docs/file-encoding.md) for encoding and BOM behavior.
 - [`README.md`](README.md) for implemented, user-facing features and manual test entry points.
 
+Update documentation in the same change as the behavior it describes:
+
+- Update `docs/syntax-languages.md` for a language contract, extension mapping, display name, implementation status, or known language limitation.
+- Update `docs/syntax-coloring.md` for a token role, palette, span, formatting, or recoloring-policy change.
+- Update `docs/file-encoding.md` for encoding, decoding, saving, or BOM behavior.
+- Update `README.md` when a user-visible feature, supported language, limitation, or manual test changes. Do not list a planned highlighter as implemented.
+
 Before making changes:
 1. Briefly summarize the current project structure.
 2. Identify the exact TODO.md bullet point(s) being implemented.
