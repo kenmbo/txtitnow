@@ -174,7 +174,7 @@ Keep this milestone limited to shared infrastructure and preservation of existin
 
 ### Language model and registry
 
-- [ ] Introduce a small `SupportedLanguage` value that includes `PlainText`, `C`, `Cpp`, `Markdown`, and `CSharp`
+- [x] Introduce a small `SupportedLanguage` value that includes `PlainText`, `C`, `Cpp`, `Markdown`, and `CSharp`
 - [ ] Introduce a `LanguageDefinition` containing the language value, status-bar display name, supported extensions, and optional `ISyntaxHighlighter`
 - [ ] Add one language registry as the authoritative extension-to-language mapping
 - [ ] Make extension matching case-insensitive and include a `Plain Text` fallback definition
