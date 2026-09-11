@@ -8,4 +8,3 @@ internal enum SupportedLanguage
     Markdown,
     CSharp
 }
-

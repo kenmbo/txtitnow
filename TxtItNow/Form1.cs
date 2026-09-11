@@ -881,4 +881,3 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
-

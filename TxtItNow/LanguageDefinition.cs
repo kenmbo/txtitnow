@@ -5,4 +5,3 @@ internal sealed record LanguageDefinition(
     string StatusBarDisplayName,
     IReadOnlyList<string> SupportedExtensions,
     ISyntaxHighlighter? SyntaxHighlighter);
-
