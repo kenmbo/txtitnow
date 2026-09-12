@@ -59,6 +59,7 @@ internal sealed class SyntaxColorPalette
     {
         return role switch
         {
+            SyntaxTokenRole.PlainText => PlainText,
             SyntaxTokenRole.Keyword => Keyword,
             SyntaxTokenRole.StringLiteral => StringLiteral,
             SyntaxTokenRole.Comment => Comment,
@@ -67,7 +68,10 @@ internal sealed class SyntaxColorPalette
             SyntaxTokenRole.TypeName => TypeName,
             SyntaxTokenRole.FunctionName => FunctionName,
             SyntaxTokenRole.Operator => Operator,
-            _ => PlainText
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(role),
+                role,
+                "Every syntax token role must have an explicit palette mapping.")
         };
     }
 }
