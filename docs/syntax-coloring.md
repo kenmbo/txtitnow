@@ -66,7 +66,9 @@ For the source passed to `Highlight`, every returned span must satisfy all of th
 - Spans are returned in ascending `Start` order.
 - Spans do not overlap; each span starts at or after the end of its predecessor.
 
-Scanners must always advance their source index, including for malformed input, so syntax coloring cannot loop indefinitely. Shared validation may enforce these invariants during development, but each scanner remains responsible for producing valid spans.
+`SyntaxSpanBuilder` is the common path for adding spans. It accepts source start and end positions, rejects non-positive, out-of-bounds, out-of-order, or overlapping requests before adding them, and validates the complete result when it is built. `SyntaxSpanValidator` makes those development-time failures explicit. Each scanner remains responsible for producing valid spans.
+
+Scanners must always advance their source index, including for malformed input, so syntax coloring cannot loop indefinitely. Unterminated constructs must consume only the deterministic portion specified by their language contract; ambiguous text remains `PlainText` instead of triggering compiler-style recovery.
 
 ## Scanner Rules
 
@@ -82,6 +84,12 @@ Scanners favor deterministic lexical recognition over compiler-level parsing. Th
 The C baseline preserves its existing visible behavior; its numeric check occurs before its identifier check because their starting characters cannot conflict, and its current operator characters are emitted one at a time. New or revised scanners must use the shared precedence above, including longest-match handling where operator spelling overlaps.
 
 When text is malformed, incomplete, or ambiguous, scanners must leave it as `PlainText` rather than guess aggressively. This keeps highlighting stable while a document is being edited and prevents a false classification from claiming unrelated text.
+
+## Scanner Composition
+
+Each language keeps a separate highlighter class; there is no shared C-like scanner base class. Language classes own their keywords, built-in types, literals, directives, declaration heuristics, and token precedence.
+
+`SyntaxScannerHelpers` contains only mechanics that have already proven reusable: identifier-character classification, line-boundary checks, escaped-delimiter scanning, newline skipping, prefix matching, and longest-match selection. It does not decide which text belongs to a language token. The C highlighter keeps its existing language rules while using these helpers and the shared span builder.
 
 ## Formatting and Editor Preservation
 
