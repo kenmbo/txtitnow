@@ -52,7 +52,7 @@ Scanners emit only these `SyntaxTokenRole` values. A scanner may omit a span for
 | `FunctionName` | `#795E26` | `#DCDCAA` |
 | `Operator` | `#404040` | `#B4B4B4` |
 
-`SyntaxColorPalette.Light` and `SyntaxColorPalette.Dark` implement this mapping. Its `GetColor` fallback is `PlainText`; a future role must not rely on that fallback instead of receiving both explicit palette entries.
+`SyntaxColorPalette.Light` and `SyntaxColorPalette.Dark` implement this mapping. `GetColor` explicitly handles every current role, including `PlainText`, and throws for an unknown role. Adding a role therefore requires explicit entries in both palettes and an explicit `GetColor` mapping in the same change; it cannot silently inherit a language-specific color.
 
 ## Syntax Span Contract
 

@@ -196,10 +196,10 @@ Keep this milestone limited to shared infrastructure and preservation of existin
 
 ### Token roles and palettes
 
-- [ ] Add new token roles only when an implemented language needs them
-- [ ] Require every new token role to be mapped explicitly in both light and dark palettes in the same change
-- [ ] Define a deliberate fallback or failure behavior for an unmapped token role instead of silently using a language-specific color
-- [ ] Verify that no highlighter or scanner references `Color` or an editor theme
+- [x] Add new token roles only when an implemented language needs them
+- [x] Require every new token role to be mapped explicitly in both light and dark palettes in the same change
+- [x] Define a deliberate fallback or failure behavior for an unmapped token role instead of silently using a language-specific color
+- [x] Verify that no highlighter or scanner references `Color` or an editor theme
 
 ### RichTextBox integration and performance baseline
 
