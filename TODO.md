@@ -186,10 +186,10 @@ Keep this milestone limited to shared infrastructure and preservation of existin
 ### Scanner composition and span correctness
 
 - [ ] Keep separate highlighter classes for each language
-- [ ] Prefer small composed scanner helpers over a shared C-like base class
-- [ ] Extract only proven lexical helpers, such as identifier characters, line-boundary handling, escaped delimiters, and longest-match operators
-- [ ] Keep language keyword, built-in type, literal, directive, and declaration rules inside the corresponding highlighter
-- [ ] Define a common helper for adding spans only when they are valid and do not overlap an already-claimed region
+- [x] Prefer small composed scanner helpers over a shared C-like base class
+- [x] Extract only proven lexical helpers, such as identifier characters, line-boundary handling, escaped delimiters, and longest-match operators
+- [x] Keep language keyword, built-in type, literal, directive, and declaration rules inside the corresponding highlighter
+- [x] Define a common helper for adding spans only when they are valid and do not overlap an already-claimed region
 - [ ] Add development-time validation for positive lengths, source bounds, ascending order, and non-overlap
 - [ ] Ensure every scanner advances on malformed or incomplete input and cannot loop indefinitely
 - [ ] Keep malformed and ambiguous source text deterministic and safe rather than attempting compiler-level recovery
