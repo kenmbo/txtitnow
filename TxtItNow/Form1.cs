@@ -511,6 +511,33 @@ public partial class Form1 : Form
         ApplySyntaxColoring();
     }
 
+    private void EditorTextBox_Disposed(object? sender, EventArgs e)
+    {
+        CancelPendingSyntaxColoring();
+    }
+
+    private void ScheduleSyntaxColoring()
+    {
+        if (isSyntaxColorDebounceTimerDisposed
+            || IsDisposed
+            || Disposing
+            || editorTextBox.IsDisposed)
+        {
+            return;
+        }
+
+        syntaxColorDebounceTimer.Stop();
+        syntaxColorDebounceTimer.Start();
+    }
+
+    private void CancelPendingSyntaxColoring()
+    {
+        if (!isSyntaxColorDebounceTimerDisposed)
+        {
+            syntaxColorDebounceTimer.Stop();
+        }
+    }
+
     private void ApplySyntaxColoring()
     {
         if (isApplyingSyntaxColors)
