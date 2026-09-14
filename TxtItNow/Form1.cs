@@ -644,6 +644,13 @@ public partial class Form1 : Form
         string editToCompletion = editToCompletionDuration.HasValue
             ? $"{editToCompletionDuration.Value.TotalMilliseconds:F1} ms"
             : "n/a";
+
+        Debug.WriteLine(
+            $"Syntax coloring: {textLength} UTF-16 positions; "
+            + $"scanning {scannerDuration.TotalMilliseconds:F1} ms; "
+            + $"formatting {formattingDuration.TotalMilliseconds:F1} ms; "
+            + $"total {totalDuration.TotalMilliseconds:F1} ms; "
+            + $"last edit to completion {editToCompletion}.");
     }
 
     private void PasteClipboardText()
