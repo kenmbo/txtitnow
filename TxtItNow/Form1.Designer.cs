@@ -53,6 +53,11 @@ partial class Form1
     {
         if (disposing)
         {
+            CancelPendingSyntaxColoring();
+            isSyntaxColorDebounceTimerDisposed = true;
+            syntaxColorDebounceTimer.Tick -= SyntaxColorDebounceTimer_Tick;
+            syntaxColorDebounceTimer.Dispose();
+            editorTextBox.Disposed -= EditorTextBox_Disposed;
             selectedEditorFont?.Dispose();
             components?.Dispose();
         }
