@@ -10,7 +10,6 @@ public partial class Form1 : Form
     private const int MaxRecentFiles = 5;
     private const int SyntaxColorDebounceMilliseconds = 150;
 
-
     private string? currentFilePath;
     private LanguageDefinition currentLanguage = LanguageRegistry.PlainText;
     private bool isDocumentDirty;
@@ -56,7 +55,9 @@ public partial class Form1 : Form
         }
 
         MarkDocumentDirty();
-	ScheduleSyntaxColoring();
+        lastSyntaxColorTextChangeTimestamp = Stopwatch.GetTimestamp();
+        ScheduleSyntaxColoring();
+        UpdateEditMenuItemStates();
         UpdateStatusBar();
         UpdateLineNumberGutter();
     }
@@ -284,10 +285,10 @@ public partial class Form1 : Form
         if (!ConfirmDiscardUnsavedChanges())
         {
             e.Cancel = true;
-	    return;
+            return;
         }
 
-	CancelPendingSyntaxColoring();
+        CancelPendingSyntaxColoring();
     }
 
     private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -359,7 +360,6 @@ public partial class Form1 : Form
 
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
-	editorTextBox.SetRedrawEnabled(false);
         editorTextBox.SelectAll();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
@@ -433,13 +433,13 @@ public partial class Form1 : Form
         currentLanguage = LanguageRegistry.Resolve(currentFilePath);
         UpdateWindowTitle();
         UpdateLanguageStatus();
-        ApplySyntaxColoring();
+        ApplySyntaxColoringImmediately();
     }
 
     private void SetEditorThemeMode(EditorThemeMode themeMode)
     {
         currentThemeMode = themeMode;
-        ApplySyntaxColoring();
+        ApplySyntaxColoringImmediately();
     }
 
     private void SetCurrentFileEncoding(TextFileEncoding encoding)
@@ -547,7 +547,6 @@ public partial class Form1 : Form
         ApplySyntaxColoring();
     }
 
-
     private void ApplySyntaxColoring()
     {
         if (isApplyingSyntaxColors || IsDisposed || Disposing || editorTextBox.IsDisposed)
@@ -559,36 +558,92 @@ public partial class Form1 : Form
         SyntaxColorPalette palette = SyntaxColorPalette.ForTheme(currentThemeMode);
         int selectionStart = editorTextBox.SelectionStart;
         int selectionLength = editorTextBox.SelectionLength;
+        int firstVisibleLineIndex = editorTextBox.GetFirstVisibleLineIndex();
+        string editorText = editorTextBox.Text;
+        Stopwatch totalStopwatch = Stopwatch.StartNew();
+        Stopwatch scannerStopwatch = Stopwatch.StartNew();
+        IReadOnlyList<SyntaxSpan> spans = syntaxHighlighter is null
+            ? Array.Empty<SyntaxSpan>()
+            : syntaxHighlighter.Highlight(editorText);
+        scannerStopwatch.Stop();
+        Stopwatch formattingStopwatch = Stopwatch.StartNew();
 
         isApplyingSyntaxColors = true;
-        editorTextBox.SetRedrawEnabled(false);
 
         try
         {
+            editorTextBox.SetRedrawEnabled(false);
             editorTextBox.SelectAll();
             editorTextBox.SelectionColor = palette.PlainText;
 
-            if (syntaxHighlighter is not null)
+            foreach (SyntaxSpan span in spans)
             {
-                foreach (SyntaxSpan span in syntaxHighlighter.Highlight(editorTextBox.Text))
-                {
-                    editorTextBox.Select(span.Start, span.Length);
-                    editorTextBox.SelectionColor = palette.GetColor(span.Role);
-                }
-            }
-
-            editorTextBox.Select(selectionStart, selectionLength);
-
-            if (selectionLength == 0)
-            {
-                editorTextBox.SelectionColor = palette.PlainText;
+                editorTextBox.Select(span.Start, span.Length);
+                editorTextBox.SelectionColor = palette.GetColor(span.Role);
             }
         }
         finally
         {
-            editorTextBox.SetRedrawEnabled(true);
-            isApplyingSyntaxColors = false;
+            try
+            {
+                RestoreSyntaxColoringState(selectionStart, selectionLength, firstVisibleLineIndex, palette);
+            }
+            finally
+            {
+                try
+                {
+                    editorTextBox.SetRedrawEnabled(true);
+                }
+                finally
+                {
+                    isApplyingSyntaxColors = false;
+                    formattingStopwatch.Stop();
+                    totalStopwatch.Stop();
+                    RecordSyntaxColoringTiming(
+                        editorText.Length,
+                        scannerStopwatch.Elapsed,
+                        formattingStopwatch.Elapsed,
+                        totalStopwatch.Elapsed);
+                }
+            }
         }
+    }
+
+    private void RestoreSyntaxColoringState(
+        int selectionStart,
+        int selectionLength,
+        int firstVisibleLineIndex,
+        SyntaxColorPalette palette)
+    {
+        int restoredSelectionStart = Math.Min(selectionStart, editorTextBox.TextLength);
+        int restoredSelectionLength = Math.Min(
+            selectionLength,
+            editorTextBox.TextLength - restoredSelectionStart);
+
+        editorTextBox.Select(restoredSelectionStart, restoredSelectionLength);
+
+        if (restoredSelectionLength == 0)
+        {
+            editorTextBox.SelectionColor = palette.PlainText;
+        }
+
+        editorTextBox.RestoreFirstVisibleLineIndex(firstVisibleLineIndex);
+    }
+
+    private void RecordSyntaxColoringTiming(
+        int textLength,
+        TimeSpan scannerDuration,
+        TimeSpan formattingDuration,
+        TimeSpan totalDuration)
+    {
+        TimeSpan? editToCompletionDuration = lastSyntaxColorTextChangeTimestamp is long timestamp
+            ? Stopwatch.GetElapsedTime(timestamp)
+            : null;
+        lastSyntaxColorTextChangeTimestamp = null;
+
+        string editToCompletion = editToCompletionDuration.HasValue
+            ? $"{editToCompletionDuration.Value.TotalMilliseconds:F1} ms"
+            : "n/a";
     }
 
     private void PasteClipboardText()
@@ -943,4 +998,3 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
-

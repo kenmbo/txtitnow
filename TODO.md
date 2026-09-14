@@ -206,12 +206,12 @@ Keep this milestone limited to shared infrastructure and preservation of existin
 - [x] Route all implemented languages through the existing syntax-color application path
 - [x] Preserve the selection start, selection length, and caret position while recoloring
 - [x] Preserve the editor viewport or first visible line while recoloring
-- [ ] Suppress redraw during a formatting pass and restore redraw in a `finally` path
+- [x] Suppress redraw during a formatting pass and restore redraw in a `finally` path
 - [x] Ensure formatting-only changes do not mark the document dirty or replace the user's text undo history
 - [x] Ensure highlighting does not disrupt Open, Save, Save As, New, Find, Replace, word wrap, line numbers, or status information
 - [x] Add a short text-change debounce of approximately 100–200 ms while keeping file-type and theme changes immediate
 - [x] Cancel pending highlighting work safely when the form or editor is disposed
-- [ ] Record highlighting time for representative small, medium, and large files before considering visible-range or incremental processing
+- [x] Record highlighting time for representative small, medium, and large files before considering visible-range or incremental processing
 - [x] Defer cached lexical state, visible-range scanning, background scanning, and incremental highlighting until measurements show a practical need
 
 ### Foundation verification
