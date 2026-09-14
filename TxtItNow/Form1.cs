@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace TxtItNow;
 
 public partial class Form1 : Form
@@ -6,11 +8,14 @@ public partial class Form1 : Form
     private const string ApplicationIconResourceName = "TxtItNow.app.ico";
     private const string ConfiguredIndentation = "    ";
     private const int MaxRecentFiles = 5;
+    private const int SyntaxColorDebounceMilliseconds = 150;
+
 
     private string? currentFilePath;
     private LanguageDefinition currentLanguage = LanguageRegistry.PlainText;
     private bool isDocumentDirty;
     private bool isApplyingSyntaxColors;
+    private bool isSyntaxColorDebounceTimerDisposed;
     private bool isWordWrapEnabled = true;
     private bool isSmartIndentEnabled = true;
     private bool isLineNumbersEnabled = true;
@@ -20,10 +25,18 @@ public partial class Form1 : Form
     private string lastFindText = string.Empty;
     private string lastReplaceText = string.Empty;
     private readonly List<string> recentFilePaths = new();
+    private readonly System.Windows.Forms.Timer syntaxColorDebounceTimer;
+    private long? lastSyntaxColorTextChangeTimestamp;
 
     public Form1()
     {
         InitializeComponent();
+        syntaxColorDebounceTimer = new System.Windows.Forms.Timer
+        {
+            Interval = SyntaxColorDebounceMilliseconds
+        };
+        syntaxColorDebounceTimer.Tick += SyntaxColorDebounceTimer_Tick;
+        editorTextBox.Disposed += EditorTextBox_Disposed;
         SetApplicationIcon();
         SetCurrentFilePath(null);
         SetCurrentFileEncoding(TextFileEncoding.Utf8WithoutBom);
@@ -486,6 +499,18 @@ public partial class Form1 : Form
         UpdateLineNumberGutter();
     }
 
+    private void SyntaxColorDebounceTimer_Tick(object? sender, EventArgs e)
+    {
+        CancelPendingSyntaxColoring();
+
+        if (IsDisposed || Disposing || editorTextBox.IsDisposed)
+        {
+            return;
+        }
+
+        ApplySyntaxColoring();
+    }
+
     private void ApplySyntaxColoring()
     {
         if (isApplyingSyntaxColors)
@@ -881,3 +906,4 @@ public partial class Form1 : Form
         Text = $"{dirtyMarker}{documentName} - {ApplicationName}";
     }
 }
+
