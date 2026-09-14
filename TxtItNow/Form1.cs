@@ -56,8 +56,7 @@ public partial class Form1 : Form
         }
 
         MarkDocumentDirty();
-        ApplySyntaxColoring();
-        UpdateEditMenuItemStates();
+	ScheduleSyntaxColoring();
         UpdateStatusBar();
         UpdateLineNumberGutter();
     }
@@ -285,7 +284,10 @@ public partial class Form1 : Form
         if (!ConfirmDiscardUnsavedChanges())
         {
             e.Cancel = true;
+	    return;
         }
+
+	CancelPendingSyntaxColoring();
     }
 
     private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -357,6 +359,7 @@ public partial class Form1 : Form
 
     private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
+	editorTextBox.SetRedrawEnabled(false);
         editorTextBox.SelectAll();
         UpdateEditMenuItemStates();
         UpdateStatusBar();
@@ -538,9 +541,16 @@ public partial class Form1 : Form
         }
     }
 
+    private void ApplySyntaxColoringImmediately()
+    {
+        CancelPendingSyntaxColoring();
+        ApplySyntaxColoring();
+    }
+
+
     private void ApplySyntaxColoring()
     {
-        if (isApplyingSyntaxColors)
+        if (isApplyingSyntaxColors || IsDisposed || Disposing || editorTextBox.IsDisposed)
         {
             return;
         }

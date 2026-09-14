@@ -204,7 +204,7 @@ Keep this milestone limited to shared infrastructure and preservation of existin
 ### RichTextBox integration and performance baseline
 
 - [x] Route all implemented languages through the existing syntax-color application path
-- [ ] Preserve the selection start, selection length, and caret position while recoloring
+- [x] Preserve the selection start, selection length, and caret position while recoloring
 - [x] Preserve the editor viewport or first visible line while recoloring
 - [ ] Suppress redraw during a formatting pass and restore redraw in a `finally` path
 - [x] Ensure formatting-only changes do not mark the document dirty or replace the user's text undo history
