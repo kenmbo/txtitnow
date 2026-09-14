@@ -6,6 +6,8 @@ internal sealed class EditorRichTextBox : RichTextBox
     private const int WmHScroll = 0x0114;
     private const int WmVScroll = 0x0115;
     private const int WmMouseWheel = 0x020A;
+    private const int EmGetFirstVisibleLine = 0x00CE;
+    private const int EmLineScroll = 0x00B6;
 
     public event EventHandler? ViewportChanged;
 
@@ -21,6 +23,28 @@ internal sealed class EditorRichTextBox : RichTextBox
         if (enabled)
         {
             Invalidate();
+        }
+    }
+
+    public int GetFirstVisibleLineIndex()
+    {
+        return !IsHandleCreated
+            ? 0
+            : (int)SendMessage(Handle, EmGetFirstVisibleLine, 0, 0);
+    }
+
+    public void RestoreFirstVisibleLineIndex(int firstVisibleLineIndex)
+    {
+        if (!IsHandleCreated)
+        {
+            return;
+        }
+
+        int lineDelta = firstVisibleLineIndex - GetFirstVisibleLineIndex();
+
+        if (lineDelta != 0)
+        {
+            SendMessage(Handle, EmLineScroll, 0, lineDelta);
         }
     }
 
