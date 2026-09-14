@@ -100,18 +100,18 @@ Syntax formatting changes only `SelectionColor`; it must never replace document 
 3. Restore the selection, caret color, and viewport after formatting, then re-enable redraw.
 4. Avoid document text assignments, `SelectedText` changes, and undo-stack operations so dirty-state tracking and undo history are unchanged by coloring alone.
 
-The existing applicator already guards reentrancy, suspends redraw, captures and restores selection, and resets an empty caret selection to `PlainText`. The shared integration must add explicit viewport preservation while retaining those safeguards. File open/save workflows, unsaved-change prompts, undo, cut, copy, paste, find, replace, word wrap, smart indentation, font selection, status updates, line-number gutter behavior, and recent-file behavior must continue to work exactly as they do without syntax coloring.
+The applicator guards reentrancy, captures and restores selection, resets an empty caret selection to `PlainText`, and uses `EditorRichTextBox` first-visible-line methods to restore the viewport. Redraw suspension and every restoration occur through `finally` paths. It changes only `SelectionColor`, leaving editor text assignments and undo commands out of the formatting pass. File open/save workflows, unsaved-change prompts, undo, cut, copy, paste, find, replace, word wrap, smart indentation, font selection, status updates, line-number gutter behavior, and recent-file behavior must continue to work exactly as they do without syntax coloring; this remains a manual Windows verification responsibility.
 
 
 ## Recoloring Policy and Performance
 
-The current C prototype recolors the entire document immediately on text changes and when the file type or active theme changes. It is the behavioral baseline, but the initial shared multi-language policy is a full-document recoloring pass after a 150 ms text-change debounce:
+The current implementation uses a full-document recoloring pass. Text changes restart a 150 ms UI-thread debounce; current-file-path/language and theme changes cancel pending work and recolor immediately:
 
-- Restart the 150 ms timer on each text change; color only the latest document snapshot when it expires.
+- Restart the 150 ms timer on each text change; color the latest editor text when it expires.
 - Recolor immediately after a successful open, a current-file-path or language change, and a theme change.
-- Keep all RichTextBox formatting on the UI thread and discard a stale scheduled request when a newer text change, document, language, or theme supersedes it.
+- Keep all RichTextBox formatting on the UI thread and cancel pending timer work when a newer immediate request, the form closing, or the editor disposing supersedes it.
 
-Full-document recoloring is intentionally the initial strategy. Do not add visible-range or incremental highlighting merely because they are possible. First instrument representative documents and record document length in UTF-16 positions, scanner duration, formatting duration, total recoloring duration, and the elapsed time from the last edit to completed redraw.
+Full-document recoloring is intentionally the initial strategy. Do not add visible-range or incremental highlighting merely because they are possible. `Form1` writes the document length in UTF-16 positions, scanner duration, formatting duration, total recoloring duration, and elapsed time from the last edit to completed redraw to Debug output. Record those values for representative small, medium, and large files before considering an optimization.
 
 Consider visible-range or incremental highlighting only when a 30-second sustained-edit sample on representative files shows either a 95th-percentile total recoloring duration above 50 ms, any repeatable recoloring duration above 100 ms, or a user-visible typing delay attributable to coloring. Measurements must identify whether scanning or RichTextBox formatting is the bottleneck before choosing an optimization.
 
