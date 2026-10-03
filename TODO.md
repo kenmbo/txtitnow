@@ -456,3 +456,8 @@ Keep this milestone limited to the tabbed document model and adapting existing f
 - [ ] Test multiple tabs containing C, C++, Markdown, C#, plain text, and files with different encodings
 - [ ] Test Save As language changes, theme changes, find/replace, line numbers, and status updates independently in multiple tabs
 - [ ] Test closing one dirty tab, closing the only tab, and exiting with multiple dirty tabs, including Cancel paths
+
+
+# Fixes
+## Find + Replace Dialog
+- [ ] Delete entire lines on Find searches
